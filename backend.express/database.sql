@@ -8,7 +8,7 @@ CREATE TABLE fnb_item_lists (
     price DECIMAL(6,2) not null,
     photo text not null,
     type varchar(10) check(type in ('Food', 'Drink')),
-    categories varchar(15) check(type in ('Appertizer', 'Soup', 'Main Course', 'Pasta', 'Dessert', 'Cocktail', 'Red Wine', 'White Wine', 'Bottle Beer', 'Spirit', 'Soft Drink', 'Juice')),
+    category varchar(15) check(type in ('Appertizer', 'Soup', 'Main Course', 'Pasta', 'Dessert', 'Cocktail', 'Red Wine', 'White Wine', 'Bottle Beer', 'Spirit', 'Soft Drink', 'Juice')),
     isDeleted BOOLEAN default false
 );
 
@@ -24,11 +24,11 @@ CREATE SEQUENCE employee_id_seq START 100;
 
 -- nextval function used to generate the next value in a sequence.
 CREATE TABLE employees (
-    id TEXT DEFAULT 'SEI' || nextval('employee_id_seq') NOT null primary key,
+    id TEXT DEFAULT 'SEI ' || nextval('employee_id_seq') NOT null primary key,
     name VARCHAR(30) NOT NULL,
     password varchar(60) not null,
     contact varchar(10) not null,
-    CONSTRAINT check_id_pattern CHECK (id ~ '^SEI[0-9]+$')
+    CONSTRAINT check_id_pattern CHECK (id ~ '^SEI [0-9]+$')
 );
 
 create table orders (
