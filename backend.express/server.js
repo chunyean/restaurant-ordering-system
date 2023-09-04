@@ -6,6 +6,12 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const pool = require("./src/DB/db");
 
+// define all the routes
+const customer = require('./src/route_customer/customer')
+const employee = require('./src/route_customer/employee')
+
+
+//set limit for the number of request
 const limit = rateLimit({
   windowMs: 15 * 60 * 1000, //15 min
   max: 100,
@@ -15,11 +21,16 @@ const limit = rateLimit({
 
 const app = express();
 
+
 app.use(cors());
 app.use(helmet());
 app.use(limit);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// use the routes
+app.use('/customer', customer)
+app.use('/employee', employee)
 
 // Route to test the database connection
 app.get("/book", async (req, res) => {
