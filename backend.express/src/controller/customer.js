@@ -21,7 +21,7 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
     // insert the customer detail into database
-    const newCustomer = await pool.query(
+    await pool.query(
       `insert into customers (username, password, contact) values ($1, $2, $3)`,
       [req.body.username, hashedPassword, req.body.contact]
     );
