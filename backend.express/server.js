@@ -7,8 +7,8 @@ const rateLimit = require("express-rate-limit");
 const pool = require("./src/DB/db");
 
 // define all the routes
-const customer = require('./src/route_customer/customer')
-const employee = require('./src/route_customer/employee')
+const customer = require('./src/router_customer/customer')
+const employee = require('./src/router_customer/employee')
 
 
 //set limit for the number of request

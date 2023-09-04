@@ -2,7 +2,6 @@ const pool = require("../DB/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
-const { $ } = require("pg-format");
 
 // customer register accountc
 const register = async (req, res) => {
@@ -12,7 +11,8 @@ const register = async (req, res) => {
       `select username from customers where username = $1`,
       [req.body.username]
     );
-    console.log(existingUsername);
+
+    // if rowCount is not 0, then username already exists
     if (existingUsername.rowCount) {
       return res.status(400).json({ message: "Username already exists" });
     }
@@ -21,53 +21,42 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
     // insert the customer detail into database
-    const newCustomer = await pool.query(
+    await pool.query(
       `insert into customers (username, password, contact) values ($1, $2, $3)`,
       [req.body.username, hashedPassword, req.body.contact]
     );
 
-    res.json({ status: "ok", message: "new customer created", newCustomer });
-
-    // // display the last inserted record
-    // if (newCustomer.rows.length > 0) {
-    //   const lastRow = newCustomer.rows[newCustomer.rows.length - 1];
-    //   res.json(lastRow);
-    //   console.log(lastRow);
-    // } //when only one row is returned in the result
-    // else if (newCustomer.rows.length == 0) {
-    //   const firstRow = newCustomer.rows[0];
-    //   res.json(firstRow);
-    //   console.log(firstRow);
-    // } else {
-    //   // when no rows inside the result will show error
-    //   res.status(404).json({ error: "No rows found" });
-    // }
+    res.json({ status: "ok", message: "new customer created" });
   } catch (error) {
     console.log(error.message);
-    res.json({ status: "error", message: "exit" });
+    res.json({ status: "error", message: error.message });
   }
 };
 
 //customer login
 const login = async (req, res) => {
   try {
+    // retrieve customer detail by using username
     const user = await pool.query(
-      $`select * from customers where username = req.body.username`
+      `select * from customers where username = $1`,
+      [req.body.username]
     );
 
     if (!user) {
       return res.status(400).json({ message: "User does not exist" });
     }
 
+    const result = user.rows[0];
+    // compare req.body.password with db password
     const correctPassword = await bcrypt.compare(
       req.body.password,
-      user.password
+      result.password
     );
 
     if (correctPassword) {
       const payload = {
-        id: user.id,
-        username: user.username,
+        id: result.id,
+        username: result.username,
       };
 
       const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -75,7 +64,7 @@ const login = async (req, res) => {
         jwtid: uuidv4(),
       });
 
-      const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
+      const refresh = jwt.sign(payload, process.env.REFRESH_SECRET, {
         expiresIn: "30d",
         jwtid: uuidv4(),
       });
@@ -93,6 +82,7 @@ const login = async (req, res) => {
 // use refresh token to get new access token
 const refresh = async (req, res) => {
   try {
+    // decoded refresh token
     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
     const payload = {
       id: decoded.id,
