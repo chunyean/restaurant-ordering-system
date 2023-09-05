@@ -11,7 +11,7 @@ const register = async (req, res) => {
 
     // insert the customer detail into database
     await pool.query(
-      `insert into employees (name, password, contact) values ($1, $2, $3)`,
+      "insert into employees (name, password, contact) values ($1, $2, $3)",
       [req.body.name, hashedPassword, req.body.contact]
     );
 
@@ -42,15 +42,15 @@ const nextAvaiId = async (req, res) => {
 // employee login
 const login = async (req, res) => {
   try {
-    const result = await pool.query(`select * from employees where id = $1`, [
+    const result = await pool.query("select * from employees where id = $1", [
       req.body.id,
     ]);
 
     if (!result) {
       return res.status(400).json({ message: "ID does not exist" });
     }
-    console.log(result)
-    const employee = result.rows[0]
+    console.log(result);
+    const employee = result.rows[0];
     const correctPassword = await bcrypt.compare(
       req.body.password,
       employee.password
