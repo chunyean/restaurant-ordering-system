@@ -1,4 +1,4 @@
-// end point created relate with all food and beverage item 
+// end point created relate with all food and beverage item
 
 const pool = require("../DB/db");
 
@@ -11,7 +11,7 @@ const createNewItem = async (req, res) => {
     // insert all the data into fnb_item_list
     const result = await pool.query(
       "insert into fnb_item_lists (name, description, price, photo, type, category) values ($1, $2, $3, $4, $5, $6) returning *",
-      [name, description, price, photo, type, category]
+      [name, description, price, photo, type.toUpperCase(), category.toUpperCase()]
     );
 
     //result.rows is an array, data that we insert will return at array index of 0
@@ -31,6 +31,7 @@ const categoryItem = async (req, res) => {
       [req.body.value.toUpperCase()]
     );
     const list = result.rows;
+    console.log(result)
     res.json(list);
   } catch (error) {
     console.log(error.message);
