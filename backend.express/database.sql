@@ -55,6 +55,7 @@ CREATE TABLE orders (
 	customer_id int4 NULL,
 	"date" date NULL,
 	table_number int2 NOT NULL,
+	pax integer not null,
 	CONSTRAINT orders_pkey PRIMARY KEY (id),
 	CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES customers(id),
 	CONSTRAINT orders_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employees(id)
