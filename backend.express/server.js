@@ -7,8 +7,9 @@ const rateLimit = require("express-rate-limit");
 const pool = require("./src/DB/db");
 
 // define all the routes
-const customer = require('./src/router_customer/customer')
-const employee = require('./src/router_customer/employee')
+const customer = require('./src/router/customer')
+const employee = require('./src/router/employee')
+const fnbList = require('./src/router/fnb_item_list')
 
 
 //set limit for the number of request
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 // use the routes
 app.use('/customer', customer)
 app.use('/employee', employee)
+app.use('/fnblist', fnbList)
 
 // Route to test the database connection
 app.get("/book", async (req, res) => {
