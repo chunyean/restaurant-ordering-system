@@ -8,7 +8,7 @@ const register = async (req, res) => {
   try {
     // check for existing user name
     const existingUsername = await pool.query(
-      `select username from customers where username = $1`,
+      "select username from customers where username = $1",
       [req.body.username]
     );
 
@@ -22,7 +22,7 @@ const register = async (req, res) => {
 
     // insert the customer detail into database
     await pool.query(
-      `insert into customers (username, password, contact) values ($1, $2, $3)`,
+      "insert into customers (username, password, contact) values ($1, $2, $3)",
       [req.body.username, hashedPassword, req.body.contact]
     );
 
@@ -38,7 +38,7 @@ const login = async (req, res) => {
   try {
     // retrieve customer detail by using username
     const user = await pool.query(
-      `select * from customers where username = $1`,
+      "select * from customers where username = $1",
       [req.body.username]
     );
 
