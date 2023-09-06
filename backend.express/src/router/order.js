@@ -13,6 +13,6 @@ router.delete("/delete", deleteOrderedItem);
 
 router.patch("/update", admendOrder);
 
-router.delete("/delete", deleteOrder);
+router.delete("/voidOrder/:id", deleteOrder);
 
 module.exports = router;
