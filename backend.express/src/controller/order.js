@@ -2,6 +2,7 @@
 
 const pool = require("../DB/db");
 
+//create new row under table orders and fnb_order_lists
 const newOrder = async (req, res) => {
   //add pax
   try {
@@ -28,7 +29,7 @@ const newOrder = async (req, res) => {
     );
     const unitPrice = list.rows;
 
-    // use for loop to get index of array
+    // use for loop to loop the index of array
     // use index to get the data of unitPrice, quantity, fnb_item_list_id, each of it contain the same number of length of an array
     for (let index = 0; index < quantity.length; index++) {
       const price = unitPrice[index].price * quantity[index];
@@ -45,28 +46,31 @@ const newOrder = async (req, res) => {
   }
 };
 
+//delte individual ordered item when meet the condition of fnb_item_list_id and order_id
 const deleteOrderedItem = async (req, res) => {
   try {
-    const result = await pool.query(
-      "delete from fnb_order_lists join orders where orders.id = order_id and fnb_item_list_id = $1 and table_number = $2",
-      [[req.body.id, req.body.table_number]]
+    await pool.query(
+      "delete from fnb_order_lists where (fnb_item_list_id = $1 and order_id = $2)",
+      [req.body.id, req.body.order_id]
     );
 
-    res.json(result);
+    res.json({ status: "ok", message: "Item has been deleted" });
   } catch (error) {
     console.log(error.message);
     res.json({ status: "error", message: error.message });
   }
 };
 
+//update order quantity when meet the condition of fnb_item_list_id and order_id
 const admendOrder = async (req, res) => {
   try {
     const result = await pool.query(
-      "update fnb_order_lists set quantity = $1 where id = req.params.id returning *",
-      [req.body, quntity]
+      "update fnb_order_lists set quantity = $1 where fnb_item_list_id = $2 and order_id = $3 returning *",
+      [req.body.quantity, req.body.id, req.body.order_id]
     );
-
+    console.log(result);
     const updated = result.rows[0];
+    console.log(updated);
     res.json(updated);
   } catch (error) {
     console.log(error.message);
@@ -76,9 +80,10 @@ const admendOrder = async (req, res) => {
 
 const deleteOrder = async (req, res) => {
   try {
-    await pool.query("update orders set is_void_order = true where id = $1", [
-      req.params.id,
-    ]);
+    await pool.query(
+      "update orders set is_void_order = true where order_id = $1",
+      [req.params.id]
+    );
     res.json({ status: "ok", message: "order has been deleted" });
   } catch (error) {
     console.log(error.message);
