@@ -8,17 +8,19 @@ const newOrder = async (req, res) => {
   try {
     const {
       customer_id,
+      employee_id,
       table_number,
       fnb_item_list_id,
       quantity,
       order_type,
+      pax,
     } = req.body;
 
     // use table_number and customer_id to create new row of orders table
     // get the new generate order.id to create another new row at table fnb_order_lists
     const create = await pool.query(
-      "insert into orders (table_number, customer_id) values ($1, $2) returning id",
-      [table_number, customer_id]
+      "insert into orders (table_number, customer_id, employee_id, pax) values ($1, $2, $3, $4) returning id",
+      [table_number, customer_id, employee_id, pax]
     );
     const newID = create.rows[0].id;
 
@@ -80,10 +82,11 @@ const admendOrder = async (req, res) => {
 
 const deleteOrder = async (req, res) => {
   try {
-    await pool.query(
-      "update orders set is_void_order = true where order_id = $1",
-      [req.params.id]
-    );
+    console.log("h");
+    await pool.query("update orders set is_voidorder = true where id = $1", [
+      req.params.id,
+    ]);
+    console.log("hi");
     res.json({ status: "ok", message: "order has been deleted" });
   } catch (error) {
     console.log(error.message);
@@ -94,7 +97,7 @@ const deleteOrder = async (req, res) => {
 const allOrder = async (req, res) => {
   try {
     const list = await pool.query(
-      "select table_number, pax, username, name, quantity, total_price from orders join fnb_order_lists fol on fol.order_id = orders.id join fnb_item_lists fil on fil.id = fol.fnb_item_list_id where (table_number = $1 and is_payment = false)",
+      "select table_number, pax, username, name, quantity, total_price from orders join fnb_order_lists fol on fol.order_id = orders.id join fnb_item_lists fil on fil.id = fol.fnb_item_list_id join customers c on c.id = orders.customer_id where (table_number = $1 and is_payment = false)",
       [req.params.id]
     );
     const result = list.rows;

@@ -14,7 +14,7 @@ router.delete("/delete/:id", deleteOrderedItem);
 
 router.patch("/update/:id", admendOrder);
 
-router.delete("/voidOrder/:id", deleteOrder);
+router.delete("/voidorder/:id", deleteOrder);
 
 router.get("/allorder/:id", allOrder);
 
