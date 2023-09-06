@@ -1,11 +1,14 @@
 const express = require("express");
-const { register, login, refresh } = require("../controller/customer");
+const { register, login } = require("../controller/customer");
+const {
+  validateCustRegisterData,
+  validateCustLogin,
+} = require("../validators/customer");
+const validCheck = require("../middleware/validCheck");
 const router = express.Router();
 
-router.put("/register", register);
+router.put("/register", validateCustRegisterData, validCheck, register);
 
-router.post("/login", login);
-
-router.post("/refresh", refresh);
+router.post("/login", validateCustLogin, login);
 
 module.exports = router;
