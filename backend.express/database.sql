@@ -22,7 +22,7 @@ CREATE TABLE fnb_item_lists (
 	photo varchar(255) NOT NULL,
 	"type" varchar(15) NULL,
 	category varchar(15) NULL,
-	isdeleted bool NULL DEFAULT false,
+	is_deleted bool NULL DEFAULT false,
 	CONSTRAINT fnb_item_lists_pkey PRIMARY KEY (id),
 	CONSTRAINT fnb_item_lists_category_fkey FOREIGN KEY (category) REFERENCES categories(category),
 	CONSTRAINT fnb_item_lists_type_fkey FOREIGN KEY ("type") REFERENCES "types"("type")
@@ -56,6 +56,8 @@ CREATE TABLE orders (
 	"date" date NULL,
 	table_number int2 NOT NULL,
 	pax integer not null,
+	is_voidoder boolean default false,
+	is_payment boolean default false,
 	CONSTRAINT orders_pkey PRIMARY KEY (id),
 	CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES customers(id),
 	CONSTRAINT orders_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employees(id)
