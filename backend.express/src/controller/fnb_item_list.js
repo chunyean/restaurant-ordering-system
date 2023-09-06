@@ -11,7 +11,14 @@ const createNewItem = async (req, res) => {
     // insert all the data into fnb_item_list
     const result = await pool.query(
       "insert into fnb_item_lists (name, description, price, photo, type, category) values ($1, $2, $3, $4, $5, $6) returning *",
-      [name, description, price, photo, type.toUpperCase(), category.toUpperCase()]
+      [
+        name,
+        description,
+        price,
+        photo,
+        type.toUpperCase(),
+        category.toUpperCase(),
+      ]
     );
 
     //result.rows is an array, data that we insert will return at array index of 0
@@ -31,7 +38,7 @@ const categoryItem = async (req, res) => {
       [req.body.value.toUpperCase()]
     );
     const list = result.rows;
-    console.log(result)
+    console.log(result);
     res.json(list);
   } catch (error) {
     console.log(error.message);
@@ -60,7 +67,7 @@ const singleItem = async (req, res) => {
 const softdelete = async (req, res) => {
   try {
     await pool.query(
-      "update fnb_item_lists set isDeleted = true where id = $1",
+      "update fnb_item_lists set is_deleted = true where id = $1",
       [req.params.id]
     );
     res.json({ status: "ok", message: "item has been deleted" });
