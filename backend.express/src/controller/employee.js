@@ -26,12 +26,14 @@ const register = async (req, res) => {
 const nextAvaiId = async (req, res) => {
   try {
     //increase the sequence by 1
-    await pool.query("SELECT nextval('employee_id_seq')");
+    await pool.query("select nextval('employee_id_seq')");
 
     // retrieve the next available id
+    // as next_id is give a name to the result column 
     const result = await pool.query(
-      "SELECT 'SEI' || currval('employee_id_seq') AS next_id"
+      "select 'SEI' || currval('employee_id_seq') as next_id"
     );
+    console.log(result)
     res.json(result.rows[0].next_id);
   } catch (error) {
     console.log(error.message);
@@ -59,7 +61,7 @@ const login = async (req, res) => {
     if (correctPassword) {
       const payload = {
         id: employee.id,
-        name: employee.name,
+        username: employee.name,
       };
 
       const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -67,12 +69,7 @@ const login = async (req, res) => {
         jwtid: uuidv4(),
       });
 
-      const refresh = jwt.sign(payload, process.env.REFRESH_SECRET, {
-        expiresIn: "30d",
-        jwtid: uuidv4(),
-      });
-
-      res.json({ access, refresh, payload });
+      res.json({ access, payload });
     } else {
       return res.status(400).json({ message: "Incorrect password" });
     }
@@ -82,24 +79,16 @@ const login = async (req, res) => {
   }
 };
 
-// use refresh token to get new access token
-const refresh = async (req, res) => {
+const deleteEmployee = async (req, res) => {
   try {
-    const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
-    const payload = {
-      id: decoded.id,
-      name: decoded.name,
-    };
-    const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
-      expiresIn: "1d",
-      jwtid: uuidv4(),
-    });
-
-    res.json({ access, payload });
+    await pool.query("update employees set is_resigned = true where id = $1", [
+      req.params.id,
+    ]);
+    res.json({ status: "ok", message: "This employee has been deleted" });
   } catch (error) {
     console.log(error.message);
-    res.status(400).json({ status: "error", message: "token refresh error" });
+    res.status(500).json({ status: "error", message: "invalid login" });
   }
 };
 
-module.exports = { register, nextAvaiId, login, refresh };
+module.exports = { register, nextAvaiId, login, deleteEmployee };

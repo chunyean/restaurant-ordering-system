@@ -37,26 +37,26 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     // retrieve customer detail by using username
-    const user = await pool.query(
+    const result = await pool.query(
       "select * from customers where username = $1",
       [req.body.username]
     );
 
-    if (!user) {
+    if (!result) {
       return res.status(400).json({ message: "User does not exist" });
     }
 
-    const result = user.rows[0];
+    const user = result.rows[0];
     // compare req.body.password with db password
     const correctPassword = await bcrypt.compare(
       req.body.password,
-      result.password
+      user.password
     );
 
     if (correctPassword) {
       const payload = {
-        id: result.id,
-        username: result.username,
+        id: user.id,
+        username: user.username,
       };
 
       const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -64,12 +64,7 @@ const login = async (req, res) => {
         jwtid: uuidv4(),
       });
 
-      const refresh = jwt.sign(payload, process.env.REFRESH_SECRET, {
-        expiresIn: "30d",
-        jwtid: uuidv4(),
-      });
-
-      res.json({ access, refresh, payload });
+      res.json({ access, payload });
     } else {
       return res.status(400).json({ message: "Incorrect password" });
     }
@@ -79,25 +74,4 @@ const login = async (req, res) => {
   }
 };
 
-// use refresh token to get new access token
-const refresh = async (req, res) => {
-  try {
-    // decoded refresh token
-    const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
-    const payload = {
-      id: decoded.id,
-      username: decoded.username,
-    };
-    const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
-      expiresIn: "1d",
-      jwtid: uuidv4(),
-    });
-
-    res.json({ access, payload });
-  } catch (error) {
-    console.log(error.message);
-    res.status(400).json({ status: "error", message: "token refresh error" });
-  }
-};
-
-module.exports = { register, login, refresh };
+module.exports = { register, login };
