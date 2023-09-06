@@ -8,9 +8,9 @@ const createNewItem = async (req, res) => {
     // declare all the res.body data
     const { name, description, price, photo, type, category } = req.body;
 
-    // insert all the data into fnb_item_list
+    // insert all the data into item
     const result = await pool.query(
-      "insert into fnb_item_lists (name, description, price, photo, type, category) values ($1, $2, $3, $4, $5, $6) returning *",
+      "insert into items (name, description, price, photo, type, category) values ($1, $2, $3, $4, $5, $6) returning *",
       [
         name,
         description,
@@ -34,11 +34,10 @@ const createNewItem = async (req, res) => {
 const categoryItem = async (req, res) => {
   try {
     const result = await pool.query(
-      "select * from fnb_item_lists where category = $1",
+      "select * from items where category = $1",
       [req.body.value.toUpperCase()]
     );
     const list = result.rows;
-    console.log(result);
     res.json(list);
   } catch (error) {
     console.log(error.message);
@@ -50,7 +49,7 @@ const categoryItem = async (req, res) => {
 const singleItem = async (req, res) => {
   try {
     const result = await pool.query(
-      "select * from fnb_item_lists where id = $1",
+      "select * from items where id = $1",
       [req.params.id]
     );
     const item = result.rows[0];
@@ -67,7 +66,7 @@ const singleItem = async (req, res) => {
 const softdelete = async (req, res) => {
   try {
     await pool.query(
-      "update fnb_item_lists set isdeleted = true where id = $1",
+      "update items set isdeleted = true where id = $1",
       [req.params.id]
     );
     res.json({ status: "ok", message: "item has been deleted" });
@@ -82,7 +81,7 @@ const updateItem = async (req, res) => {
   try {
     const { name, description, price, photo } = req.body;
     const result = await pool.query(
-      "update fnb_item_lists set name=$2, description=$3, price=$4, photo=$5 where id = $1 returning *",
+      "update items set name=$2, description=$3, price=$4, photo=$5 where id = $1 returning *",
       [req.params.id, name, description, price, photo]
     );
     const update = result.rows[0];
