@@ -67,7 +67,7 @@ const singleItem = async (req, res) => {
 const softdelete = async (req, res) => {
   try {
     await pool.query(
-      "update fnb_item_lists set is_deleted = true where id = $1",
+      "update fnb_item_lists set isdeleted = true where id = $1",
       [req.params.id]
     );
     res.json({ status: "ok", message: "item has been deleted" });
