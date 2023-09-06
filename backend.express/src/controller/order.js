@@ -51,7 +51,7 @@ const deleteOrderedItem = async (req, res) => {
   try {
     await pool.query(
       "delete from fnb_order_lists where (fnb_item_list_id = $1 and order_id = $2)",
-      [req.body.id, req.body.order_id]
+      [req.params.id, req.body.order_id]
     );
 
     res.json({ status: "ok", message: "Item has been deleted" });
@@ -66,7 +66,7 @@ const admendOrder = async (req, res) => {
   try {
     const result = await pool.query(
       "update fnb_order_lists set quantity = $1 where fnb_item_list_id = $2 and order_id = $3 returning *",
-      [req.body.quantity, req.body.id, req.body.order_id]
+      [req.body.quantity, req.params.id, req.body.order_id]
     );
     console.log(result);
     const updated = result.rows[0];

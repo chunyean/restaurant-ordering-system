@@ -9,9 +9,9 @@ const router = express.Router();
 
 router.put("/create", newOrder);
 
-router.delete("/delete", deleteOrderedItem);
+router.delete("/delete/:id", deleteOrderedItem);
 
-router.patch("/update", admendOrder);
+router.patch("/update/:id", admendOrder);
 
 router.delete("/voidOrder/:id", deleteOrder);
 
