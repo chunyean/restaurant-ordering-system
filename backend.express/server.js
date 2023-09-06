@@ -11,6 +11,7 @@ const customer = require("./src/router/customer");
 const employee = require("./src/router/employee");
 const fnbList = require("./src/router/fnb_item_list");
 const order = require("./src/router/order");
+const payment = require("./src/router/payment");
 
 //set limit for the number of request
 const limit = rateLimit({
@@ -33,6 +34,7 @@ app.use("/customer", customer);
 app.use("/employee", employee);
 app.use("/fnblist", fnbList);
 app.use("/order", order);
+app.use("/payment", payment);
 
 // Route to test the database connection
 app.get("/book", async (req, res) => {

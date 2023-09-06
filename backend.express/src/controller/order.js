@@ -31,11 +31,11 @@ const newOrder = async (req, res) => {
 
     // use for loop to loop the index of array
     // use index to get the data of unitPrice, quantity, fnb_item_list_id, each of it contain the same number of length of an array
-    for (let index = 0; index < quantity.length; index++) {
-      const price = unitPrice[index].price * quantity[index];
+    for (let idx = 0; idx < quantity.length; idx++) {
+      const price = unitPrice[idx].price * quantity[idx];
       await pool.query(
         "insert into fnb_order_lists (total_price, quantity, order_id, order_type, fnb_item_list_id) values ($1, $2, $3, $4, $5)",
-        [price, quantity[index], newID, order_type, fnb_item_list_id[index]]
+        [price, quantity[idx], newID, order_type, fnb_item_list_id[idx]]
       );
     }
 
@@ -51,7 +51,7 @@ const deleteOrderedItem = async (req, res) => {
   try {
     await pool.query(
       "delete from fnb_order_lists where (fnb_item_list_id = $1 and order_id = $2)",
-      [req.body.id, req.body.order_id]
+      [req.params.id, req.body.order_id]
     );
 
     res.json({ status: "ok", message: "Item has been deleted" });
@@ -66,11 +66,11 @@ const admendOrder = async (req, res) => {
   try {
     const result = await pool.query(
       "update fnb_order_lists set quantity = $1 where fnb_item_list_id = $2 and order_id = $3 returning *",
-      [req.body.quantity, req.body.id, req.body.order_id]
+      [req.body.quantity, req.params.id, req.body.order_id]
     );
-    console.log(result);
+
     const updated = result.rows[0];
-    console.log(updated);
+
     res.json(updated);
   } catch (error) {
     console.log(error.message);
@@ -91,4 +91,24 @@ const deleteOrder = async (req, res) => {
   }
 };
 
-module.exports = { newOrder, deleteOrderedItem, admendOrder, deleteOrder };
+const allOrder = async (req, res) => {
+  try {
+    const list = await pool.query(
+      "select table_number, pax, username, name, quantity, total_price from orders join fnb_order_lists fol on fol.order_id = orders.id join fnb_item_lists fil on fil.id = fol.fnb_item_list_id where (table_number = $1 and is_payment = false)",
+      [req.params.id]
+    );
+    const result = list.rows;
+    res.json(result);
+  } catch (error) {
+    console.log(error.message);
+    res.json({ status: "error", message: error.message });
+  }
+};
+
+module.exports = {
+  newOrder,
+  deleteOrderedItem,
+  admendOrder,
+  deleteOrder,
+  allOrder,
+};
