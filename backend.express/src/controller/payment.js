@@ -13,13 +13,13 @@ const newPayment = async (req, res) => {
     //1st
     const create = await pool.query(
       "insert into payments (employee_id) values ($1) returning id",
-      [req.userID]
+      [req.staffID]
     );
     const paymentID = create.rows[0].id;
 
     //2nd
     const order = await pool.query(
-      "select id from orders where table_number=$1 and is_payment=false",
+      "select orders.id, customers.id as custID from orders join customers on customers.id = orders.customer_id where table_number = $1 and is_payment = false and orders.is_voidorder = false",
       [req.body.table_number]
     );
     const orderID = order.rows;
@@ -53,7 +53,7 @@ const newPayment = async (req, res) => {
     const finalPayment = await pool.query(
       "update payments set nett_amount=$1, gst=$2, service_charge=$3, total_amount=$4 returning *",
       [
-        totalPrice.toFixed(2),
+        nettAmount.toFixed(2),
         gst.toFixed(2),
         serviceCharge.toFixed(2),
         finalAmount.toFixed(2),
@@ -76,7 +76,7 @@ const completedPayment = async (req, res) => {
     ]);
 
     const order = await pool.query(
-      "select order_id from order_payment where payment_id=$1",
+      "select order_id, customer_id from order_payment join orders on orders.id = order_id where payment_id=$1",
       [req.params.id]
     );
 
@@ -88,10 +88,11 @@ const completedPayment = async (req, res) => {
       ]);
     }
 
-    await pool.query("insert into order_histories (history) value ($1)", [
-      req.params.id,
-    ]);
-    
+    await pool.query(
+      "insert into order_histories (customer_id, payment_id) values ($1, $2)",
+      [orderID[0].customer_id, req.params.id]
+    );
+
     res.json({ status: "ok", message: "Payment has been completed" });
   } catch (error) {
     console.log(error.message);
