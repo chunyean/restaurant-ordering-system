@@ -5,20 +5,22 @@ const pool = require("../DB/db");
 //create new row under table orders and order_lists
 const newOrder = async (req, res) => {
   try {
-    const {
-      table_number,
-      item_id,
-      quantity,
-      order_type,
-      pax,
-    } = req.body;
-
+    const { table_number, item_id, quantity, order_type, pax } = req.body;
+    console.log(req.staffID);
     // use table_number and customer_id to create new row under orders table
     // get the new generate order.id to create another new row under table order_lists
-    const create = await pool.query(
-      "insert into orders (table_number, customer_id, pax) values ($1, $2, $3) returning id",
-      [table_number, req.userID, pax]
-    );
+    let create;
+    if (String(req.staffID).includes("SEI")) {
+      create = await pool.query(
+        "insert into orders (table_number,employee_id, customer_id, pax) values ($1, $2, $3, $4) returning id",
+        [table_number, req.staffID, req.custID, pax]
+      );
+    } else {
+      create = await pool.query(
+        "insert into orders (table_number,customer_id, pax) values ($1, $2, $3) returning id",
+        [table_number, req.custID, pax]
+      );
+    }
     const newID = create.rows[0].id;
 
     //use item_id to retrieve each individual unit price
@@ -42,7 +44,7 @@ const newOrder = async (req, res) => {
     res.json({ status: "ok", message: "Order has been created" });
   } catch (error) {
     console.log(error.message);
-    res.json({ status: "error", message: error.message });
+    res.json({ status: "error", message: "wrong" });
   }
 };
 
@@ -96,7 +98,7 @@ const cancelOrder = async (req, res) => {
 const allOrder = async (req, res) => {
   try {
     const list = await pool.query(
-      "select table_number, pax, username, name, quantity, total_price from orders join order_lists on order_lists.order_id = orders.id join items on items.id = order_lists.item_id join customers on customers.id = orders.customer_id where (table_number = $1 and is_payment = false and is_voidorder = false)",
+      "select table_number, pax, coalesce(username,''), name, quantity, total_price from orders join order_lists on order_lists.order_id = orders.id join items on items.id = order_lists.item_id join customers on customers.id = orders.customer_id where (table_number = $1 and is_payment = false and is_voidorder = false)",
       [req.params.id]
     );
     const result = list.rows;

@@ -1,4 +1,4 @@
-const { body, params } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const validateId = [
   body("id", "id is required").not().isEmpty(),
@@ -9,16 +9,12 @@ const validateId = [
 ];
 
 const validateParamsId = [
-  body("id", "id is required").not().isEmpty(),
-  body("id", "id is invalid").isLength({
-    min: 36,
-    max: 36,
-  }),
+  param("id", "id is invalid").isLength({ min: 5, max: 7 }),
 ];
 
 const validateSubmitOrder = [
-  body("tableNumber", "Table number is required").not().isEmpty(),
-  body("tableNumber", "Table number shouldn't over 12").isLength({
+  body("table_number", "Table number is required").not().isEmpty(),
+  body("table_number", "Table number shouldn't over 12").isLength({
     min: 1,
     max: 12,
   }),

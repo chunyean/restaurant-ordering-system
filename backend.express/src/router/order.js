@@ -30,6 +30,6 @@ router.patch("/update/:id", auth, validateParamsId, admendOrder);
 router.delete("/voidorder/:id", auth, validateParamsId, cancelOrder);
 
 //this one need to check where to get the table number
-router.get("/allorder/:id", auth, validateParamsId, allOrder);
+router.get("/allorder/:id", validateParamsId, allOrder);
 
 module.exports = router;

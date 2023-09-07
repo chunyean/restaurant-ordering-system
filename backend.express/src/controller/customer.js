@@ -55,7 +55,7 @@ const login = async (req, res) => {
 
     if (correctPassword) {
       const payload = {
-        id: user.id,
+        custID: user.id,
         username: user.username,
       };
 
