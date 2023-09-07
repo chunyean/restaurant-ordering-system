@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import "./App.css";
-import DataAuth from "./components/context/data";
+import UserContext from "./components/context/user";
+import Header from "./components/customer/Header";
 
-function App() {
+const App = () => {
+  const [accessToken, setAccessToken] = useState("");
+  const [register, setRegister] = useState(true);
+  const [login, setLogin] = useState(false);
+
   return (
     <>
-      <DataAuth.Provider value></DataAuth.Provider>
+      <UserContext.Provider value={{ accessToken, setAccessToken }}>
+        <Header register={register} setRegister={setRegister} login={login}setLogin={setLogin}></Header>
+      </UserContext.Provider>
     </>
   );
-}
+};
 
 export default App;
