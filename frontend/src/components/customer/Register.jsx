@@ -41,6 +41,11 @@ const Register = (props) => {
     }
   };
 
+  const change=()=>{
+    props.setRegister(false),
+    props.setLogin(true)
+  }
+
   return (
     <>
       <div className={styles.register}>
@@ -97,7 +102,7 @@ const Register = (props) => {
               By clicking register, you agree to our Terms, Privacy Policy and
               Cookies Policy.
             </span>
-            <button onClick={registerAccount}>Register</button>
+            <button onClick={change}>Register</button>
           </div>
         </div>
       </div>
