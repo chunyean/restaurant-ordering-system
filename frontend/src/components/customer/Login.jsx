@@ -23,68 +23,59 @@ const Login = (props) => {
     } else {
       console.log(res.data);
       //check error data
+      setErrorUsername(res.data);
+      setErrorPassword(res.data);
     }
   };
-  return <><>
-  <div className={styles.register}>
-    <div className={styles.btnbox}>
-      <div className={styles.signup}>
-        <span>Sign Up</span>
+  return (
+    <>
+      <div className={styles.register}>
+        <div className={styles.btnbox}>
+          <div className={styles.signup}>
+            <span>Sign Up</span>
+          </div>
+          <div className={styles.signin}>
+            <span>Sign In</span>
+          </div>
+          <div className={styles.username}>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="Enter your username"
+              onChange={() => setUsername(e.target.value)}
+            ></input>
+            {errorUsername ? (
+              <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
+            ) : (
+              <div style={{ height: "36px", margin: "0" }}></div>
+            )}
+          </div>
+          <div className={styles.password}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              onChange={() => setPassword(e.target.value)}
+            ></input>
+            <label>
+              <input type="checkbox" onClick="" />
+              Show Password
+            </label>
+            {errorPassword ? (
+              <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
+            ) : (
+              <div style={{ height: "36px", margin: "0" }}></div>
+            )}
+          </div>
+          <div className={styles.loginBtn}>
+            <button onClick={handleLogin}>Login</button>
+          </div>
+        </div>
       </div>
-      <div className={styles.signin}>
-        <span>Sign In</span>
-      </div>
-      <div className={styles.username}>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Enter your username"
-          onChange={() => setUsername(e.target.value)}
-        ></input>
-        {/* {errorUsername ? (
-          <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
-        ) : (
-          <div style={{ height: "36px", margin: "0" }}></div>
-        )} */}
-      </div>
-      <div className={styles.contact}>
-        <label htmlFor="contact">Contact</label>
-        <input
-          type="text"
-          id="contact"
-          placeholder="Enter your contact number"
-          onChange={(e) => setContact(e.target.value)}
-        ></input>
-      </div>
-      <div className={styles.password}>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Enter your password"
-          onChange={() => setPassword(e.target.value)}
-        ></input>
-        <label>
-          <input type="checkbox" onClick="" />
-          Show Password
-        </label>
-        {/* {errorPassword ? (
-          <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
-        ) : (
-          <div style={{ height: "36px", margin: "0" }}></div>
-        )} */}
-      </div>
-      <div className={styles.term}>
-        <span>
-          By clicking register, you agree to our Terms, Privacy Policy and
-          Cookies Policy.
-        </span>
-        <button onClick="">Register</button>
-      </div>
-    </div>
-  </div>
-</></>;
+    </>
+  );
 };
 
 export default Login;
