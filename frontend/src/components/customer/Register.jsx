@@ -46,6 +46,7 @@ const Register = (props) => {
     props.setLogin(true)
   }
 
+  //sign up and sign in change to toggle
   return (
     <>
       <div className={styles.register}>

@@ -23,12 +23,6 @@ const Header = (props) => {
           src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
           className={styles.logo}
         />
-        <button className={styles.ellipse} onClick={handleRegister}>
-          Sign Up
-        </button>
-        <button className={styles.signin1} onClick={handleLogin}>
-          Sign In
-        </button>
       </div>
     </>
   );
