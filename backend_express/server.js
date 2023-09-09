@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 // use the routes
 app.use("/customer", customer);
 app.use("/employee", employee);
-app.use("/fnblist", fnbList);
+app.use("/item", fnbList);
 app.use("/order", order);
 app.use("/payment", payment);
 

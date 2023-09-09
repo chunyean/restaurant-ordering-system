@@ -1,52 +1,32 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import AuthContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../customer/Header.module.css";
 
-const Register = (props) => {
+const Login = (props) => {
   const auth = useContext(AuthContext);
   const fetchData = useFetch();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [contact, setContact] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
-  const registerAccount = async () => {
-    const res = await fetchData("/customer/register", "PUT", {
+  const handleLogin = async () => {
+    const res = await fetchData("customer/login", "POST", {
       username,
       password,
-      contact,
     });
     if (res.ok) {
-      setUsername("");
-      setPassword("");
-      setContact("");
-      props.setRegister(false);
-      props.setLogin(true);
+      auth.setAccessToken(res.data.access);
+      //direct menu page
     } else {
       console.log(res.data);
+      //check error data
       setErrorUsername(res.data);
       setErrorPassword(res.data);
     }
   };
-
-  const showPassword = () => {
-    var x = document.getElementById("password");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  };
-
-  const change=()=>{
-    props.setRegister(false),
-    props.setLogin(true)
-  }
-
-  //sign up and sign in change to toggle
   return (
     <>
       <div className={styles.register}>
@@ -71,15 +51,6 @@ const Register = (props) => {
               <div style={{ height: "36px", margin: "0" }}></div>
             )}
           </div>
-          <div className={styles.contact}>
-            <label htmlFor="contact">Contact</label>
-            <input
-              type="text"
-              id="contact"
-              placeholder="Enter your contact number"
-              onChange={(e) => setContact(e.target.value)}
-            ></input>
-          </div>
           <div className={styles.password}>
             <label htmlFor="password">Password</label>
             <input
@@ -89,7 +60,7 @@ const Register = (props) => {
               onChange={() => setPassword(e.target.value)}
             ></input>
             <label>
-              <input type="checkbox" onClick={showPassword} />
+              <input type="checkbox" onClick="" />
               Show Password
             </label>
             {errorPassword ? (
@@ -98,12 +69,8 @@ const Register = (props) => {
               <div style={{ height: "36px", margin: "0" }}></div>
             )}
           </div>
-          <div className={styles.term}>
-            <span>
-              By clicking register, you agree to our Terms, Privacy Policy and
-              Cookies Policy.
-            </span>
-            <button onClick={change}>Register</button>
+          <div className={styles.loginBtn}>
+            <button onClick={handleLogin}>Login</button>
           </div>
         </div>
       </div>
@@ -111,4 +78,4 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+export default Login;

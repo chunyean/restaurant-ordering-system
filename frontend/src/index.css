@@ -24,10 +24,11 @@ a:hover {
 } */
 
 body {
-background-image: url('https://s3-alpha-sig.figma.com/img/f8dc/7b64/89a5af6ea73fa7fa0a03a7dfabf03349?Expires=1694995200&Signature=ebgB8uQzwdpIq1ST3ddw5DA2pPrEIFZtkYhk69qiELqBJc2wrwmCuodi0CheC2mkYJSu6VKvN-s7pQtCsyVjtyrDAh6yFwvAL8GCZGU7lNan1f8VAr7lBOuZG6jD4Z35hpV4GjJzD6ayvd0x0gLcSIp6DjKl1p51~cCIxlhyqiCzVcb6FzTgiEClS-ecyB87Kf2DC8g0Lt0FbBx1xhZ-m2iccUkV9mHBZfREMT04OY1nfe7LNhNzByo7tim36ge3uAugecmCbUtLaN8U5ZxNgpXiGHx8QwEi~dbRz2KNv9VWCIMNdvrM9oYtSSl-s~qPwZnlzWtUlNXF09mBoi7M9w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4');
-background-size: cover;
-background-size: 100%;
-background-position: fixed;
+  background-image: url("https://s3-alpha-sig.figma.com/img/f8dc/7b64/89a5af6ea73fa7fa0a03a7dfabf03349?Expires=1694995200&Signature=ebgB8uQzwdpIq1ST3ddw5DA2pPrEIFZtkYhk69qiELqBJc2wrwmCuodi0CheC2mkYJSu6VKvN-s7pQtCsyVjtyrDAh6yFwvAL8GCZGU7lNan1f8VAr7lBOuZG6jD4Z35hpV4GjJzD6ayvd0x0gLcSIp6DjKl1p51~cCIxlhyqiCzVcb6FzTgiEClS-ecyB87Kf2DC8g0Lt0FbBx1xhZ-m2iccUkV9mHBZfREMT04OY1nfe7LNhNzByo7tim36ge3uAugecmCbUtLaN8U5ZxNgpXiGHx8QwEi~dbRz2KNv9VWCIMNdvrM9oYtSSl-s~qPwZnlzWtUlNXF09mBoi7M9w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4");
+  background-size: cover;
+  background-size: 100%;
+  background-position: fixed;
+  overflow-x: hidden;
 }
 
 /* h1 {

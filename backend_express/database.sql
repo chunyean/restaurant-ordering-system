@@ -4,6 +4,66 @@ create database restaurant_db;
 --add extension for uuid generate
 CREATE EXTENSION "uuid-ossp";
 
+CREATE FUNCTION nettprice()
+RETURNS trigger AS 
+$$
+BEGIN
+  IF NEW.nett_amount IS NULL THEN
+    NEW.nett_amount = NEW.quantity * NEW.unit_price;
+  END IF;
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER;
+
+CREATE FUNCTION service_charge()
+RETURNS trigger AS 
+$$
+BEGIN
+  IF NEW.service_charge IS NULL THEN
+    NEW.service_charge = new.nett_amount * 0.1;
+  END IF;
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER;
+
+CREATE FUNCTION gst()
+RETURNS trigger AS 
+$$
+BEGIN
+  IF NEW.gst IS NULL THEN
+    NEW.gst = (new.nett_amount + (new.nett_amount * 0.1)) *0.08;
+  END IF;
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER;
+
+CREATE FUNCTION total_amount()
+RETURNS trigger AS 
+$$
+BEGIN
+  IF NEW.total_amount IS NULL THEN
+    NEW.total_amount = new.nett_amount + (new.nett_amount * 0.1) + ((new.nett_amount + (new.nett_amount * 0.1)) *0.08);
+  END IF;
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER;
+
 create table types (
 	type varchar(15) not null primary key
 );
@@ -89,10 +149,38 @@ create table payments (
 
 create table order_payment (
 	order_id uuid references orders(id),
-	payment_id uuid references payments(id)
+	payment_id uuid references payments(id),
+	primary key(order_id, payments_id)
 );
 
+create table order_histories (
+	customer_id integer ,
+	payment_id uuid ,
+	primary key(customer_id, payment_id),
+	constraint fk_id foreign key(customer_id) references customers(id),
+	constraint pfk_id foreign key(payment_id) references payments(id)
+);
 
+CREATE TRIGGER service_charge
+  before INSERT OR UPDATE 
+  ON payments
+
+FOR EACH ROW 
+  EXECUTE PROCEDURE service_charge();
+ 
+ CREATE TRIGGER gst
+  before INSERT OR UPDATE 
+  ON payments
+
+FOR EACH ROW 
+  EXECUTE PROCEDURE gst();
+ 
+ CREATE TRIGGER total_amount
+  before INSERT OR UPDATE 
+  ON payments
+
+FOR EACH ROW 
+  EXECUTE PROCEDURE total_amount();
 
 insert into types values ('FOOD');
 insert into types values ('DRINK');

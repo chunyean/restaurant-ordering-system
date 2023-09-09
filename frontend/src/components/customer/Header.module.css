@@ -1,5 +1,5 @@
 .header {
-  width: 100dvw;
+  width: 99.2dvw;
   height: 3dvw;
   background: linear-gradient(
     180deg,
@@ -24,38 +24,140 @@
   cursor: pointer;
 }
 
-.signup {
-  background-color: aqua;
-  width: 8dvw;
-  height: 2dvw;
-  position: absolute;
-  right: 15dvw;
-  top: 0.5dvw;
-  border-radius: 40%;
-  font-size: 1dvw;
-}
-
-.signin {
-  background-color: red;
-  width: 8dvw;
-  height: 2dvw;
-  position: absolute;
-  right: 6dvw;
-  top: 0.5dvw;
-  border-radius: 40%;
-  font-size: 1dvw;
-}
-
 .register {
   background-color: antiquewhite;
   width: 60dvw;
-  height: 30dvw;
+  height: 60svh;
   /* flex-shrink: 0; */
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   left: 20dvw;
-  top: 10dvw;
+  top: 23svh;
   margin: auto;
+}
+
+.btnbox {
+  background-color: #857bee;
+  width: 40dvw;
+  height: 8svh;
+  border-radius: 33px;
+  position: relative;
+  /* top: 5%; */
+  /* left: 20%; */
+  /* justify-content: center;
+  align-items: center;  */
+  /* margin: auto; */
+}
+
+.signup {
+  background-color: aqua;
+  width: 8dvw;
+  height: 4svh;
+  position: relative;
+  left: 5dvw;
+  top: 2svh;
+  border-radius: 33px;
+  text-align: center;
+}
+
+.signup > span {
+  font-size: 1.5dvw;
+}
+
+.signin {
+  background-color: aqua;
+  width: 8dvw;
+  height: 4svh;
+  position: relative;
+  left: 20dvw;
+  bottom: 2svh;
+  border-radius: 33px;
+  text-align: center;
+}
+
+.signin > span {
+  font-size: 1.5dvw;
+}
+
+.username {
+  background-color: rgb(243, 73, 217);
+  width: 30dvw;
+  height: 6svh;
+  position: relative;
+  top: 50%;
+}
+.username > label {
+  font-size: 1.2dvw;
+  margin: auto;
+}
+
+.username > input {
+  position: absolute;
+  top: 3svh;
+  left: 0dvw;
+  width: 20dvw;
+  height: 2svh;
+  margin: auto;
+}
+
+.contact {
+  position: relative;
+  background-color: rgb(10, 144, 233);
+  width: 30dvw;
+  height: 6svh;
+  position: relative;
+  top: 50%;
+}
+
+.contact > label {
+  font-size: 1.2dvw;
+  margin: auto;
+}
+
+.contact > input {
+  position: absolute;
+  top: 3svh;
+  left: 0dvw;
+  width: 20dvw;
+  height: 2svh;
+  margin: auto;
+}
+
+.password {
+  position: relative;
+  width: 30dvw;
+  height: 6svh;
+  position: relative;
+  top: 50%;
+}
+
+.password > label {
+  font-size: 1.2dvw;
+  margin: auto;
+}
+
+.password > input {
+  position: absolute;
+  top: 3svh;
+  left: 0dvw;
+  width: 20dvw;
+  height: 2svh;
+  margin: auto;
+}
+
+.term {
+  position: relative;
+  width: 30dvw;
+  height: 6svh;
+  position: relative;
+  top: 50%;
+}
+
+.term > span {
+  float: left;
+  width: 10dvw;
+}
+
+.term > button {
+  float: right;
 }

@@ -23,20 +23,6 @@ const Header = (props) => {
           src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
           className={styles.logo}
         />
-        <button className={styles.signup} onClick={handleRegister}>
-          Sign Up
-        </button>
-        <button className={styles.signin} onClick={handleLogin}>
-          Sign In
-        </button>
-        {props.register && (
-          <Register
-            setRegister={props.setRegister}
-            setLogin={props.setLogin}
-            handleRegister={handleRegister}
-            handleLogin={handleLogin}
-          ></Register>
-        )}
       </div>
     </>
   );
