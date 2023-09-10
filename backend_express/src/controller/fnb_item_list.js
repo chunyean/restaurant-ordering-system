@@ -93,7 +93,7 @@ const addOrder = async (req, res) => {
   try {
     console.log("1");
     await pool.query(
-      `do $$ begin create temporary table if not exists "SEI${req.custID}" (item_id integer, name varchar(100), quantity smallserial, unit_price decimal(6,2), nett_amount decimal(6,2) null); end$$;`
+      `do $$ begin create table if not exists "SEI${req.custID}" (item_id integer, name varchar(100), quantity smallserial, unit_price decimal(6,2), nett_amount decimal(6,2) null); end$$;`
     );
     console.log("2");
     await pool.query(
@@ -101,7 +101,7 @@ const addOrder = async (req, res) => {
     );
     console.log("3");
     await pool.query(
-      `insert into "SEI${req.custID}" (item_id, quantity) values (${req.params.id},${req.body.quantity})`
+      `insert into "SEI${req.custID}" (item_id, quantity) values (${req.params.id}, ${req.body.quantity}) `
     );
 
     // let price;
@@ -114,13 +114,14 @@ const addOrder = async (req, res) => {
     console.log("4");
     const price = await pool.query(
       "select name, price from items where id = $1",
-      [req.body.id]
+      [req.params.id]
     );
-    // const nettprice = price.rows[0];
+
+    const list = price.rows[0];
     console.log("5");
     await pool.query(
-      `update SEI${req.custID} set unit_price = $1, name = $2 where item_id = $3`,
-      [price.price, price.name, req.params.id]
+      `update "SEI${req.custID}" set unit_price = $1, name = $2 where item_id = $3`,
+      [list.price, list.name, req.params.id]
     );
 
     // for (let idx = 0; idx < nettprice.length; idx++) {
@@ -131,7 +132,7 @@ const addOrder = async (req, res) => {
     //   );
     // }
     console.log("6");
-    res.json({ status: "success", message:'add successful' });
+    res.json({ status: "success", message: "add successful" });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ status: "error", message: error.message });
@@ -141,7 +142,7 @@ const addOrder = async (req, res) => {
 const cartOrder = async (req, res) => {
   try {
     const cartDetail = await pool.query(
-      `select item_id, name, sum(quantity), sum(nett_price) from "SEI${req.custID}" group by item_id`
+      `select item_id, name, sum(quantity) as quantity, sum(nett_amount) as nett_amount from "SEI${req.custID}" group by item_id, name`
     );
     const list = cartDetail.rows;
     res.json(list);
@@ -154,11 +155,12 @@ const cartOrder = async (req, res) => {
 const lengthOfCart = async (req, res) => {
   try {
     const cart = await pool.query(
-      `select count(item_id) from "SEI${req.custID}" group by item_id`
+      `select sum(quantity) as quantity from "SEI${req.custID}"`
     );
-    const array = cart.rows;
-    const length = array.length;
-    res.json(length);
+
+    const number = cart.rows;
+    console.log(number);
+    res.json(number);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ status: "error", message: error.message });
