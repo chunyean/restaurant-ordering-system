@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import AuthContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../customer/Header.module.css";
@@ -7,19 +7,22 @@ const Register = (props) => {
   const auth = useContext(AuthContext);
   const fetchData = useFetch();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [contact, setContact] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [contact, setContact] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
   const registerAccount = async () => {
+    console.log("1");
     const res = await fetchData("/customer/register", "PUT", {
-      username,
-      password,
-      contact,
+      username: props.username,
+      password: props.password,
+      contact: props.contact,
     });
+    console.log("2");
     if (res.ok) {
+      console.log(res);
       setUsername("");
       setPassword("");
       setContact("");
@@ -32,21 +35,30 @@ const Register = (props) => {
     }
   };
 
-  const showPassword = () => {
-    var x = document.getElementById("password");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  };
+  // const showPassword = () => {
+  //   var x = document.getElementById("password");
+  //   if (x.type === "password") {
+  //     x.type = "text";
+  //   } else {
+  //     x.type = "password";
+  //   }
+  // };
 
+  // const handleUsername = (e) => {
+  //   setUsername(e.target.value);
+  // };
 
+  // const handleContact = (e) => {
+  //   setContact(e.target.value);
+  // };
 
-  const change=()=>{
-    props.setRegister(false),
-    props.setLogin(true)
-  }
+  // const handlePassword = (e) => {
+  //   setPassword(e.target.value);
+  // };
+
+  // useEffect(()=>{
+  //   registerAccount()
+  // }, [])
 
   //sign up and sign in change to toggle
   return (
@@ -65,7 +77,7 @@ const Register = (props) => {
               type="text"
               id="username"
               placeholder="Enter your username"
-              onChange={() => setUsername(e.target.value)}
+              onChange={props.handleUsername}
             ></input>
             {errorUsername ? (
               <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
@@ -79,7 +91,7 @@ const Register = (props) => {
               type="text"
               id="contact"
               placeholder="Enter your contact number"
-              onChange={(e) => setContact(e.target.value)}
+              onChange={props.handleContact}
             ></input>
           </div>
           <div className={styles.password}>
@@ -88,12 +100,14 @@ const Register = (props) => {
               type="password"
               id="password"
               placeholder="Enter your password"
-              onChange={() => setPassword(e.target.value)}
+              onChange={props.handlePassword}
             ></input>
-            <label>
-              <input type="checkbox" onClick={showPassword} />
-              Show Password
-            </label>
+            <div className={styles.check}>
+              <label>
+                <input type="checkbox" onClick={props.showPassword} />
+                Show Password
+              </label>
+            </div>
             {errorPassword ? (
               <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
             ) : (
@@ -105,7 +119,9 @@ const Register = (props) => {
               By clicking register, you agree to our Terms, Privacy Policy and
               Cookies Policy.
             </span>
-            <button onClick={()=> {registerAccount;change}}>Register</button>
+            <button className={styles.registerbtn} onClick={registerAccount}>
+              Register
+            </button>
           </div>
         </div>
       </div>

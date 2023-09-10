@@ -25,124 +25,146 @@
 }
 
 .register {
-  background-color: antiquewhite;
-  width: 60dvw;
+  width: 40dvw;
   height: 60svh;
-  /* flex-shrink: 0; */
   display: flex;
   position: absolute;
-  left: 20dvw;
   top: 23svh;
-  margin: auto;
+  justify-content: center;
+  align-items: center;
+  margin: 0 28dvw;
+  /* border: 2px black solid; */
 }
 
 .btnbox {
-  background-color: #857bee;
-  width: 40dvw;
+  background-color: rgb(252, 196, 112);
+  width: 30dvw;
   height: 8svh;
   border-radius: 33px;
-  position: relative;
-  /* top: 5%; */
-  /* left: 20%; */
-  /* justify-content: center;
-  align-items: center;  */
-  /* margin: auto; */
+  position: absolute;
+  top: 5%;
+
+  justify-content: center;
+  align-items: center;
+  margin: 0 18%;
 }
 
 .signup {
-  background-color: aqua;
+  background-color: rgba(158, 137, 106, 1);
   width: 8dvw;
-  height: 4svh;
+  height: 7svh;
   position: relative;
-  left: 5dvw;
-  top: 2svh;
+  left: 4dvw;
+  top: 0.5svh;
   border-radius: 33px;
   text-align: center;
+  cursor: pointer;
 }
 
 .signup > span {
-  font-size: 1.5dvw;
+  font-size: 2dvw;
+  position: relative;
+  top: 0.4dvw;
 }
 
 .signin {
-  background-color: aqua;
+  background-color: rgba(158, 137, 106, 1);
   width: 8dvw;
-  height: 4svh;
+  height: 7svh;
   position: relative;
-  left: 20dvw;
-  bottom: 2svh;
+  float: right;
+  right: 4dvw;
+  bottom: 6.5svh;
   border-radius: 33px;
   text-align: center;
+  cursor: pointer;
 }
 
 .signin > span {
-  font-size: 1.5dvw;
+  font-size: 2dvw;
+  position: relative;
+  top: 0.4dvw;
 }
 
 .username {
-  background-color: rgb(243, 73, 217);
+  /* background-color: rgb(243, 73, 217); */
   width: 30dvw;
-  height: 6svh;
+  height: 10svh;
   position: relative;
   top: 50%;
 }
+
 .username > label {
-  font-size: 1.2dvw;
+  font-size: 2dvw;
   margin: auto;
 }
 
 .username > input {
   position: absolute;
-  top: 3svh;
+  top: 5svh;
   left: 0dvw;
-  width: 20dvw;
-  height: 2svh;
+  width: 30dvw;
+  height: 5svh;
   margin: auto;
+}
+
+input::placeholder {
+  font-size: 1dvw;
 }
 
 .contact {
   position: relative;
-  background-color: rgb(10, 144, 233);
+  /* background-color: rgb(10, 144, 233); */
   width: 30dvw;
-  height: 6svh;
+  height: 10svh;
   position: relative;
-  top: 50%;
+  top: 70%;
 }
 
 .contact > label {
-  font-size: 1.2dvw;
+  font-size: 2dvw;
   margin: auto;
 }
 
 .contact > input {
   position: absolute;
-  top: 3svh;
+  top: 5svh;
   left: 0dvw;
-  width: 20dvw;
-  height: 2svh;
+  width: 30dvw;
+  height: 5svh;
   margin: auto;
 }
 
 .password {
   position: relative;
+  /* background-color: rgb(10, 144, 233); */
   width: 30dvw;
-  height: 6svh;
+  height: 10svh;
   position: relative;
-  top: 50%;
+  top: 90%;
 }
 
 .password > label {
-  font-size: 1.2dvw;
+  font-size: 2dvw;
   margin: auto;
 }
 
 .password > input {
   position: absolute;
-  top: 3svh;
+  top: 5svh;
   left: 0dvw;
-  width: 20dvw;
-  height: 2svh;
+  width: 30dvw;
+  height: 5svh;
   margin: auto;
+}
+
+.check {
+  /* background-color: pink; */
+  position: relative;
+  float: right;
+  top: 15%;
+  right: 2%;
+  font-size: 20px;
 }
 
 .term {
@@ -150,16 +172,34 @@
   width: 30dvw;
   height: 6svh;
   position: relative;
-  top: 50%;
+  top: 120%;
+  left: 2%;
 }
 
 .term > span {
+  font-size: large;
   float: left;
-  width: 10dvw;
+  width: 30dvw;
 }
 
-.term > button {
+.registerbtn{
   float: right;
+  width:10dvw;
+  height: 5svh;
+  position: relative;
+  right: 10%;
+  border-radius: 30px;
+  background-color: chocolate;}
+
+.loginBtn {
+  position: relative;
+  margin: 0 10dvw;
+  top: 5dvw;
+  width: 10dvw;
+  height: 3dvw;
+  border-radius: 33px;
+  background-color: dodgerblue;
+  font-size: 2dvw;
 }
 
 .food {
@@ -170,6 +210,7 @@
   position: absolute;
   top: 0.5dvw;
   left: 15dvw;
+  cursor: pointer;
 }
 
 .food > p {
@@ -187,6 +228,7 @@
   position: absolute;
   top: 0.5dvw;
   left: 30dvw;
+  cursor: pointer;
 }
 
 .beverage > p {
@@ -203,6 +245,7 @@
   width: 3dvw;
   height: 3dvw;
   left: 80dvw;
+  cursor: pointer;
 }
 
 .p {
@@ -213,6 +256,7 @@
   font-size: 1.2dvw;
   font-weight: bolder;
   color: red;
+  cursor: pointer;
 }
 
 .displayname {
@@ -223,6 +267,7 @@
   bottom: 0.7dvw;
   font-size: 1dvw;
   border-radius: 30px;
+  cursor: pointer;
 }
 
 .logout {
@@ -232,4 +277,5 @@
   border-radius: 50%;
   position: sticky;
   left: 95dvw;
+  cursor: pointer;
 }

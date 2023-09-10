@@ -13,22 +13,26 @@ const Login = (props) => {
   const [errorPassword, setErrorPassword] = useState("");
 
   const login = async () => {
-    const res = await fetchData("customer/login", "POST", {
-      username,
-      password,
+    console.log("1");
+    const res = await fetchData("/customer/login", "POST", {
+      username: props.username,
+      password: props.password,
     });
+    console.log("2");
     if (res.ok) {
+      console.log("3");
       auth.setAccessToken(res.data.access);
-      props.setLanding(false)
+      props.setShowLanding(false);
+      props.setLogin(false);
+      props.setFoodPage(true);
+      props.setUser(res.data.payload);
       //direct menu page
     } else {
+      console.log("4");
       console.log(res.data);
       //check error data
       setErrorUsername(res.data);
       setErrorPassword(res.data);
-      props.setLogin(false)
-      props.setFoodPage(true)
-      props.setUser(res.data.payload);
     }
   };
   return (
@@ -47,7 +51,7 @@ const Login = (props) => {
               type="text"
               id="username"
               placeholder="Enter your username"
-              onChange={() => setUsername(e.target.value)}
+              onChange={props.handleUsername}
             ></input>
             {errorUsername ? (
               <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
@@ -61,20 +65,22 @@ const Login = (props) => {
               type="password"
               id="password"
               placeholder="Enter your password"
-              onChange={() => setPassword(e.target.value)}
+              onChange={props.handlePassword}
             ></input>
-            <label>
-              <input type="checkbox" onClick="" />
-              Show Password
-            </label>
+            <div className={styles.check}>
+              <label>
+                <input type="checkbox" onClick={props.showPassword} />
+                Show Password
+              </label>
+            </div>
             {errorPassword ? (
               <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
             ) : (
               <div style={{ height: "36px", margin: "0" }}></div>
             )}
           </div>
-          <div className={styles.loginBtn}>
-            <button onClick={login}>Login</button>
+          <div>
+            <button  className={styles.loginBtn} onClick={login}>Login</button>
           </div>
         </div>
       </div>

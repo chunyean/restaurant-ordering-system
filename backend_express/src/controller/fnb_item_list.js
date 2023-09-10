@@ -91,37 +91,48 @@ const updateItem = async (req, res) => {
 
 const addOrder = async (req, res) => {
   try {
+    console.log("1");
     await pool.query(
-      `create temporary table if not exits SEI${req.custID} (item_id integer, name varchar(100), quantity smallserial, unit_price decimal(6,2), nett_amount decimal(6,2) null)`
+      `do $$ begin create table if not exists "SEI${req.custID}" (item_id integer, name varchar(100), quantity smallserial, unit_price decimal(6,2), nett_amount decimal(6,2) null); end$$;`
     );
-
+    console.log("2");
     await pool.query(
-      `IF NOT EXISTS (SELECT 1 FROM information_schema.triggers WHERE event_object_table = SEI${erq.custID} AND trigger_name = 'nettprice') THEN CREATE TRIGGER nettprice BEFORE INSERT OR UPDATE ON SEI${erq.custID} FOR EACH ROW EXECUTE FUNCTION nettprice(); END IF;`
+      `do $$ begin IF NOT EXISTS (SELECT 1 FROM information_schema.triggers WHERE event_object_table = 'SEI${req.custID}' AND trigger_name = 'nettprice') THEN CREATE TRIGGER nettprice BEFORE INSERT OR UPDATE ON "SEI${req.custID}" FOR EACH ROW EXECUTE FUNCTION nettprice(); END IF;end$$;`
+    );
+    console.log("3");
+    await pool.query(
+      `insert into "SEI${req.custID}" (item_id, quantity) values (${req.params.id}, ${req.body.quantity}) `
     );
 
-    const res = await pool.query(
-      `insert into SEI${req.custID} (item_id, quantity values (${req.params.id},${req.body.quantity})`
+    // let price;
+    // for (let idx = 0; idx < req.body.id.length; idx++) {
+    //   price = await pool.query(
+    //     "select id, name, price from items where id = $1",
+    //     [req.body.id[idx]]
+    //   );
+    // }
+    console.log("4");
+    const price = await pool.query(
+      "select name, price from items where id = $1",
+      [req.params.id]
     );
 
-    let price;
-    for (let idx = 0; idx < req.body.id.length; idx++) {
-      price = await pool.query(
-        "select id, name, price from items where id = $1",
-        [req.body.id[idx]]
-      );
-    }
+    const list = price.rows[0];
+    console.log("5");
+    await pool.query(
+      `update "SEI${req.custID}" set unit_price = $1, name = $2 where item_id = $3`,
+      [list.price, list.name, req.params.id]
+    );
 
-    const nettprice = price.rows;
-
-    for (let idx = 0; idx < nettprice.length; idx++) {
-      const item = nettprice[idx];
-      await pool.query(
-        `update SEI${req.custID} set unit_price = $1, name = $2 where item_id = $3`,
-        [item.price, item.name, item.id]
-      );
-    }
-
-    res.json({ status: "success" });
+    // for (let idx = 0; idx < nettprice.length; idx++) {
+    //   const item = nettprice[idx];
+    //   await pool.query(
+    //     `update SEI${req.custID} set unit_price = $1, name = $2 where item_id = $3`,
+    //     [item.price, item.name, item.id]
+    //   );
+    // }
+    console.log("6");
+    res.json({ status: "success", message: "add successful" });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ status: "error", message: error.message });
@@ -131,7 +142,7 @@ const addOrder = async (req, res) => {
 const cartOrder = async (req, res) => {
   try {
     const cartDetail = await pool.query(
-      `select item_id, name, sum(quantity), sum(nett_price) from SEI${req.custID} group by item_id`
+      `select item_id, name, sum(quantity) as quantity, sum(nett_amount) as nett_amount from "SEI${req.custID}" group by item_id, name`
     );
     const list = cartDetail.rows;
     res.json(list);
@@ -144,11 +155,12 @@ const cartOrder = async (req, res) => {
 const lengthOfCart = async (req, res) => {
   try {
     const cart = await pool.query(
-      `select count(item_id) from SEI${req.custID} group by item_id`
+      `select sum(quantity) as quantity from "SEI${req.custID}"`
     );
-    const array = cart.rows;
-    const length = array.length;
-    res.json(length);
+
+    const number = cart.rows;
+    console.log(number);
+    res.json(number);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ status: "error", message: error.message });

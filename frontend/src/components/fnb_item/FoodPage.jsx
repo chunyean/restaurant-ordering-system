@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../fnb_item/MenuPage.module.css";
+import ItemOverlay from "../overlay_item/ItemOverlay";
+import OrderCart from "../orderCart/OrderCart";
+import UserContext from "../context/user";
 
 const FoodPage = (props) => {
   const fetchData = useFetch();
@@ -8,9 +11,10 @@ const FoodPage = (props) => {
   const [category, setCategory] = useState("APPERTIZER");
   const [quantity, setQuantity] = useState(1);
   const [individualItem, setIndividualItem] = useState();
-  const [showItemOverlay, setShowItemOverLay] = useState(false);
+  const [showItemOverlay, setShowItemOverlay] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [cart, setCart] = useState([]);
+  const auth = useContext(UserContext);
 
   const foodCate = ["APPERTIZER", "SOUP", "MAIN COURSE", "PASTA", "DESSERT"];
 
@@ -42,17 +46,7 @@ const FoodPage = (props) => {
     );
   });
 
-  const itemOverlay = async () => {
-    const res = await fetchData("/item/getItem/" + id, "POST");
-    if (res.ok) {
-      console.log(res.data);
-      setIndividualItem(res.data);
-    } else {
-      alert(JSON.stringify(res.data));
-    }
-  };
-
-  const addOrder = async () => {
+  const addOrder = async (id) => {
     const res = await fetchData("/item/addorder/" + id, "PUT", {
       quantity: quantity,
     });
@@ -64,73 +58,80 @@ const FoodPage = (props) => {
   };
 
   const lengthOfCart = async () => {
-    const res = await fetchData("/length");
+    const res = await fetchData(
+      "/item/length",
+      "POST",
+      undefined,
+      auth.accesstoken
+    );
     if (res.ok) {
-      props.setArrayLength(res.data);
+      console.log(res.data);
+      props.setArrayLength(res.data[0].quantity);
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
-  const listItem = fnbItem.map((item, idx) => {
+  const listItem = fnbItem.map((item) => {
     return (
-      <div
-        key={item[idx].id}
-        id={item[idx].id}
-        onClick={() => {
-          setShowItemOverLay(true);
-          itemOverlay(item[idx].id);
-        }}
-      >
-        <div className={styles.items}>
-          <div className={styles.photo}>
-            <img src={item[idx].photo} />
-          </div>
-          <div className={styles.content}>
-            <span>{item[idx].name}</span>
-            <span className={styles.price}>${item[idx].price}</span>
-            <p>{item[idx].description}</p>
-            <button
-              onClick={() => {
-                addOrder(item[idx].id);
-                lengthOfCart();
-              }}
-            >
-              Add
-            </button>
+      <div key={item.id} className={styles.box}>
+        <div className={styles.leftbox} />
+        <div className={styles.rightbox} />
+
+        <div
+          id={item.id}
+          onClick={() => {
+            console.log(item);
+            setIndividualItem(item);
+            setShowItemOverlay(true);
+          }}
+        >
+          <div className={styles.items}>
+            <div className={styles.photo}>
+              <img src={item.photo} />
+            </div>
+            <div className={styles.content}>
+              <span>{item.name}</span>
+              <span className={styles.price}>${item.price}</span>
+              <p>{item.description}</p>
+              <button
+                className={styles.button}
+                onClick={(event) => {
+                  console.log("add");
+                  event.stopPropagation();
+                  addOrder(item.id);
+                  lengthOfCart();
+                }}
+              >
+                Add
+              </button>
+            </div>
           </div>
         </div>
       </div>
     );
   });
 
+  useEffect(() => {
+    everyCateData();
+    lengthOfCart();
+  }, [category]);
+
   return (
     <>
-      {/* <div className={styles.header}>
-        <img
-          src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
-          className={styles.logo}
-        />
-        <div className={styles.food} onClick={props.handleFoodPage}>
-          <p>Food</p>
-        </div>
-        <div className={styles.beverage} onClick={props.handleBeveragePage}>
-          <p>Beverage</p>
-        </div>
-        <img
-          src="/cart.256x256.png"
-          className={styles.cart}
-          onClick={cartOrder}
-        />
-        <p className={styles.p}>{props.arrayLength}</p>
-        make drop dropdown
-        <button className={styles.username}>Hi, {props.user.username}!</button>
-        <img src="/log-out-04.512x465.png" className={styles.logout} />
-      </div> */}
-      <div className={styles.subcat}>
+      <div className={styles.subfood}>
         <ul>{subFoods}</ul>
       </div>
-      <div>{listItem}</div>
+      {listItem}
+      {showItemOverlay && (
+        <ItemOverlay
+          individualItem={individualItem}
+          setQuantity={setQuantity}
+          addOrder={addOrder}
+          lengthOfCart={lengthOfCart}
+          setShowItemOverlay={setShowItemOverlay}
+        ></ItemOverlay>
+      )}
     </>
   );
 };

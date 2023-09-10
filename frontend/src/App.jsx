@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import useFetch from "../src/components/custom_hooks/useFetch";
 import UserContext from "./components/context/user";
 import Header from "./components/customer/Header";
 import Register from "./components/customer/Register";
 import Login from "./components/customer/Login";
 import FoodPage from "./components/fnb_item/FoodPage";
 import BeveragePage from "./components/fnb_item/BeveragePage";
+import OrderCart from "./components/orderCart/OrderCart";
 
 const App = () => {
-  const [accessToken, setAccessToken] = useState("");
-  const [showLanding, setShowLanding] = useState(true);
+  const fetchData = useFetch();
+
+  const test =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SUQiOjIwMDAyLCJ1c2VybmFtZSI6InBpa2FjaHUxIiwiaWF0IjoxNjk0MzIzNjAyLCJleHAiOjE2OTQ0MTAwMDIsImp0aSI6ImQ4NmUyZmE4LWY5NzEtNDQzNC05Zjk3LTJhZDU5NzE5NWExNCJ9.NuxdGvBvc9L6GTXE9PWstiByASPevbQExRyBm4ZoE-M";
+
+  const [accessToken, setAccessToken] = useState(test);
+  const [showLanding, setShowLanding] = useState(false);
 
   //need to change login to true, display back the login container
   const [register, setRegister] = useState(false);
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState("");
-  const [foodPage, setFoodPage] = useState(true);
-  const [beveragePage, setBeveragePage] = useState(false);
   const [arrayLength, setArrayLength] = useState();
+  const [foodPage, setFoodPage] = useState(false);
+  const [beveragePage, setBeveragePage] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [contact, setContact] = useState("");
+  const [cart, setCart] = useState(false);
+  const [cartDetail, setCartDetail] = useState([]);
+
+  const auth = useContext(UserContext);
 
   const registerClick = () => {
     setRegister(true), setLogin(false);
@@ -26,13 +40,25 @@ const App = () => {
     setLogin(true), setRegister(false);
   };
 
-  const lengthOfCart = async () => {
-    const res = await fetchData("/length");
-    if (res.ok) {
-      setArrayLength(res.data);
+  const showPassword = () => {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
     } else {
-      alert(JSON.stringify(res.data));
+      x.type = "password";
     }
+  };
+
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handleContact = (e) => {
+    setContact(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
   };
 
   return (
@@ -49,13 +75,23 @@ const App = () => {
           setLogin={setLogin}
           user={user}
           arrayLength={arrayLength}
+          cart={cart}
+          setCart={setCart}
+          setCartDetail={setCartDetail}
         ></Header>
         {register && (
           <Register
             setRegister={setRegister}
             setLogin={setLogin}
-            handleLloginClickogin={loginClick}
+            loginClick={loginClick}
             registerClick={registerClick}
+            showPassword={showPassword}
+            username={username}
+            handleUsername={handleUsername}
+            password={password}
+            handlePassword={handlePassword}
+            contact={contact}
+            handleContact={handleContact}
           ></Register>
         )}
         {login && (
@@ -68,14 +104,22 @@ const App = () => {
             setBeveragePage={setBeveragePage}
             setFoodPage={setFoodPage}
             setLogin={setLogin}
+            showPassword={showPassword}
+            username={username}
+            handleUsername={handleUsername}
+            password={password}
+            handlePassword={handlePassword}
+            contact={contact}
+            handleContact={handleContact}
           ></Login>
         )}
         {foodPage && (
           <FoodPage
             user={user}
+            foodPage={foodPage}
             setFoodPage={setFoodPage}
             setBeveragePage={setBeveragePage}
-            lengthOfCart={lengthOfCart}
+            setArrayLength={setArrayLength}
           ></FoodPage>
         )}
         {beveragePage && (
@@ -83,8 +127,16 @@ const App = () => {
             user={user}
             setFoodPage={setFoodPage}
             setBeveragePage={setBeveragePage}
-            lengthOfCart={lengthOfCart}
+            setArrayLength={setArrayLength}
           ></BeveragePage>
+        )}
+        {cart && (
+          <OrderCart
+            cartDetail={cartDetail}
+            setCartDetail={setCartDetail}
+            setCart={setCart}
+            setFoodPage={setFoodPage}
+          ></OrderCart>
         )}
       </UserContext.Provider>
     </>

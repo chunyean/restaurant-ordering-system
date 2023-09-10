@@ -14,18 +14,18 @@ const order = require("./src/router/order");
 const payment = require("./src/router/payment");
 
 //set limit for the number of request
-const limit = rateLimit({
-  windowMs: 15 * 60 * 1000, //15 min
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// const limit = rateLimit({
+//   windowMs: 15 * 60 * 1000, //15 min
+//   max: 100,
+//   standardHeaders: true,
+//   legacyHeaders: false,
+// });
 
 const app = express();
 
 app.use(cors());
 app.use(helmet());
-app.use(limit);
+// app.use(limit);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

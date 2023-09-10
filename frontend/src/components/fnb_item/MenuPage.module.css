@@ -96,14 +96,14 @@
   left: 95dvw;
 }
 
-.subcat {
+.subfood {
   position: relative;
   text-align: center;
   padding: 1dvw 2dvw;
   padding-left: 0px;
 }
 
-.subcat > ul > li {
+.subfood > ul > li {
   display: inline-block;
   font-size: 1.6dvw;
   margin: 0 4dvw;
@@ -112,35 +112,67 @@
   text-decoration: underline;
 }
 
-.items {
-  width: 60%;
+.leftbox {
+  position: relative;
+  /* background-color: #4233e8; */
+  float: left;
   height: 30dvh;
-  background-color: #f5f5f5;
-  margin: auto;
+  width: 15%;
+}
+
+.rightbox {
+  position: relative;
+  /* background-color: chartreuse; */
+  float: right;
+  height: 30dvh;
+  width: 15%;
+}
+
+.items {
+  width: 70%;
+  height: 30dvh;
+  /* background-color: #f5f5f5; */
+  margin: 1dvw auto;
 }
 
 .photo {
   position: absolute;
   float: left;
-  background-color: aqua;
-  width: 20dvw;
+  /* background-color: aqua; */
+  width: 30dvw;
   height: 30dvh;
   margin: 0 1dvw;
 }
 
 .photo > img {
   position: absolute;
-  width: 20dvw;
+  width: 30dvw;
   height: 30dvh;
   border-radius: 30px;
+  object-fit: cover;
 }
 
+.food {
+  position: absolute;
+  right: 300dvw;
+  width: 30dvw;
+  height: 30dvh;
+  border-radius: 30px;
+  object-fit: cover;
+}
+
+.drink {
+  position: absolute;
+  width: 30dvw;
+  height: 30dvh;
+  object-fit: contain;
+}
 .content {
   position: relative;
   float: right;
   width: 36dvw;
   height: 30dvh;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   margin: 0 1dvw;
 }
 
@@ -156,11 +188,27 @@
   position: relative;
   float: right;
   font-size: 1.2dvw;
-  right: 1dvw;
+  right: 1.2dvw;
 }
 
 .price {
   position: relative;
   float: right;
-  right: 1dvw;
+  right: 1.5dvw;
+}
+
+.subbev {
+  position: relative;
+  text-align: center;
+  padding: 1dvw 2dvw;
+  padding-left: 0px;
+}
+
+.subbev > ul > li {
+  display: inline-block;
+  font-size: 1.6dvw;
+  margin: 0 2.5dvw;
+  left: 5dvw;
+  text-shadow: 2px 2px 4px burlywood;
+  text-decoration: underline;
 }
