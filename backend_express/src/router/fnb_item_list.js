@@ -21,7 +21,7 @@ router.put("/create", auth, validateDataInput, validCheck, createNewItem);
 
 router.post("/category", categoryItem);
 
-router.post("/getItem/:id", validateParamsId, singleItem);
+router.post("/getitem/:id", validateParamsId, singleItem);
 
 router.delete("/delete/:id", auth, validateParamsId, softdelete);
 
@@ -29,7 +29,7 @@ router.put("/addorder/:id", auth, addOrder);
 
 router.get("/cart", auth, cartOrder);
 
-router.get("/length", auth, lengthOfCart);
+router.post("/length", auth, lengthOfCart);
 
 router.patch(
   "/update/:id",
