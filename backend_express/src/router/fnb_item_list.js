@@ -6,7 +6,8 @@ const {
   softdelete,
   updateItem,
   addOrder,
-  cartOrder
+  cartOrder,
+  lengthOfCart
 } = require("../controller/fnb_item_list");
 const {
   validateDataInput,
@@ -24,9 +25,11 @@ router.post("/getItem/:id", validateParamsId, singleItem);
 
 router.delete("/delete/:id", auth, validateParamsId, softdelete);
 
-router.put('/addorder', addOrder)
+router.put('/addorder/:id', addOrder)
 
 router.get('/cart', cartOrder)
+
+router.get('/length', lengthOfCart)
 
 router.patch(
   "/update/:id",

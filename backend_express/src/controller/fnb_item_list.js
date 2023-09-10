@@ -100,7 +100,7 @@ const addOrder = async (req, res) => {
     );
 
     const res = await pool.query(
-      `insert into SEI${req.custID} (item_id, quantity values (${req.body.id},${req.body.quantity})`
+      `insert into SEI${req.custID} (item_id, quantity values (${req.params.id},${req.body.quantity})`
     );
 
     let price;
@@ -141,6 +141,20 @@ const cartOrder = async (req, res) => {
   }
 };
 
+const lengthOfCart = async (req, res) => {
+  try {
+    const cart = await pool.query(
+      `select count(item_id) from SEI${req.custID} group by item_id`
+    );
+    const array = cart.rows;
+    const length = array.length;
+    res.json(length);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
 module.exports = {
   createNewItem,
   categoryItem,
@@ -149,4 +163,5 @@ module.exports = {
   updateItem,
   addOrder,
   cartOrder,
+  lengthOfCart,
 };

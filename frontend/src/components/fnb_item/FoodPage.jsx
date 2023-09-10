@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../fnb_item/MenuPage.module.css";
 
-const MenuPage = (props) => {
+const FoodPage = (props) => {
   const fetchData = useFetch();
   const [fnbItem, setFnbItem] = useState([]);
   const [category, setCategory] = useState("APPERTIZER");
+  const [quantity, setQuantity] = useState(1);
   const [individualItem, setIndividualItem] = useState();
   const [showItemOverlay, setShowItemOverLay] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const [cart, setCart] = useState([]);
 
   const foodCate = ["APPERTIZER", "SOUP", "MAIN COURSE", "PASTA", "DESSERT"];
@@ -41,21 +43,33 @@ const MenuPage = (props) => {
   });
 
   const itemOverlay = async () => {
-    const res = await fetchData("/item/getItem" + id, "POST");
+    const res = await fetchData("/item/getItem/" + id, "POST");
     if (res.ok) {
-      console.log(res);
-      if (res.ok) {
-        console.log(res.data);
-        setIndividualItem(res.data);
-      } else {
-        alert(JSON.stringify(res.data));
-      }
+      console.log(res.data);
+      setIndividualItem(res.data);
+    } else {
+      alert(JSON.stringify(res.data));
     }
   };
 
-  const addItemToCart = () => {
-    const tempValue = [...currCart, { id }];
-    setCart(tempValue);
+  const addOrder = async () => {
+    const res = await fetchData("/item/addorder/" + id, "PUT", {
+      quantity: quantity,
+    });
+    if (res.ok) {
+      console.log(res.ok);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
+  const lengthOfCart = async () => {
+    const res = await fetchData("/length");
+    if (res.ok) {
+      props.setArrayLength(res.data);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
   };
 
   const listItem = fnbItem.map((item, idx) => {
@@ -76,7 +90,14 @@ const MenuPage = (props) => {
             <span>{item[idx].name}</span>
             <span className={styles.price}>${item[idx].price}</span>
             <p>{item[idx].description}</p>
-            <button onClick={addItemToCart(item[idx].id)}>Add</button>
+            <button
+              onClick={() => {
+                addOrder(item[idx].id);
+                lengthOfCart();
+              }}
+            >
+              Add
+            </button>
           </div>
         </div>
       </div>
@@ -85,29 +106,33 @@ const MenuPage = (props) => {
 
   return (
     <>
-      <div className={styles.header}>
+      {/* <div className={styles.header}>
         <img
           src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
           className={styles.logo}
         />
-        <div className={styles.food}>
+        <div className={styles.food} onClick={props.handleFoodPage}>
           <p>Food</p>
         </div>
-        <div className={styles.beverage}>
+        <div className={styles.beverage} onClick={props.handleBeveragePage}>
           <p>Beverage</p>
         </div>
-        <img src="/cart.256x256.png" className={styles.cart} />
-        <p>{cart.length}</p>
-        {/* make drop dropdown */}
+        <img
+          src="/cart.256x256.png"
+          className={styles.cart}
+          onClick={cartOrder}
+        />
+        <p className={styles.p}>{props.arrayLength}</p>
+        make drop dropdown
         <button className={styles.username}>Hi, {props.user.username}!</button>
         <img src="/log-out-04.512x465.png" className={styles.logout} />
-      </div>
+      </div> */}
       <div className={styles.subcat}>
         <ul>{subFoods}</ul>
       </div>
-      {listItem}
+      <div>{listItem}</div>
     </>
   );
 };
 
-export default MenuPage;
+export default FoodPage;
