@@ -7,7 +7,7 @@ const {
   updateItem,
   addOrder,
   cartOrder,
-  lengthOfCart
+  lengthOfCart,
 } = require("../controller/fnb_item_list");
 const {
   validateDataInput,
@@ -25,11 +25,11 @@ router.post("/getItem/:id", validateParamsId, singleItem);
 
 router.delete("/delete/:id", auth, validateParamsId, softdelete);
 
-router.put('/addorder/:id', addOrder)
+router.put("/addorder/:id", auth, addOrder);
 
-router.get('/cart', cartOrder)
+router.get("/cart", auth, cartOrder);
 
-router.get('/length', lengthOfCart)
+router.get("/length", auth, lengthOfCart);
 
 router.patch(
   "/update/:id",

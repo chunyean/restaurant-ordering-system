@@ -25,7 +25,7 @@ const newOrder = async (req, res) => {
 
     //use item_id to retrieve each individual unit price
     const list = await pool.query(
-      `select item_id, name, sum(quantity), sum(nett_price), unit_price from SEI${req.custID} group by item_id`
+      `select item_id, name, sum(quantity), sum(nett_price), unit_price from "SEI${req.custID}" group by item_id`
     );
     const unitPrice = list.rows;
 
@@ -45,12 +45,12 @@ const newOrder = async (req, res) => {
       );
     }
 
-    await pool.query(`drop table SEI${req.custID}`);
+    await pool.query(`drop table "SEI${req.custID}"`);
 
     res.json({ status: "ok", message: "Order has been created" });
   } catch (error) {
     console.log(error.message);
-    res.json({ status: "error", message: "wrong" });
+    res.json({ status: "error", message: error.message });
   }
 };
 
