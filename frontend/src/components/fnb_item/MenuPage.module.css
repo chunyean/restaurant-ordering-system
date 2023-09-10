@@ -67,6 +67,16 @@
   left: 80dvw;
 }
 
+.p {
+  position: relative;
+  float: right;
+  right: 17dvw;
+  bottom: 0.7dvw;
+  font-size: 1.2dvw;
+  font-weight: bolder;
+  color: red;
+}
+
 .username {
   width: fit-content;
   height: 1.5dvw;
@@ -134,23 +144,23 @@
   margin: 0 1dvw;
 }
 
-.content > span{
+.content > span {
   font-size: 2dvw;
 }
 
-.content > p{
+.content > p {
   font-size: 1.2dvw;
 }
 
 .content > button {
-  position:relative;
+  position: relative;
   float: right;
   font-size: 1.2dvw;
   right: 1dvw;
 }
 
-.price{
-  position:relative;
+.price {
+  position: relative;
   float: right;
   right: 1dvw;
 }

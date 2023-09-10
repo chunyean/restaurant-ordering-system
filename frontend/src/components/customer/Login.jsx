@@ -12,29 +12,33 @@ const Login = (props) => {
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
-  const handleLogin = async () => {
+  const login = async () => {
     const res = await fetchData("customer/login", "POST", {
       username,
       password,
     });
     if (res.ok) {
       auth.setAccessToken(res.data.access);
+      props.setLanding(false)
       //direct menu page
     } else {
       console.log(res.data);
       //check error data
       setErrorUsername(res.data);
       setErrorPassword(res.data);
+      props.setLogin(false)
+      props.setFoodPage(true)
+      props.setUser(res.data.payload);
     }
   };
   return (
     <>
       <div className={styles.register}>
         <div className={styles.btnbox}>
-          <div className={styles.signup}>
+          <div className={styles.signup} onClick={props.registerClick}>
             <span>Sign Up</span>
           </div>
-          <div className={styles.signin}>
+          <div className={styles.signin} onClick={props.loginClick}>
             <span>Sign In</span>
           </div>
           <div className={styles.username}>
@@ -70,7 +74,7 @@ const Login = (props) => {
             )}
           </div>
           <div className={styles.loginBtn}>
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={login}>Login</button>
           </div>
         </div>
       </div>

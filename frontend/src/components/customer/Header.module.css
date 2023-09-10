@@ -161,3 +161,75 @@
 .term > button {
   float: right;
 }
+
+.food {
+  background-color: cornflowerblue;
+  width: 9dvw;
+  height: 2dvw;
+  border-radius: 50%;
+  position: absolute;
+  top: 0.5dvw;
+  left: 15dvw;
+}
+
+.food > p {
+  font-size: 1.5dvw;
+  text-align: center;
+  position: relative;
+  bottom: 1.3dvw;
+}
+
+.beverage {
+  background-color: cornflowerblue;
+  width: 9dvw;
+  height: 2dvw;
+  border-radius: 50%;
+  position: absolute;
+  top: 0.5dvw;
+  left: 30dvw;
+}
+
+.beverage > p {
+  font-size: 1.5dvw;
+  text-align: center;
+  position: relative;
+  bottom: 1.3dvw;
+}
+
+.cart {
+  background-color: white;
+  border-radius: 20px;
+  position: relative;
+  width: 3dvw;
+  height: 3dvw;
+  left: 80dvw;
+}
+
+.p {
+  position: relative;
+  float: right;
+  right: 17dvw;
+  bottom: 0.7dvw;
+  font-size: 1.2dvw;
+  font-weight: bolder;
+  color: red;
+}
+
+.displayname {
+  width: fit-content;
+  height: 1.5dvw;
+  position: absolute;
+  left: 84dvw;
+  bottom: 0.7dvw;
+  font-size: 1dvw;
+  border-radius: 30px;
+}
+
+.logout {
+  background-color: beige;
+  width: 3dvw;
+  height: 3dvw;
+  border-radius: 50%;
+  position: sticky;
+  left: 95dvw;
+}
