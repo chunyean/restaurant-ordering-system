@@ -1,54 +1,71 @@
 import React, { useContext, useState } from "react";
-import AuthContext from "../context/user";
+import UserContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../customer/Header.module.css";
 import Register from "./Register";
 
 const Header = (props) => {
   const fetchData = useFetch();
-
+  const auth = useContext(UserContext);
 
   const handleFoodPage = () => {
     props.setBeveragePage(false);
+    props.setCart(false);
     props.setFoodPage(true);
   };
 
   const handleBeveragePage = () => {
     props.setFoodPage(false);
+    props.setCart(false);
     props.setBeveragePage(true);
   };
 
   const cartOrder = async () => {
-    setShowCart(true);
-    const res = await fetchData("/item/cart");
+    const res = await fetchData(
+      "/item/cart",
+      "GET",
+      undefined,
+      auth.accesstoken
+    );
     if (res.ok) {
       console.log(res.data);
-      setCart(res.data);
+      props.setCartDetail(res.data);
       props.setFoodPage(false);
       props.setBeveragePage(false);
+      props.setCart(true);
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
+  const returnFoodPage = () => {
+    props.setCart(false);
+    props.setBeveragePage(false);
+    props.setFoodPage(true);
+  };
 
-
+const returnRegisterPage = () =>{
+  props.setLogin(false)
+  props.setRegister(true)
+}
 
   return (
     <>
-      {!props.showLanding && (
-        <div className={styles.header}>
-          <img
-            src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
-            className={styles.logo}
-          />
-        </div>
-      )}
       {props.showLanding && (
         <div className={styles.header}>
           <img
             src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
             className={styles.logo}
+            onClick={returnRegisterPage}
+          />
+        </div>
+      )}
+      {!props.showLanding && (
+        <div className={styles.header}>
+          <img
+            src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
+            className={styles.logo}
+            onClick={returnFoodPage}
           />
           <div className={styles.food} onClick={handleFoodPage}>
             <p>Food</p>
@@ -61,7 +78,7 @@ const Header = (props) => {
             className={styles.cart}
             onClick={cartOrder}
           />
-          <p className={styles.p}>{props.arrayLength}</p>
+          <p className={styles.p} onClick={cartOrder}>{props.arrayLength}</p>
           {/* make drop dropdown */}
           <button className={styles.displayname}>
             Hi, {props.user.username}!

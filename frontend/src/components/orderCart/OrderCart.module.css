@@ -1,0 +1,110 @@
+.container {
+  background-color: antiquewhite;
+  position: relative;
+  width: 60dvw;
+  min-height: 70svh;
+  max-height: auto;
+  top: 3dvw;
+  margin: auto;
+  padding: 20px;
+}
+
+.close {
+  position: relative;
+  float: right;
+  font-size: 1dvw;
+  bottom: 0.5dvw;
+  right: 1dvw;
+  cursor: pointer;
+}
+
+.container > label {
+  position: relative;
+  top: 1dvw;
+  font-size: 2.6dvw;
+  /* left: 0.5dvw; */
+  text-align: center;
+  margin: 0 23dvw;
+}
+
+.table {
+  /* background-color: chartreuse; */
+  position: relative;
+  width: 22dvw;
+  height: 4svh;
+  font-size: 1.5dvw;
+  margin: 0.3dvw auto;
+  top: 1dvw;
+}
+
+.select {
+  float: right;
+  font-size: 1.4dvw;
+  width: 10dvw;
+}
+
+.detail {
+  position: relative;
+  width: 80%;
+  height: auto;
+  font-size: 2dvw;
+  top: 1.5dvw;
+  margin: auto;
+}
+
+.name {
+  display: flex;
+  float: left;
+  width: 65%;
+  border-bottom: 3px black solid;
+}
+
+.price {
+  display: flex;
+  float: right;
+  width: 20%;
+  border-bottom: 3px black solid;
+  justify-content: center;
+}
+
+.quantity {
+  display: flex;
+  float: left;
+  width: 15%;
+  border-bottom: 3px black solid;
+  justify-content: center;
+}
+
+.name1 {
+  display: flex;
+  float: left;
+  width: 65%;
+  font-size: 1.5dvw;
+}
+
+.price1 {
+  display: flex;
+  float: right;
+  width: 20%;
+  font-size: 1.5dvw;
+  justify-content: center;
+}
+
+.quantity1 {
+  display: flex;
+  float: left;
+  width: 15%;
+  font-size: 1.5dvw;
+  justify-content: center;
+}
+
+.btn {
+  position: relative;
+  font-size: 1.5dvw;
+  margin: 0 24dvw;
+  top: 3dvw;
+  color:black;
+  background-color: aqua;
+  border-radius: 20px;
+  cursor: pointer;
+}

@@ -1,0 +1,112 @@
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvw;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.modal {
+  background-color: bisque;
+  position: fixed;
+  width: 70dvw;
+  height: 80svh;
+  top: 10svh;
+  z-index: 100;
+  border-radius: 20px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.modal > p {
+  position: relative;
+  float: right;
+  font-size: 2dvw;
+  right: 1dvw;
+  bottom: 1.9dvw;
+  cursor: pointer;
+}
+
+.photo {
+  /* background-color: aqua; */
+  position: relative;
+  width: 50dvw;
+  height: 45svh;
+  margin: auto;
+  top: 6svh;
+  border-radius: 20px;
+}
+
+.photo > img {
+  position: relative;
+  object-fit: scale-down;
+  width: 50dvw;
+  height: 45svh;
+  border-radius: 20px;
+}
+
+.content {
+  /* background-color: beige; */
+  position: relative;
+  width: 50dvw;
+  height: 20svh;
+  top: 4dvw;
+  margin: auto;
+}
+
+.column1 {
+  /* background-color: blueviolet; */
+  display: flex;
+  float: left;
+
+  width: 44dvw;
+  height: 100%;
+}
+
+.column2 {
+  /* background-color: brown; */
+  display: flex;
+  float: right;
+  width: 6dvw;
+  height: 20svh;
+}
+
+.name {
+  position: absolute;
+  font-size: 2dvw;
+  left: 0.5dvw;
+}
+
+.description {
+  position: relative;
+  font-size: 1.3dvw;
+  margin: auto;
+  left: 0.5dvw;
+}
+
+.price {
+  position: relative;
+  font-size: 2dvw;
+  top: 1dvw;
+}
+
+.select {
+  position: absolute;
+  font-size: 2dvw;
+  top: 3.5dvw;
+  right: 1.1dvw;
+}
+
+.btn {
+  position: absolute;
+  font-size: 1.3dvw;
+  top: 6.5dvw;
+  right: 1.5dvw;
+  border-radius: 10px;
+}
