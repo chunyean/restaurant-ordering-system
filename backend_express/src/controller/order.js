@@ -25,7 +25,7 @@ const newOrder = async (req, res) => {
 
     //use item_id to retrieve each individual unit price
     const list = await pool.query(
-      `select item_id, name, sum(quantity), sum(nett_price), unit_price from "SEI${req.custID}" group by item_id`
+      `select item_id, name, sum(quantity), sum(nett_amount), unit_price from "SEI${req.custID}" group by item_id`
     );
     const unitPrice = list.rows;
 
