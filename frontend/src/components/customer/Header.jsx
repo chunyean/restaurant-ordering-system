@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../customer/Header.module.css";
@@ -49,6 +49,9 @@ const returnRegisterPage = () =>{
   props.setRegister(true)
 }
 
+// useEffect(()=>{
+//   cartOrder();
+// }, [props.abc])
   return (
     <>
       {props.showLanding && (

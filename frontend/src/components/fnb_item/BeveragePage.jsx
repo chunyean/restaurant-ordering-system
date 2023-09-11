@@ -64,13 +64,19 @@ const BeveragePage = (props) => {
     );
     if (res.ok) {
       console.log(res.ok);
+      lengthOfCart();
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
   const lengthOfCart = async () => {
-    const res = await fetchData("/length");
+    const res = await fetchData(
+      "/item/length",
+      "POST",
+      undefined,
+      auth.accesstoken
+    );
     if (res.ok) {
       props.setArrayLength(res.data);
     } else {
@@ -104,7 +110,7 @@ const BeveragePage = (props) => {
                   console.log("add");
                   event.stopPropagation();
                   addOrder(item.id);
-                  lengthOfCart;
+                  lengthOfCart();
                 }}
               >
                 Add
@@ -118,6 +124,7 @@ const BeveragePage = (props) => {
 
   useEffect(() => {
     everyCateData();
+    lengthOfCart();
   }, [category]);
 
   return (

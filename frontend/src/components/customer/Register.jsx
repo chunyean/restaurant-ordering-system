@@ -7,9 +7,9 @@ const Register = (props) => {
   const auth = useContext(AuthContext);
   const fetchData = useFetch();
 
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [contact, setContact] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [contact, setContact] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 

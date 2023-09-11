@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "../orderCart/OrderCart.module.css";
+import UserContext from "../context/user";
+import useFetch from "../custom_hooks/useFetch";
 
 const OrderCart = (props) => {
   const [table_number, setTable_Number] = useState();
   const [pax, setPax] = useState();
   const [order_type, setOrder_Type] = useState();
+  const auth = useContext(UserContext);
+  const [value, setValue] = useState();
+  const [unitPrice, setUnitPrice] = useState();
+  const [dishName, setDishName] = useState();
+  const fetchData = useFetch();
 
   const handleTblNo = (e) => {
     setTable_Number(e.target.value);
@@ -23,13 +30,77 @@ const OrderCart = (props) => {
     props.setFoodPage(true);
   };
 
-  console.log(props.cartDetail);
+  const handleValue = (e) => {
+    setValue(e.target.value);
+  };
+
+  const deleteCartItem = async (id) => {
+    const res = await fetchData(
+      "/item/deletecartiem/" + id,
+      "DELETE",
+      undefined,
+      auth.accesstoken
+    );
+    if (res.ok) {
+      console.log(res.data);
+      props.setAbc(1);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
+  const changeQuantity = async (id, name, price) => {
+    const res = await fetchData(
+      "/item/updatecartitem/" + id,
+      "PATCH",
+      {
+        quantity: value,
+        name: name,
+        unit_price: price,
+      },
+      auth.accesstoken
+    );
+    if (res.ok) {
+      console.log(res.data);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
   const orderDetail = props.cartDetail.map((item) => {
     return (
-      <div key={item.id}>
+      <div key={item.item_id}>
         <div className={styles.name1}>{item.name}</div>
-        <div className={styles.quantity1}>{item.quantity}</div>
+        <select className={styles.quantity1} onClick={handleValue}>
+          <option value={item.quantity}>{item.quantity}</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+          <option value={10}>10</option>
+        </select>
+        <input
+          onClick={() => {
+            console.log(item.unit_price);
+            console.log(item.name);
+            // setUnitPrice(item.unit_price);
+            // setDishName(item.name);
+            changeQuantity(item.item_id, item.name, item.unit_price);
+          }}
+          type="checkbox"
+        ></input>
         <div className={styles.price1}>${item.nett_amount}</div>
+        <button
+          className={styles.button}
+          onClick={() => deleteCartItem(item.item_id)}
+        >
+          delete
+        </button>
       </div>
     );
   });
