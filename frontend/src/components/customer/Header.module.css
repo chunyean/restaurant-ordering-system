@@ -109,7 +109,11 @@
 }
 
 input::placeholder {
-  font-size: 1dvw;
+  font-size: 1.2dvw;
+}
+
+input[type='text']{
+  font-size:1.2dvw;
 }
 
 .contact {

@@ -8,6 +8,8 @@ const {
   addOrder,
   cartOrder,
   lengthOfCart,
+  deleteCartItem,
+  updateQuantity,
 } = require("../controller/fnb_item_list");
 const {
   validateDataInput,
@@ -15,13 +17,14 @@ const {
 } = require("../validators/inputValidate");
 const validCheck = require("../middleware/validCheck");
 const { auth } = require("../middleware/auth");
+const { deleteOrderedItem } = require("../controller/order");
 const router = express.Router();
 
 router.put("/create", auth, validateDataInput, validCheck, createNewItem);
 
 router.post("/category", categoryItem);
 
-router.post("/getitem/:id", validateParamsId, singleItem);
+// router.post("/getitem/:id", validateParamsId, singleItem);
 
 router.delete("/delete/:id", auth, validateParamsId, softdelete);
 
@@ -30,6 +33,10 @@ router.put("/addorder/:id", auth, addOrder);
 router.get("/cart", auth, cartOrder);
 
 router.post("/length", auth, lengthOfCart);
+
+router.delete("/deletecartiem/:id", auth, deleteCartItem);
+
+router.patch("/updatecartitem/:id", auth, updateQuantity);
 
 router.patch(
   "/update/:id",

@@ -12,8 +12,6 @@ const FoodPage = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [individualItem, setIndividualItem] = useState();
   const [showItemOverlay, setShowItemOverlay] = useState(false);
-  const [showCart, setShowCart] = useState(false);
-  const [cart, setCart] = useState([]);
   const auth = useContext(UserContext);
 
   const foodCate = ["APPERTIZER", "SOUP", "MAIN COURSE", "PASTA", "DESSERT"];
@@ -48,10 +46,11 @@ const FoodPage = (props) => {
 
   const addOrder = async (id) => {
     const res = await fetchData("/item/addorder/" + id, "PUT", {
-      quantity: quantity,
+      quantity: props.quantity,
     });
     if (res.ok) {
       console.log(res.ok);
+      lengthOfCart();
     } else {
       alert(JSON.stringify(res.data));
     }
@@ -66,9 +65,7 @@ const FoodPage = (props) => {
     );
     if (res.ok) {
       console.log(res.data);
-      props.setArrayLength(res.data[0].quantity);
-    } else {
-      alert(JSON.stringify(res.data));
+      props.setArrayLength(res.data);
     }
   };
 
@@ -126,7 +123,7 @@ const FoodPage = (props) => {
       {showItemOverlay && (
         <ItemOverlay
           individualItem={individualItem}
-          setQuantity={setQuantity}
+          setQuantity={props.setQuantity}
           addOrder={addOrder}
           lengthOfCart={lengthOfCart}
           setShowItemOverlay={setShowItemOverlay}

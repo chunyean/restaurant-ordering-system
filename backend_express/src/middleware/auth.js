@@ -8,7 +8,7 @@ const auth = (req, res, next) => {
   // const token = req.headers["authorization"].replace("Bearer ", "");
 
   const test =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SUQiOjIwMDAyLCJ1c2VybmFtZSI6InBpa2FjaHUxIiwiaWF0IjoxNjk0MzIzNjAyLCJleHAiOjE2OTQ0MTAwMDIsImp0aSI6ImQ4NmUyZmE4LWY5NzEtNDQzNC05Zjk3LTJhZDU5NzE5NWExNCJ9.NuxdGvBvc9L6GTXE9PWstiByASPevbQExRyBm4ZoE-M";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SUQiOjIwMDAyLCJ1c2VybmFtZSI6InBpa2FjaHUxIiwiaWF0IjoxNjk0NDEwMTExLCJleHAiOjE2OTQ0OTY1MTEsImp0aSI6IjdhOTBhYWE2LTQwMTQtNGExZC04MmY2LWU3Y2QzZGY5YmM1ZSJ9.WXlkPrqIf3w4GFeagZsECOUtC2rItbcTKTh5gXq-Tjk";
   const token = test;
 
   if (token) {

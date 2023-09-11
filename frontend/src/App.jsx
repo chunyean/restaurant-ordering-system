@@ -15,13 +15,13 @@ const App = () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SUQiOjIwMDAyLCJ1c2VybmFtZSI6InBpa2FjaHUxIiwiaWF0IjoxNjk0MzIzNjAyLCJleHAiOjE2OTQ0MTAwMDIsImp0aSI6ImQ4NmUyZmE4LWY5NzEtNDQzNC05Zjk3LTJhZDU5NzE5NWExNCJ9.NuxdGvBvc9L6GTXE9PWstiByASPevbQExRyBm4ZoE-M";
 
   const [accessToken, setAccessToken] = useState(test);
-  const [showLanding, setShowLanding] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
 
   //need to change login to true, display back the login container
-  const [register, setRegister] = useState(false);
+  const [register, setRegister] = useState(true);
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState("");
-  const [arrayLength, setArrayLength] = useState();
+  const [arrayLength, setArrayLength] = useState(0);
   const [foodPage, setFoodPage] = useState(false);
   const [beveragePage, setBeveragePage] = useState(false);
   const [username, setUsername] = useState("");
@@ -29,6 +29,8 @@ const App = () => {
   const [contact, setContact] = useState("");
   const [cart, setCart] = useState(false);
   const [cartDetail, setCartDetail] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+
 
   const auth = useContext(UserContext);
 
@@ -120,6 +122,9 @@ const App = () => {
             setFoodPage={setFoodPage}
             setBeveragePage={setBeveragePage}
             setArrayLength={setArrayLength}
+            arrayLength={arrayLength}
+            quantity={quantity}
+            setQuantity={setQuantity}
           ></FoodPage>
         )}
         {beveragePage && (
@@ -128,6 +133,8 @@ const App = () => {
             setFoodPage={setFoodPage}
             setBeveragePage={setBeveragePage}
             setArrayLength={setArrayLength}
+            quantity={quantity}
+            setQuantity={setQuantity}
           ></BeveragePage>
         )}
         {cart && (
@@ -136,6 +143,8 @@ const App = () => {
             setCartDetail={setCartDetail}
             setCart={setCart}
             setFoodPage={setFoodPage}
+            quantity={quantity}
+            setQuantity={setQuantity}
           ></OrderCart>
         )}
       </UserContext.Provider>
