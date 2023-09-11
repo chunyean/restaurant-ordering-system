@@ -10,7 +10,6 @@ import BeveragePage from "./components/fnb_item/BeveragePage";
 import OrderCart from "./components/orderCart/OrderCart";
 import AdminRegister from "./components/admin/AdminRegister";
 import AdminLogin from "./components/admin/AdminLogin";
-import Food from "./components/admin/Food";
 
 const App = () => {
   const fetchData = useFetch();
@@ -22,40 +21,41 @@ const App = () => {
   // const [showLanding, setShowLanding] = useState(true);
 
   //need to change login to true, display back the login container
-  const [register, setRegister] = useState(false);
+  const [register, setRegister] = useState(true);
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState("");
   const [arrayLength, setArrayLength] = useState(0);
-  const [foodPage, setFoodPage] = useState(true);
+  const [foodPage, setFoodPage] = useState(false);
   const [beveragePage, setBeveragePage] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [contact, setContact] = useState("");
+  const [employeeId, setEmployeeId] = useState();
   const [cart, setCart] = useState(false);
   const [cartDetail, setCartDetail] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
-  const [header1, setHeader1] = useState(false);
-  const [header2, setHeader2] = useState(true);
+  const [header1, setHeader1] = useState(true);
+  const [header2, setHeader2] = useState(false);
   const [header3, setHeader3] = useState(false);
   const [header4, setHeader4] = useState(false);
 
   const auth = useContext(UserContext);
 
-  const registerClick = () => {
-    setRegister(true), setLogin(false);
-  };
+  // const registerClick = () => {
+  //   setRegister(true), setLogin(false);
+  // };
 
-  const loginClick = () => {
-    setLogin(true), setRegister(false);
-  };
+  // const loginClick = () => {
+  //   setLogin(true), setRegister(false);
+  // };
 
   const showPassword = () => {
-    var x = document.getElementById("password");
-    if (x.type === "password") {
-      x.type = "text";
+    const show = document.getElementById("password");
+    if (show.type === "password") {
+      show.type = "text";
     } else {
-      x.type = "password";
+      show.type = "password";
     }
   };
 
@@ -71,6 +71,9 @@ const App = () => {
     setPassword(e.target.value);
   };
 
+  const handleEmployeeId = (e) => {
+    setEmployeeId(e.target.value);
+  };
   return (
     <>
       <UserContext.Provider value={{ accessToken, setAccessToken }}>
@@ -93,77 +96,95 @@ const App = () => {
           header3={header3}
           header4={header4}
         ></Header>
-        {register && (
-          <Register
-            setRegister={setRegister}
-            setLogin={setLogin}
-            loginClick={loginClick}
-            registerClick={registerClick}
-            showPassword={showPassword}
-            username={username}
-            handleUsername={handleUsername}
-            password={password}
-            handlePassword={handlePassword}
-            contact={contact}
-            handleContact={handleContact}
-          ></Register>
-        )}
-        {login && (
-          <Login
-            setRegister={setRegister}
-            setUser={setUser}
-            loginClick={loginClick}
-            registerClick={registerClick}
-            // setShowLanding={setShowLanding}
-            setBeveragePage={setBeveragePage}
-            setFoodPage={setFoodPage}
-            setLogin={setLogin}
-            showPassword={showPassword}
-            username={username}
-            handleUsername={handleUsername}
-            password={password}
-            handlePassword={handlePassword}
-            contact={contact}
-            handleContact={handleContact}
-            setHeader1={setHeader1}
-            setHeader2={setHeader2}
-          ></Login>
-        )}
-        {foodPage && (
-          <FoodPage
-            user={user}
-            foodPage={foodPage}
-            setFoodPage={setFoodPage}
-            setBeveragePage={setBeveragePage}
-            setArrayLength={setArrayLength}
-            arrayLength={arrayLength}
-            quantity={quantity}
-            setQuantity={setQuantity}
-          ></FoodPage>
-        )}
-        {beveragePage && (
-          <BeveragePage
-            user={user}
-            setFoodPage={setFoodPage}
-            setBeveragePage={setBeveragePage}
-            setArrayLength={setArrayLength}
-            quantity={quantity}
-            setQuantity={setQuantity}
-          ></BeveragePage>
-        )}
-        {cart && (
-          <OrderCart
-            cartDetail={cartDetail}
-            setCartDetail={setCartDetail}
-            setCart={setCart}
-            setFoodPage={setFoodPage}
-            quantity={quantity}
-            setQuantity={setQuantity}
-          ></OrderCart>
-        )}
+
         <Routes>
           <Route
-            path="/admin/login"
+            path=""
+            element={
+              <Register
+                setRegister={setRegister}
+                setLogin={setLogin}
+                // loginClick={loginClick}
+                // registerClick={registerClick}
+                showPassword={showPassword}
+                username={username}
+                setUsername={setUsername}
+                handleUsername={handleUsername}
+                password={password}
+                setPassword={setPassword}
+                handlePassword={handlePassword}
+                contact={contact}
+                setContact={setContact}
+                handleContact={handleContact}
+              ></Register>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Login
+                setRegister={setRegister}
+                setUser={setUser}
+                // loginClick={loginClick}
+                // registerClick={registerClick}
+                // setShowLanding={setShowLanding}
+                setBeveragePage={setBeveragePage}
+                setFoodPage={setFoodPage}
+                setLogin={setLogin}
+                showPassword={showPassword}
+                password={password}
+                handlePassword={handlePassword}
+                setHeader1={setHeader1}
+                setHeader2={setHeader2}
+                handleEmployeeId={handleEmployeeId}
+              ></Login>
+            }
+          />
+          <Route
+            path="/food"
+            element={
+              <FoodPage
+                user={user}
+                foodPage={foodPage}
+                setFoodPage={setFoodPage}
+                setBeveragePage={setBeveragePage}
+                setArrayLength={setArrayLength}
+                arrayLength={arrayLength}
+                quantity={quantity}
+                setQuantity={setQuantity}
+              ></FoodPage>
+            }
+          />
+          <Route
+            path="/beverage"
+            element={
+              <BeveragePage
+                user={user}
+                setFoodPage={setFoodPage}
+                setBeveragePage={setBeveragePage}
+                setArrayLength={setArrayLength}
+                quantity={quantity}
+                setQuantity={setQuantity}
+              ></BeveragePage>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <OrderCart
+                user={user}
+                cartDetail={cartDetail}
+                setCartDetail={setCartDetail}
+                setCart={setCart}
+                setFoodPage={setFoodPage}
+                quantity={quantity}
+                setQuantity={setQuantity}
+                setArrayLength={setArrayLength}
+              ></OrderCart>
+            }
+          />
+          <Route
+            path="/admin"
             element={
               <AdminLogin
                 setRegister={setRegister}
@@ -171,10 +192,19 @@ const App = () => {
                 setHeader2={setHeader2}
                 setHeader3={setHeader3}
                 setHeader4={setHeader4}
+                password={password}
+                handlePassword={handlePassword}
+                setUser={setUser}
+                employeeId={employeeId}
+                handleEmployeeId={handleEmployeeId}
               />
             }
           />
-          <Route path="/admin/food" element={<Food                 setRegister={setRegister}
+          <Route
+            path="/admin/food"
+            element={
+              <FoodPage
+                setRegister={setRegister}
                 setHeader1={setHeader1}
                 setHeader2={setHeader2}
                 setHeader3={setHeader3}
@@ -186,7 +216,41 @@ const App = () => {
                 setArrayLength={setArrayLength}
                 arrayLength={arrayLength}
                 quantity={quantity}
-                setQuantity={setQuantity}/>} />
+                setQuantity={setQuantity}
+              />
+            }
+          />
+          <Route
+            path="/admin/beverage"
+            element={
+              <BeveragePage
+                setRegister={setRegister}
+                setHeader1={setHeader1}
+                setHeader2={setHeader2}
+                setHeader3={setHeader3}
+                setHeader4={setHeader4}
+                setArrayLength={setArrayLength}
+              />
+            }
+          />
+          <Route
+            path="/admin/cart"
+            element={
+              <OrderCart
+                user={user}
+                setRegister={setRegister}
+                setHeader1={setHeader1}
+                setHeader2={setHeader2}
+                setHeader3={setHeader3}
+                setHeader4={setHeader4}
+                cartDetail={cartDetail}
+                setCartDetail={setCartDetail}
+                setCart={setCart}
+                setFoodPage={setFoodPage}
+                setArrayLength={setArrayLength}
+              />
+            }
+          />
         </Routes>
       </UserContext.Provider>
     </>

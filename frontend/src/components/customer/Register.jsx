@@ -2,32 +2,32 @@ import React, { useRef, useContext, useState, useEffect } from "react";
 import AuthContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../customer/Header.module.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = (props) => {
   const auth = useContext(AuthContext);
   const fetchData = useFetch();
+  const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [contact, setContact] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [contact, setContact] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
   const registerAccount = async () => {
-    console.log("1");
     const res = await fetchData("/customer/register", "PUT", {
       username: props.username,
       password: props.password,
       contact: props.contact,
     });
-    console.log("2");
+
     if (res.ok) {
       console.log(res);
-      setUsername("");
-      setPassword("");
-      setContact("");
-      props.setRegister(false);
-      props.setLogin(true);
+      props.setUsername("");
+      props.setPassword("");
+      props.setContact("");
+      navigate('/login');
     } else {
       console.log(res.data);
       setErrorUsername(res.data);
@@ -35,41 +35,19 @@ const Register = (props) => {
     }
   };
 
-  // const showPassword = () => {
-  //   var x = document.getElementById("password");
-  //   if (x.type === "password") {
-  //     x.type = "text";
-  //   } else {
-  //     x.type = "password";
-  //   }
-  // };
-
-  // const handleUsername = (e) => {
-  //   setUsername(e.target.value);
-  // };
-
-  // const handleContact = (e) => {
-  //   setContact(e.target.value);
-  // };
-
-  // const handlePassword = (e) => {
-  //   setPassword(e.target.value);
-  // };
-
-  // useEffect(()=>{
-  //   registerAccount()
-  // }, [])
-
-  //sign up and sign in change to toggle
   return (
     <>
       <div className={styles.register}>
         <div className={styles.btnbox}>
-          <div className={styles.signup} onClick={props.registerClick}>
-            <span>Sign Up</span>
+          <div to="/" className={styles.signup} onClick={props.registerClick}>
+            <Link to="/" className={styles.customLink}>
+              Sign Up
+            </Link>
           </div>
           <div className={styles.signin} onClick={props.loginClick}>
-            <span>Sign In</span>
+            <Link to="/login" className={styles.customLink}>
+              Sign In
+            </Link>
           </div>
           <div className={styles.username}>
             <label htmlFor="username">Username</label>

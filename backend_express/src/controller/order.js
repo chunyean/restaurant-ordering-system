@@ -10,6 +10,7 @@ const newOrder = async (req, res) => {
     // use table_number and customer_id to create new row under orders table
     // get the new generate order.id to create another new row under table order_lists
     let create;
+
     if (String(req.staffID).includes("SEI")) {
       create = await pool.query(
         "insert into orders (table_number,employee_id, customer_id, pax) values ($1, $2, $3, $4) returning id",
@@ -25,7 +26,7 @@ const newOrder = async (req, res) => {
 
     //use item_id to retrieve each individual unit price
     const list = await pool.query(
-      `select item_id, name, sum(quantity), sum(nett_amount), unit_price from "SEI${req.custID}" group by item_id`
+      `select item_id, name, sum(quantity) as quantity, sum(nett_amount) as nett_amount, unit_price from "SEI${req.custID}" group by item_id, name, unit_price`
     );
     const unitPrice = list.rows;
 
@@ -36,7 +37,7 @@ const newOrder = async (req, res) => {
       await pool.query(
         "insert into order_lists (total_price, quantity, order_id, order_type, item_id) values ($1, $2, $3, $4, $5)",
         [
-          unitPrice[idx].nett_price,
+          unitPrice[idx].nett_amount,
           unitPrice[idx].quantity,
           newID,
           order_type,
@@ -72,7 +73,7 @@ const deleteOrderedItem = async (req, res) => {
 //update order quantity when meet the condition of item_id and order_id
 const admendOrder = async (req, res) => {
   try {
-await pool.query('delete order_list where ')
+    await pool.query("delete order_list where ");
 
     const result = await pool.query(
       "update order_lists set quantity = $1 where item_id = $2 and order_id = $3 returning *",

@@ -2,9 +2,11 @@ import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../customer/Header.module.css";
+import { Link, useNavigate } from "react-router-dom";
 import Register from "./Register";
 
 const Header = (props) => {
+  const navigate = useNavigate();
   const fetchData = useFetch();
   const auth = useContext(UserContext);
 
@@ -49,36 +51,45 @@ const Header = (props) => {
     props.setRegister(true);
   };
 
-
   return (
     <>
       {props.header1 && (
         <div className={styles.header}>
-          <img
-            src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
-            className={styles.logo}
-            onClick={returnRegisterPage}
-          />
+          <Link to="/">
+            <img
+              src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
+              className={styles.logo}
+              onClick={returnRegisterPage}
+            />
+          </Link>
         </div>
       )}
       {props.header2 && (
         <div id="landing" className={styles.header}>
-          <img
-            src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
-            className={styles.logo}
-            onClick={returnFoodPage}
-          />
+          <Link to="/">
+            <img
+              src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
+              className={styles.logo}
+              onClick={returnFoodPage}
+            />
+          </Link>
           <div className={styles.food} onClick={handleFoodPage}>
-            <p>Food</p>
+            <Link to="/food" className={styles.customLink1}>
+              <p>Food</p>
+            </Link>
           </div>
           <div className={styles.beverage} onClick={handleBeveragePage}>
-            <p>Beverage</p>
+            <Link to="/beverge" className={styles.customLink2}>
+              <p>Beverage</p>
+            </Link>
           </div>
-          <img
-            src="/cart.256x256.png"
-            className={styles.cart}
-            onClick={cartOrder}
-          />
+          <Link to="/cart">
+            <img
+              src="/cart.256x256.png"
+              className={styles.cart}
+              onClick={cartOrder}
+            />
+          </Link>
           <p className={styles.p} onClick={cartOrder}>
             {props.arrayLength}
           </p>
@@ -90,33 +101,43 @@ const Header = (props) => {
       )}
       {props.header3 && (
         <div id="landing" className={styles.header3}>
-          <img
-            src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
-            className={styles.logo}
-            onClick={returnFoodPage}
-          />
+          <Link to="/admin">
+            <img
+              src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
+              className={styles.logo}
+              onClick={returnFoodPage}
+            />
+          </Link>
         </div>
       )}
       {props.header4 && (
         <div id="landing" className={styles.header3}>
-          <img
-            src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
-            className={styles.logo}
-          />
+          <Link to="/admin">
+            <img
+              src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
+              className={styles.logo}
+            />
+          </Link>
           <div className={styles.food1}>
-            <p>Food</p>
+            <Link to="/admin/food" className={styles.customLink1}>
+              <p>Food</p>
+            </Link>
           </div>
           <div className={styles.beverage1}>
-            <p>Beverage</p>
+            <Link to="/admin/beverage" className={styles.customLink2}>
+              <p>Beverage</p>
+            </Link>
           </div>
           <div className={styles.table}>
             <p>Table</p>
           </div>
-          <img
-            src="/cart.256x256.png"
-            className={styles.cart}
-            onClick={cartOrder}
-          />
+          <Link to="/admin/cart">
+            <img
+              src="/cart.256x256.png"
+              className={styles.cart}
+              onClick={cartOrder}
+            />
+          </Link>
           <p className={styles.p} onClick={cartOrder}>
             {props.arrayLength}
           </p>

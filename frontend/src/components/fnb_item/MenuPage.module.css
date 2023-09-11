@@ -146,6 +146,7 @@
   width: 30dvw;
   height: 30dvh;
   margin: 0 1dvw;
+  cursor: pointer;
 }
 
 .photo > img {
@@ -154,6 +155,7 @@
   height: 30dvh;
   border-radius: 30px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .food {
@@ -163,6 +165,7 @@
   height: 30dvh;
   border-radius: 30px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .drink {
@@ -170,7 +173,9 @@
   width: 30dvw;
   height: 30dvh;
   object-fit: contain;
+  cursor: pointer;
 }
+
 .content {
   position: relative;
   float: right;
@@ -193,6 +198,7 @@
   float: right;
   font-size: 1.2dvw;
   right: 1.2dvw;
+  cursor: pointer;
 }
 
 .price {
@@ -206,6 +212,7 @@
   text-align: center;
   padding: 1dvw 2dvw;
   padding-left: 0px;
+  cursor: pointer;
 }
 
 .subbev > ul > li {
@@ -215,4 +222,5 @@
   left: 5dvw;
   text-shadow: 2px 2px 4px burlywood;
   text-decoration: underline;
+  cursor: pointer;
 }

@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import styles from "../orderCart/OrderCart.module.css";
 import UserContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
+import { Link, useNavigate } from "react-router-dom";
 
 const OrderCart = (props) => {
   const [table_number, setTable_Number] = useState();
@@ -12,6 +13,7 @@ const OrderCart = (props) => {
   const [unitPrice, setUnitPrice] = useState();
   const [dishName, setDishName] = useState();
   const fetchData = useFetch();
+  const navigate = useNavigate();
 
   const handleTblNo = (e) => {
     setTable_Number(e.target.value);
@@ -25,9 +27,13 @@ const OrderCart = (props) => {
     setOrder_Type(e.target.value);
   };
 
-  const handleClose = (e) => {
-    props.setCart(false);
-    props.setFoodPage(true);
+  const handleClose = () => {
+    const user = props.user.id;
+    if (user.includes("SEI")) {
+      navigate("/admin/food");
+    } else {
+      navigate("/food");
+    }
   };
 
   const handleValue = (e) => {
@@ -43,7 +49,6 @@ const OrderCart = (props) => {
     );
     if (res.ok) {
       console.log(res.data);
-      props.setAbc(1);
     } else {
       alert(JSON.stringify(res.data));
     }
@@ -71,6 +76,7 @@ const OrderCart = (props) => {
     return (
       <div key={item.item_id}>
         <div className={styles.name1}>{item.name}</div>
+
         <select className={styles.quantity1} onClick={handleValue}>
           <option value={item.quantity}>{item.quantity}</option>
           <option value={1}>1</option>
@@ -85,11 +91,10 @@ const OrderCart = (props) => {
           <option value={10}>10</option>
         </select>
         <input
+          className={styles.check}
           onClick={() => {
             console.log(item.unit_price);
             console.log(item.name);
-            // setUnitPrice(item.unit_price);
-            // setDishName(item.name);
             changeQuantity(item.item_id, item.name, item.unit_price);
           }}
           type="checkbox"
@@ -114,10 +119,23 @@ const OrderCart = (props) => {
     if (res.ok) {
       props.setCart(false);
       props.setFoodPage(true);
+      props.setArrayLength(0);
     } else {
       alert(JSON.stringify(res.data));
     }
   };
+
+  const handleHeader = () => {
+    props.setHeader1(false);
+    props.setHeader2(false);
+    props.setHeader3(false);
+    props.setRegister(false);
+    props.setHeader4(true);
+  };
+
+  useEffect(() => {
+    handleHeader();
+  }, []);
 
   return (
     <>
@@ -125,23 +143,24 @@ const OrderCart = (props) => {
         <div className={styles.close}>
           <p onClick={handleClose}>x</p>
         </div>
+
         <label>Order Detail</label>
         <div className={styles.table}>
           <label>Table Number:</label>
           <select className={styles.select} onClick={handleTblNo}>
             <option></option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+            <option value={8}>8</option>
+            <option value={9}>9</option>
+            <option value={10}>10</option>
+            <option value={11}>11</option>
+            <option value={12}>12</option>
           </select>
         </div>
         <div className={styles.table}>
@@ -155,20 +174,23 @@ const OrderCart = (props) => {
         <div className={styles.table}>
           <label>Order Types:</label>
           <select className={styles.select} onClick={handleOrderType}>
-            <option>DINE IN</option>
-            <option>TAKE AWAY</option>
-            <option>DELIVERY</option>
+            <option value={"DINE_IN"}>DINE IN</option>
+            <option value={"TAKE_AWAY"}>TAKE AWAY</option>
+            <option value={"DELIVERY"}>DELIVERY</option>
           </select>
         </div>
         <div className={styles.detail}>
           <span className={styles.name}>Name </span>
+          <span className={styles.space}></span>
           <span className={styles.quantity}>Quantity</span>
           <span className={styles.price}>Price</span>
+          <span className={styles.space}></span>
           {orderDetail}
         </div>
         <button className={styles.btn} onClick={submitOrder}>
           Submit Button
         </button>
+        <p>Please click the check box when quantity is change</p>
       </div>
     </>
   );
