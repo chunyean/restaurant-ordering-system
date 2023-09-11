@@ -44,19 +44,19 @@ const categoryItem = async (req, res) => {
   }
 };
 
-// retrieve individual F&B data by using ID
-const singleItem = async (req, res) => {
-  try {
-    const result = await pool.query("select * from items where id = $1", [
-      req.params.id,
-    ]);
-    const item = result.rows[0];
-    res.json(item);
-  } catch (error) {
-    console.log(error.message);
-    res.json({ status: "error", message: error.message });
-  }
-};
+// // retrieve individual F&B data by using ID
+// const singleItem = async (req, res) => {
+//   try {
+//     const result = await pool.query("select * from items where id = $1", [
+//       req.params.id,
+//     ]);
+//     const item = result.rows[0];
+//     res.json(item);
+//   } catch (error) {
+//     console.log(error.message);
+//     res.json({ status: "error", message: error.message });
+//   }
+// };
 
 // all the information is linked with another so cannot hard delete
 // here's the soft delete created
@@ -142,9 +142,10 @@ const addOrder = async (req, res) => {
 const cartOrder = async (req, res) => {
   try {
     const cartDetail = await pool.query(
-      `select item_id, name, sum(quantity) as quantity, sum(nett_amount) as nett_amount from "SEI${req.custID}" group by item_id, name`
+      `select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from "SEI${req.custID}" group by item_id, name, unit_price`
     );
     const list = cartDetail.rows;
+    console.log(cartDetail);
     res.json(list);
   } catch (error) {
     console.error(error.message);
@@ -158,9 +159,45 @@ const lengthOfCart = async (req, res) => {
       `select sum(quantity) as quantity from "SEI${req.custID}"`
     );
 
-    const number = cart.rows;
+    const number = cart.rows[0].quantity;
     console.log(number);
     res.json(number);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
+const deleteCartItem = async (req, res) => {
+  console.log("Delete cart item called");
+  console.log(req.params.id);
+  try {
+    await pool.query(`delete from "SEI${req.custID}" where item_id = $1`, [
+      req.params.id,
+    ]);
+    res.json({ status: "okay", message: "item has been deleted from cart " });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
+const updateQuantity = async (req, res) => {
+  try {
+    await pool.query(`delete from "SEI${req.custID}" where item_id = $1`, [
+      req.params.id,
+    ]);
+
+    await pool.query(
+      `insert into "SEI${req.custID}"  (item_id, quantity, unit_price, name) values ($1,$2,$3, $4)`,
+      [
+        req.params.id,
+        req.body.quantity,
+        req.body.unit_price,
+        req.body.name,
+      ]
+    );
+    res.json({ status: "okay", message: "item has been updated" });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ status: "error", message: error.message });
@@ -170,10 +207,12 @@ const lengthOfCart = async (req, res) => {
 module.exports = {
   createNewItem,
   categoryItem,
-  singleItem,
+  // singleItem,
   softdelete,
   updateItem,
   addOrder,
   cartOrder,
   lengthOfCart,
+  updateQuantity,
+  deleteCartItem,
 };

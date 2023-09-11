@@ -72,6 +72,8 @@ const deleteOrderedItem = async (req, res) => {
 //update order quantity when meet the condition of item_id and order_id
 const admendOrder = async (req, res) => {
   try {
+await pool.query('delete order_list where ')
+
     const result = await pool.query(
       "update order_lists set quantity = $1 where item_id = $2 and order_id = $3 returning *",
       [req.body.quantity, req.params.id, req.body.order_id]
