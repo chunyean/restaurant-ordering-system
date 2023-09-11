@@ -13,7 +13,15 @@ const BeveragePage = (props) => {
   const [individualItem, setIndividualItem] = useState();
   const [showItemOverlay, setShowItemOverlay] = useState(false);
 
-  console.log();
+  const handleHeader = () => {
+    props.setHeader1(false);
+    props.setHeader2(false);
+    props.setHeader3(false);
+    props.setRegister(false);
+    props.setHeader4(true);
+  };
+
+  // handleHeader();
 
   const beverageCate = [
     "COCKTAIL",

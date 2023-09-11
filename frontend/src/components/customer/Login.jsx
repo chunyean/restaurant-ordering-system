@@ -2,13 +2,15 @@ import React, { useState, useContext } from "react";
 import AuthContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../customer/Header.module.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = (props) => {
   const auth = useContext(AuthContext);
   const fetchData = useFetch();
+  const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
@@ -18,18 +20,13 @@ const Login = (props) => {
       username: props.username,
       password: props.password,
     });
-    console.log("2");
     if (res.ok) {
-      console.log("3");
       auth.setAccessToken(res.data.access);
       props.setHeader1(false);
-      props.setLogin(false);
-      props.setFoodPage(true);
       props.setHeader2(true);
       props.setUser(res.data.payload);
-      //direct menu page
+      navigate("/food");
     } else {
-      console.log("4");
       console.log(res.data);
       //check error data
       setErrorUsername(res.data);
@@ -41,10 +38,14 @@ const Login = (props) => {
       <div className={styles.register}>
         <div className={styles.btnbox}>
           <div className={styles.signup} onClick={props.registerClick}>
-            <span>Sign Up</span>
+            <Link to="/" className={styles.customLink}>
+              Sign Up
+            </Link>
           </div>
           <div className={styles.signin} onClick={props.loginClick}>
-            <span>Sign In</span>
+            <Link to="/login" className={styles.customLink}>
+              Sign In
+            </Link>
           </div>
           <div className={styles.username}>
             <label htmlFor="username">Username</label>
@@ -81,7 +82,9 @@ const Login = (props) => {
             )}
           </div>
           <div>
-            <button  className={styles.loginBtn} onClick={login}>Login</button>
+            <button className={styles.loginBtn} onClick={login}>
+              Login
+            </button>
           </div>
         </div>
       </div>
