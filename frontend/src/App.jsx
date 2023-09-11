@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
 import useFetch from "../src/components/custom_hooks/useFetch";
 import UserContext from "./components/context/user";
 import Header from "./components/customer/Header";
@@ -7,6 +8,9 @@ import Login from "./components/customer/Login";
 import FoodPage from "./components/fnb_item/FoodPage";
 import BeveragePage from "./components/fnb_item/BeveragePage";
 import OrderCart from "./components/orderCart/OrderCart";
+import AdminRegister from "./components/admin/AdminRegister";
+import AdminLogin from "./components/admin/AdminLogin";
+import Food from "./components/admin/Food";
 
 const App = () => {
   const fetchData = useFetch();
@@ -15,14 +19,14 @@ const App = () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SUQiOjIwMDAyLCJ1c2VybmFtZSI6InBpa2FjaHUxIiwiaWF0IjoxNjk0MzIzNjAyLCJleHAiOjE2OTQ0MTAwMDIsImp0aSI6ImQ4NmUyZmE4LWY5NzEtNDQzNC05Zjk3LTJhZDU5NzE5NWExNCJ9.NuxdGvBvc9L6GTXE9PWstiByASPevbQExRyBm4ZoE-M";
 
   const [accessToken, setAccessToken] = useState(test);
-  const [showLanding, setShowLanding] = useState(true);
+  // const [showLanding, setShowLanding] = useState(true);
 
   //need to change login to true, display back the login container
-  const [register, setRegister] = useState(true);
+  const [register, setRegister] = useState(false);
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState("");
   const [arrayLength, setArrayLength] = useState(0);
-  const [foodPage, setFoodPage] = useState(false);
+  const [foodPage, setFoodPage] = useState(true);
   const [beveragePage, setBeveragePage] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +35,10 @@ const App = () => {
   const [cartDetail, setCartDetail] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
+  const [header1, setHeader1] = useState(false);
+  const [header2, setHeader2] = useState(true);
+  const [header3, setHeader3] = useState(false);
+  const [header4, setHeader4] = useState(false);
 
   const auth = useContext(UserContext);
 
@@ -71,8 +79,8 @@ const App = () => {
           setFoodPage={setFoodPage}
           beveragePage={beveragePage}
           setBeveragePage={setBeveragePage}
-          showLanding={showLanding}
-          setShowLanding={setShowLanding}
+          // showLanding={showLanding}
+          // setShowLanding={setShowLanding}
           setRegister={setRegister}
           setLogin={setLogin}
           user={user}
@@ -80,6 +88,10 @@ const App = () => {
           cart={cart}
           setCart={setCart}
           setCartDetail={setCartDetail}
+          header1={header1}
+          header2={header2}
+          header3={header3}
+          header4={header4}
         ></Header>
         {register && (
           <Register
@@ -102,7 +114,7 @@ const App = () => {
             setUser={setUser}
             loginClick={loginClick}
             registerClick={registerClick}
-            setShowLanding={setShowLanding}
+            // setShowLanding={setShowLanding}
             setBeveragePage={setBeveragePage}
             setFoodPage={setFoodPage}
             setLogin={setLogin}
@@ -113,6 +125,8 @@ const App = () => {
             handlePassword={handlePassword}
             contact={contact}
             handleContact={handleContact}
+            setHeader1={setHeader1}
+            setHeader2={setHeader2}
           ></Login>
         )}
         {foodPage && (
@@ -147,6 +161,33 @@ const App = () => {
             setQuantity={setQuantity}
           ></OrderCart>
         )}
+        <Routes>
+          <Route
+            path="/admin/login"
+            element={
+              <AdminLogin
+                setRegister={setRegister}
+                setHeader1={setHeader1}
+                setHeader2={setHeader2}
+                setHeader3={setHeader3}
+                setHeader4={setHeader4}
+              />
+            }
+          />
+          <Route path="/admin/food" element={<Food                 setRegister={setRegister}
+                setHeader1={setHeader1}
+                setHeader2={setHeader2}
+                setHeader3={setHeader3}
+                setHeader4={setHeader4}
+                user={user}
+                foodPage={foodPage}
+                setFoodPage={setFoodPage}
+                setBeveragePage={setBeveragePage}
+                setArrayLength={setArrayLength}
+                arrayLength={arrayLength}
+                quantity={quantity}
+                setQuantity={setQuantity}/>} />
+        </Routes>
       </UserContext.Provider>
     </>
   );

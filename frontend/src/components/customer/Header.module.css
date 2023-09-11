@@ -1,4 +1,5 @@
 .header {
+  display: flex;
   width: 99.2dvw;
   height: 3dvw;
   background: linear-gradient(
@@ -112,8 +113,8 @@ input::placeholder {
   font-size: 1.2dvw;
 }
 
-input[type='text']{
-  font-size:1.2dvw;
+input[type="text"] {
+  font-size: 1.2dvw;
 }
 
 .contact {
@@ -186,14 +187,15 @@ input[type='text']{
   width: 30dvw;
 }
 
-.registerbtn{
+.registerbtn {
   float: right;
-  width:10dvw;
+  width: 10dvw;
   height: 5svh;
   position: relative;
   right: 10%;
   border-radius: 30px;
-  background-color: chocolate;}
+  background-color: chocolate;
+}
 
 .loginBtn {
   position: relative;
@@ -253,11 +255,11 @@ input[type='text']{
 }
 
 .p {
-  position: relative;
+  position: absolute;
   float: right;
-  right: 17dvw;
-  bottom: 0.7dvw;
-  font-size: 1.2dvw;
+  right: 17.1dvw;
+  bottom: 0.4dvw;
+  font-size: 1dvw;
   font-weight: bolder;
   color: red;
   cursor: pointer;
@@ -282,4 +284,66 @@ input[type='text']{
   position: sticky;
   left: 95dvw;
   cursor: pointer;
+}
+
+.header3 {
+  display: flex;
+  width: 99.2dvw;
+  height: 3dvw;
+  background: linear-gradient(180deg, #0f00ba 0%, rgba(38, 32, 100, 0) 100%);
+  position: sticky;
+}
+
+.food1 {
+  background-color: cornflowerblue;
+  width: 9dvw;
+  height: 2dvw;
+  border-radius: 50%;
+  position: absolute;
+  top: 0.5dvw;
+  left: 15dvw;
+  cursor: pointer;
+}
+
+.food1 > p {
+  font-size: 1.5dvw;
+  text-align: center;
+  position: relative;
+  bottom: 1.3dvw;
+}
+
+.beverage1 {
+  background-color: cornflowerblue;
+  width: 9dvw;
+  height: 2dvw;
+  border-radius: 50%;
+  position: absolute;
+  top: 0.5dvw;
+  left: 30dvw;
+  cursor: pointer;
+}
+
+.beverage1 > p {
+  font-size: 1.5dvw;
+  text-align: center;
+  position: relative;
+  bottom: 1.3dvw;
+}
+
+.table {
+  background-color: cornflowerblue;
+  width: 9dvw;
+  height: 2dvw;
+  border-radius: 50%;
+  position: absolute;
+  top: 0.5dvw;
+  left: 45dvw;
+  cursor: pointer;
+}
+
+.table > p {
+  font-size: 1.5dvw;
+  text-align: center;
+  position: relative;
+  bottom: 1.3dvw;
 }

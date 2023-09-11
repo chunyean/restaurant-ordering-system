@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import useFetch from "../custom_hooks/useFetch";
-import styles from "../fnb_item/MenuPage.module.css";
+import styles from "./MenuPage.module.css";
 import ItemOverlay from "../overlay_item/ItemOverlay";
 import OrderCart from "../orderCart/OrderCart";
 import UserContext from "../context/user";
@@ -30,7 +30,6 @@ const FoodPage = (props) => {
 
   const subFoods = foodCate.map((subFood, idx) => {
     return (
-      // if not work need to change value to button there
       <li
         key={idx}
         value={subFood}

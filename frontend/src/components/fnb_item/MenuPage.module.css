@@ -1,4 +1,4 @@
-.header {
+/* .header {
   width: 99.2dvw;
   height: 3dvw;
   background: linear-gradient(
@@ -68,13 +68,16 @@
 }
 
 .p {
-  position: relative;
+  position: fixed;
+  width: 100px;
+  height: 100px;
   float: right;
   right: 17dvw;
-  bottom: 0.7dvw;
-  font-size: 1.2dvw;
+  bottom: 0.4dvw;
+  font-size: 7dvw;
   font-weight: bolder;
   color: red;
+  background-color: #1400ff;
 }
 
 .username {
@@ -88,13 +91,13 @@
 }
 
 .logout {
-  background-color: beige;
+  background-color: rgb(255, 0, 0);
   width: 3dvw;
   height: 3dvw;
   border-radius: 50%;
   position: sticky;
   left: 95dvw;
-}
+} */
 
 .subfood {
   position: relative;
@@ -110,6 +113,7 @@
   left: 5dvw;
   text-shadow: 2px 2px 4px burlywood;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .leftbox {
