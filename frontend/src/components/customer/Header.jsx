@@ -44,17 +44,15 @@ const Header = (props) => {
     props.setFoodPage(true);
   };
 
-const returnRegisterPage = () =>{
-  props.setLogin(false)
-  props.setRegister(true)
-}
+  const returnRegisterPage = () => {
+    props.setLogin(false);
+    props.setRegister(true);
+  };
 
-// useEffect(()=>{
-//   cartOrder();
-// }, [props.abc])
+
   return (
     <>
-      {props.showLanding && (
+      {props.header1 && (
         <div className={styles.header}>
           <img
             src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
@@ -63,8 +61,8 @@ const returnRegisterPage = () =>{
           />
         </div>
       )}
-      {!props.showLanding && (
-        <div className={styles.header}>
+      {props.header2 && (
+        <div id="landing" className={styles.header}>
           <img
             src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
             className={styles.logo}
@@ -81,8 +79,47 @@ const returnRegisterPage = () =>{
             className={styles.cart}
             onClick={cartOrder}
           />
-          <p className={styles.p} onClick={cartOrder}>{props.arrayLength}</p>
-          {/* make drop dropdown */}
+          <p className={styles.p} onClick={cartOrder}>
+            {props.arrayLength}
+          </p>
+          <button className={styles.displayname}>
+            Hi, {props.user.username}!
+          </button>
+          <img src="/log-out-04.512x465.png" className={styles.logout} />
+        </div>
+      )}
+      {props.header3 && (
+        <div id="landing" className={styles.header3}>
+          <img
+            src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
+            className={styles.logo}
+            onClick={returnFoodPage}
+          />
+        </div>
+      )}
+      {props.header4 && (
+        <div id="landing" className={styles.header3}>
+          <img
+            src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
+            className={styles.logo}
+          />
+          <div className={styles.food1}>
+            <p>Food</p>
+          </div>
+          <div className={styles.beverage1}>
+            <p>Beverage</p>
+          </div>
+          <div className={styles.table}>
+            <p>Table</p>
+          </div>
+          <img
+            src="/cart.256x256.png"
+            className={styles.cart}
+            onClick={cartOrder}
+          />
+          <p className={styles.p} onClick={cartOrder}>
+            {props.arrayLength}
+          </p>
           <button className={styles.displayname}>
             Hi, {props.user.username}!
           </button>

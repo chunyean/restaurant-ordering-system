@@ -91,15 +91,15 @@ const updateItem = async (req, res) => {
 
 const addOrder = async (req, res) => {
   try {
-    console.log("1");
+    console.log("11");
     await pool.query(
       `do $$ begin create table if not exists "SEI${req.custID}" (item_id integer, name varchar(100), quantity smallserial, unit_price decimal(6,2), nett_amount decimal(6,2) null); end$$;`
     );
-    console.log("2");
+    console.log("12");
     await pool.query(
       `do $$ begin IF NOT EXISTS (SELECT 1 FROM information_schema.triggers WHERE event_object_table = 'SEI${req.custID}' AND trigger_name = 'nettprice') THEN CREATE TRIGGER nettprice BEFORE INSERT OR UPDATE ON "SEI${req.custID}" FOR EACH ROW EXECUTE FUNCTION nettprice(); END IF;end$$;`
     );
-    console.log("3");
+    console.log("13");
     await pool.query(
       `insert into "SEI${req.custID}" (item_id, quantity) values (${req.params.id}, ${req.body.quantity}) `
     );
@@ -111,14 +111,14 @@ const addOrder = async (req, res) => {
     //     [req.body.id[idx]]
     //   );
     // }
-    console.log("4");
+    console.log("14");
     const price = await pool.query(
       "select name, price from items where id = $1",
       [req.params.id]
     );
 
     const list = price.rows[0];
-    console.log("5");
+    console.log("15");
     await pool.query(
       `update "SEI${req.custID}" set unit_price = $1, name = $2 where item_id = $3`,
       [list.price, list.name, req.params.id]
@@ -131,7 +131,7 @@ const addOrder = async (req, res) => {
     //     [item.price, item.name, item.id]
     //   );
     // }
-    console.log("6");
+    console.log("16");
     res.json({ status: "success", message: "add successful" });
   } catch (error) {
     console.error(error.message);

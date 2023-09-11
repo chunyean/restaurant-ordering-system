@@ -1,11 +1,19 @@
 import React, { useEffect, useState, useContext } from "react";
 import useFetch from "../custom_hooks/useFetch";
-import styles from "./MenuPage.module.css";
+import styles from "../fnb_item/MenuPage.module.css";
 import ItemOverlay from "../overlay_item/ItemOverlay";
-import OrderCart from "../orderCart/OrderCart";
+import style from '../admin/Admin.module.css'
 import UserContext from "../context/user";
 
-const FoodPage = (props) => {
+const Food = (props) => {
+  const handleHeader = () => {
+    props.setHeader1(false);
+    props.setHeader2(false);
+    props.setRegister(false);
+    props.setHeader4(true);
+  };
+
+  handleHeader();
   const fetchData = useFetch();
   const [fnbItem, setFnbItem] = useState([]);
   const [category, setCategory] = useState("APPERTIZER");
@@ -30,6 +38,7 @@ const FoodPage = (props) => {
 
   const subFoods = foodCate.map((subFood, idx) => {
     return (
+      // if not work need to change value to button there
       <li
         key={idx}
         value={subFood}
@@ -114,7 +123,7 @@ const FoodPage = (props) => {
   }, [category]);
 
   return (
-    <>
+    <div className={style.background}>
       <div className={styles.subfood}>
         <ul>{subFoods}</ul>
       </div>
@@ -128,8 +137,8 @@ const FoodPage = (props) => {
           setShowItemOverlay={setShowItemOverlay}
         ></ItemOverlay>
       )}
-    </>
+    </div>
   );
 };
 
-export default FoodPage;
+export default Food;

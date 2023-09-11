@@ -22,9 +22,10 @@ const Login = (props) => {
     if (res.ok) {
       console.log("3");
       auth.setAccessToken(res.data.access);
-      props.setShowLanding(false);
+      props.setHeader1(false);
       props.setLogin(false);
       props.setFoodPage(true);
+      props.setHeader2(true);
       props.setUser(res.data.payload);
       //direct menu page
     } else {

@@ -1,0 +1,74 @@
+.background {
+  background-color: #f9fcd5;
+  width: 100%;
+  height: auto;
+  position: absolute;
+}
+
+.container {
+  background-color: aqua;
+  width: 40dvw;
+  height: 50svh;
+  position: relative;
+  margin: auto;
+  top: 8dvw;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.title {
+  background-color: azure;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin: auto;
+  top: 1dvw;
+  font-size: 3dvw;
+}
+
+.id {
+  background-color: blueviolet;
+  position: relative;
+  /* margin: auto; */
+  top: 1.5dvw;
+  right: 6dvw;
+  font-size: 2dvw;
+}
+
+.id > input {
+  position: absolute;
+  display: flex;
+  top: 6svh;
+  width: 20dvw;
+  height: 4svh;
+  font-size: 1.5dvw;
+}
+
+.password {
+  background-color: blue;
+  position: relative;
+  margin: auto;
+  top: 4.5dvw;
+  right: 6dvw;
+  font-size: 2dvw;
+}
+
+.password > input{
+    position: absolute;
+    display: flex;
+    top: 6svh;
+    width: 20dvw;
+    height: 4svh;
+    font-size: 1.5dvw;
+}
+
+.loginbtn{
+    position: absolute;
+    margin: 0 3dvw;
+    font-size: 2dvw;
+    bottom:6svh;
+}
+
+
