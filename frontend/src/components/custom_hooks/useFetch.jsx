@@ -26,7 +26,7 @@ const useFetch = () => {
         returnValue = { ok: false, data: data.message || data.msg };
       } else {
         console.log(data);
-        returnValue = { ok: false, data: "An error has occurred" };
+        returnValue = { ok: false, data: data.message };
       }
     }
 

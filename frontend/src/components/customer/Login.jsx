@@ -16,11 +16,14 @@ const Login = (props) => {
 
   const login = async () => {
     console.log("1");
+    console.log(props.password);
+    console.log(props.username);
     const res = await fetchData("/customer/login", "POST", {
       username: props.username,
       password: props.password,
     });
     if (res.ok) {
+      console.log(res.data.access);
       auth.setAccessToken(res.data.access);
       props.setHeader1(false);
       props.setHeader2(true);

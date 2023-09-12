@@ -57,7 +57,7 @@
   height: 60svh;
   display: flex;
   position: absolute;
-  top: 23svh;
+  top: 18svh;
   justify-content: center;
   align-items: center;
   margin: 0 28dvw;
@@ -101,15 +101,14 @@
   cursor: pointer;
 }
 .customLink {
+  position:relative;
   color: black;
-  font-size: 2.2dvw;
+  font-size: 2.3dvw;
   text-decoration: none;
+  top:0.5dvw
+
 }
-/* .customLink1 {
-  color: black;
-  font-size:2.2dvw;
-  text-decoration: none;
-} */
+
 .signin > span {
   font-size: 2dvw;
   position: relative;
@@ -121,7 +120,14 @@
   width: 30dvw;
   height: 10svh;
   position: relative;
-  top: 50%;
+  top: 35%;
+}
+
+.username > p {
+  position:relative;
+  color: red;
+  font-size: 16px;
+  top:1.3dvw;
 }
 
 .username > label {
@@ -151,18 +157,19 @@ input[type="text"] {
   /* background-color: rgb(10, 144, 233); */
   width: 30dvw;
   height: 10svh;
-  position: relative;
-  top: 70%;
+  top: 76%;
+  padding-top: 0.3dvw;
 }
 
 .contact > label {
   font-size: 2dvw;
   margin: auto;
+  /* padding: 0.5dvw; */
 }
 
 .contact > input {
   position: absolute;
-  top: 5svh;
+  top: 6svh;
   left: 0dvw;
   width: 30dvw;
   height: 5svh;
@@ -174,8 +181,7 @@ input[type="text"] {
   /* background-color: rgb(10, 144, 233); */
   width: 30dvw;
   height: 10svh;
-  position: relative;
-  top: 90%;
+  top: 4.5dvw;
 }
 
 .password > label {
@@ -207,7 +213,7 @@ input[type="text"] {
   width: 30dvw;
   height: 6svh;
   position: relative;
-  top: 120%;
+  top: 6.5dvw;
   left: 2%;
 }
 
@@ -220,11 +226,12 @@ input[type="text"] {
 .registerbtn {
   float: right;
   width: 10dvw;
-  height: 5svh;
+  height: 6svh;
   position: relative;
   right: 10%;
   border-radius: 30px;
   background-color: chocolate;
+  font-size: 2dvw;
 }
 
 .loginBtn {
@@ -308,7 +315,6 @@ input[type="text"] {
   -webkit-appearance: none;
   text-align: center;
 }
-
 
 .logout {
   background-color: beige;

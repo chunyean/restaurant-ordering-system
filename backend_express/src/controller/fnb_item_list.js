@@ -92,16 +92,17 @@ const updateItem = async (req, res) => {
 const addOrder = async (req, res) => {
   try {
     console.log("11");
+    // await pool.query(
+    //   `do $$ begin create table if not exists "SEI${req.custID}" (item_id integer, name varchar(100), quantity smallserial, unit_price decimal(6,2), nett_amount decimal(6,2) null); end$$;`
+    // );
+    // console.log("12");
+    // await pool.query(
+    //   `do $$ begin IF NOT EXISTS (SELECT 1 FROM information_schema.triggers WHERE event_object_table = 'SEI${req.custID}' AND trigger_name = 'nettprice') THEN CREATE TRIGGER nettprice BEFORE INSERT OR UPDATE ON "SEI${req.custID}" FOR EACH ROW EXECUTE FUNCTION nettprice(); END IF;end$$;`
+    // );
+    // console.log("13");
     await pool.query(
-      `do $$ begin create table if not exists "SEI${req.custID}" (item_id integer, name varchar(100), quantity smallserial, unit_price decimal(6,2), nett_amount decimal(6,2) null); end$$;`
-    );
-    console.log("12");
-    await pool.query(
-      `do $$ begin IF NOT EXISTS (SELECT 1 FROM information_schema.triggers WHERE event_object_table = 'SEI${req.custID}' AND trigger_name = 'nettprice') THEN CREATE TRIGGER nettprice BEFORE INSERT OR UPDATE ON "SEI${req.custID}" FOR EACH ROW EXECUTE FUNCTION nettprice(); END IF;end$$;`
-    );
-    console.log("13");
-    await pool.query(
-      `insert into "SEI${req.custID}" (item_id, quantity) values (${req.params.id}, ${req.body.quantity}) `
+      "insert into cart (item_id, quantity, customer_id) values ($1, $2, $3)",
+      [req.params.id, req.body.quantity, req.custID]
     );
 
     // let price;
@@ -120,7 +121,7 @@ const addOrder = async (req, res) => {
     const list = price.rows[0];
     console.log("15");
     await pool.query(
-      `update "SEI${req.custID}" set unit_price = $1, name = $2 where item_id = $3`,
+      "update cart set unit_price = $1, name = $2 where item_id = $3",
       [list.price, list.name, req.params.id]
     );
 
@@ -142,7 +143,7 @@ const addOrder = async (req, res) => {
 const cartOrder = async (req, res) => {
   try {
     const cartDetail = await pool.query(
-      `select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from "SEI${req.custID}" group by item_id, name, unit_price`
+      "select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from cart group by item_id, name, unit_price"
     );
     const list = cartDetail.rows;
     console.log(cartDetail);
@@ -156,7 +157,7 @@ const cartOrder = async (req, res) => {
 const lengthOfCart = async (req, res) => {
   try {
     const cart = await pool.query(
-      `select sum(quantity) as quantity from "SEI${req.custID}"`
+      'select sum(quantity) as quantity from cart'
     );
 
     const number = cart.rows[0].quantity;
@@ -172,8 +173,8 @@ const deleteCartItem = async (req, res) => {
   console.log("Delete cart item called");
   console.log(req.params.id);
   try {
-    await pool.query(`delete from "SEI${req.custID}" where item_id = $1`, [
-      req.params.id,
+    await pool.query('delete from cart where (item_id = $1 and customer_id=$2)', [
+      req.params.id, req.custID
     ]);
     res.json({ status: "okay", message: "item has been deleted from cart " });
   } catch (error) {
@@ -184,18 +185,13 @@ const deleteCartItem = async (req, res) => {
 
 const updateQuantity = async (req, res) => {
   try {
-    await pool.query(`delete from "SEI${req.custID}" where item_id = $1`, [
+    await pool.query('delete from cart where item_id = $1', [
       req.params.id,
     ]);
 
     await pool.query(
-      `insert into "SEI${req.custID}"  (item_id, quantity, unit_price, name) values ($1,$2,$3, $4)`,
-      [
-        req.params.id,
-        req.body.quantity,
-        req.body.unit_price,
-        req.body.name,
-      ]
+      'insert into cart (item_id, quantity, unit_price, name, customer_id) values ($1,$2,$3, $4, $5)',
+      [req.params.id, req.body.quantity, req.body.unit_price, req.body.name, req.custID]
     );
     res.json({ status: "okay", message: "item has been updated" });
   } catch (error) {

@@ -12,9 +12,8 @@ const FoodPage = (props) => {
   const [category, setCategory] = useState("APPERTIZER");
   const [quantity, setQuantity] = useState(1);
   const [individualItem, setIndividualItem] = useState();
-  const [showItemOverlay, setShowItemOverlay] = useState(false);
+  // const [showItemOverlay, setShowItemOverlay] = useState(false);
   const auth = useContext(UserContext);
-
 
   const foodCate = ["APPERTIZER", "SOUP", "MAIN COURSE", "PASTA", "DESSERT"];
 
@@ -46,12 +45,18 @@ const FoodPage = (props) => {
   });
 
   const addOrder = async (id) => {
-    const res = await fetchData("/item/addorder/" + id, "PUT", {
-      quantity: props.quantity,
-    });
+    const res = await fetchData(
+      "/item/addorder/" + id,
+      "PUT",
+      {
+        quantity: props.quantity,
+      },
+      auth.accessToken
+    );
     if (res.ok) {
       console.log(res.ok);
       lengthOfCart();
+      props.setShowItemOverlay(false)
     } else {
       alert(JSON.stringify(res.data));
     }
@@ -62,7 +67,7 @@ const FoodPage = (props) => {
       "/item/length",
       "POST",
       undefined,
-      auth.accesstoken
+      auth.accessToken
     );
     if (res.ok) {
       console.log(res.data);
@@ -81,7 +86,7 @@ const FoodPage = (props) => {
           onClick={() => {
             console.log(item);
             setIndividualItem(item);
-            setShowItemOverlay(true);
+            props.setShowItemOverlay(true);
           }}
         >
           <div className={styles.items}>
@@ -121,13 +126,13 @@ const FoodPage = (props) => {
         <ul>{subFoods}</ul>
       </div>
       {listItem}
-      {showItemOverlay && (
+      {props.showItemOverlay && (
         <ItemOverlay
           individualItem={individualItem}
           setQuantity={props.setQuantity}
           addOrder={addOrder}
           lengthOfCart={lengthOfCart}
-          setShowItemOverlay={setShowItemOverlay}
+          setShowItemOverlay={props.setShowItemOverlay}
         ></ItemOverlay>
       )}
     </>

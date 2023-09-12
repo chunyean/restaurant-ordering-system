@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 const OrderCart = (props) => {
   const [table_number, setTable_Number] = useState();
   const [pax, setPax] = useState();
-  const [order_type, setOrder_Type] = useState("DINE_IN");
+  const [order_type, setOrder_Type] = useState();
   const auth = useContext(UserContext);
   const [value, setValue] = useState();
   const [unitPrice, setUnitPrice] = useState();
@@ -28,7 +28,12 @@ const OrderCart = (props) => {
   };
 
   const handleClose = () => {
-    navigate("/food");
+    const user = props.user.id;
+    if (user.includes("SEI")) {
+      navigate("/admin/food");
+    } else {
+      navigate("/food");
+    }
   };
 
   const handleValue = (e) => {
@@ -44,7 +49,6 @@ const OrderCart = (props) => {
     );
     if (res.ok) {
       console.log(res.data);
-      props.setTest(1);
     } else {
       alert(JSON.stringify(res.data));
     }
@@ -63,23 +67,8 @@ const OrderCart = (props) => {
     );
     if (res.ok) {
       console.log(res.data);
-      lengthOfCart();
     } else {
       alert(JSON.stringify(res.data));
-    }
-  };
-
-  const lengthOfCart = async () => {
-    const res = await fetchData(
-      "/item/length",
-      "POST",
-      undefined,
-      auth.accessToken
-    );
-    if (res.ok) {
-      console.log(res.data);
-      props.setArrayLength(res.data);
-      props.setTest(true);
     }
   };
 
@@ -101,7 +90,7 @@ const OrderCart = (props) => {
           <option value={9}>9</option>
           <option value={10}>10</option>
         </select>
-        <button
+        <input
           className={styles.check}
           onClick={() => {
             console.log(item.unit_price);
@@ -109,9 +98,7 @@ const OrderCart = (props) => {
             changeQuantity(item.item_id, item.name, item.unit_price);
           }}
           type="checkbox"
-        >
-          ok
-        </button>
+        ></input>
         <div className={styles.price1}>${item.nett_amount}</div>
         <button
           className={styles.button}
@@ -124,34 +111,31 @@ const OrderCart = (props) => {
   });
 
   const submitOrder = async () => {
-    const res = await fetchData(
-      "/order/create",
-      "PUT",
-      {
-        table_number,
-        pax,
-        order_type,
-      },
-      auth.accessToken
-    );
+    const res = await fetchData("/order/create", "PUT", {
+      table_number,
+      pax,
+      order_type,
+    });
     if (res.ok) {
       props.setCart(false);
       props.setFoodPage(true);
       props.setArrayLength(0);
-      console.log(props.user);
-      if (/^[a-zA-Z]+$/.test(props.user.custID)) {
-        navigate("/admin/food");
-      } else {
-        navigate("/food");
-      }
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
-  useEffect(() => {
-    lengthOfCart();
-  }, []);
+  // const handleHeader = () => {
+  //   props.setHeader1(false);
+  //   props.setHeader2(false);
+  //   props.setHeader3(false);
+  //   props.setRegister(false);
+  //   props.setHeader4(true);
+  // };
+
+  // useEffect(() => {
+  //   handleHeader();
+  // }, []);
 
   return (
     <>

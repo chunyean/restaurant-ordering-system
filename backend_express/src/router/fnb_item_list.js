@@ -30,7 +30,7 @@ router.delete("/delete/:id", auth, validateParamsId, softdelete);
 
 router.put("/addorder/:id", auth, addOrder);
 
-router.get("/cart", auth, cartOrder);
+router.get("/cart", cartOrder);
 
 router.post("/length", auth, lengthOfCart);
 

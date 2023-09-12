@@ -27,13 +27,18 @@ const Register = (props) => {
       props.setUsername("");
       props.setPassword("");
       props.setContact("");
-      navigate('/login');
+      navigate("/login");
     } else {
       console.log(res.data);
-      setErrorUsername(res.data);
-      setErrorPassword(res.data);
+      if (res.data == []) {
+        setErrorUsername(res.data);
+      } else {
+        setErrorPassword(res.data);
+      }
     }
   };
+  console.log({ errorPassword });
+  console.log({ errorUsername });
 
   return (
     <>
@@ -57,11 +62,13 @@ const Register = (props) => {
               placeholder="Enter your username"
               onChange={props.handleUsername}
             ></input>
-            {errorUsername ? (
+            {/* {errorUsername ? (
               <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
             ) : (
               <div style={{ height: "36px", margin: "0" }}></div>
-            )}
+            )} */}
+
+            <p>{errorUsername.error}</p>
           </div>
           <div className={styles.contact}>
             <label htmlFor="contact">Contact</label>
@@ -86,11 +93,12 @@ const Register = (props) => {
                 Show Password
               </label>
             </div>
-            {errorPassword ? (
+            <p>{errorPassword[0]}</p>
+            {/* {errorPassword ? (
               <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
             ) : (
               <div style={{ height: "36px", margin: "0" }}></div>
-            )}
+            )} */}
           </div>
           <div className={styles.term}>
             <span>

@@ -3,12 +3,15 @@ import styles from "./Payment.module.css";
 import UserContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
 import { useNavigate } from "react-router-dom";
+import TableOrderOverlay from "./TableOrderOverlay";
+import ViewTableOrder from "./ViewTableOrder";
 
 const Table = (props) => {
   const auth = useContext(UserContext);
   const fetchData = useFetch();
   const navigate = useNavigate();
-  //   const [tableDetail, setTableDetail] = useState();
+  const [tableDetail, setTableDetail] = useState();
+  const [showTableOrder, setShowTableOrder] = useState(false);
 
   const row = [1, 2, 3, 4];
   const row2 = [5, 6, 7, 8];
@@ -17,9 +20,9 @@ const Table = (props) => {
   const handleViewOrder = async (id) => {
     const res = await fetchData("/order/allorder/" + id, "POST");
     if (res.ok) {
-      props.setTableDetail(res.data);
+      setTableDetail(res.data);
       console.log(res.data);
-      navigate("/admin/viewtable");
+      setShowTableOrder(true);
     } else {
       alert(JSON.stringify(res.data));
     }
@@ -94,6 +97,13 @@ const Table = (props) => {
       <div className={styles.tblcontainer2}>
         <div className={styles.table}>{table3}</div>
       </div>
+      {showTableOrder && (
+        <ViewTableOrder
+          tableDetail={tableDetail}
+          setTableDetail={setTableDetail}
+          handleViewOrder={handleViewOrder}
+        ></ViewTableOrder>
+      )}
     </>
   );
 };

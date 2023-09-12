@@ -45,10 +45,10 @@ const ItemOverlay = (props) => {
                 className={styles.btn}
                 onClick={() => {
                   console.log("add");
+                  // props.setShowItemOverLay(false);
                   props.addOrder(props.individualItem.id);
-                  props.lengthOfCart;
-                  props.setShowOverlay;
-                  props.setShowItemOverLay(false);
+                  // props.lengthOfCart;
+                  // props.setShowItemOverLay(false);
                 }}
               >
                 Add

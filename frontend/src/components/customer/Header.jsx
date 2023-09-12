@@ -23,18 +23,14 @@ const Header = (props) => {
   };
 
   const cartOrder = async () => {
-    const res = await fetchData(
-      "/item/cart",
-      "GET",
-      undefined,
-      auth.accesstoken
-    );
+    const res = await fetchData("/item/cart", "GET");
     if (res.ok) {
       console.log(res.data);
       props.setCartDetail(res.data);
       props.setFoodPage(false);
       props.setBeveragePage(false);
       props.setCart(true);
+      props.setTest("");
     } else {
       alert(JSON.stringify(res.data));
     }
@@ -57,6 +53,10 @@ const Header = (props) => {
       setErrorPassword(res.data);
     }
   };
+
+  useEffect(() => {
+    cartOrder();
+  }, [props.test]);
 
   return (
     <>
@@ -84,12 +84,16 @@ const Header = (props) => {
             </Link>
           </div>
           <div className={styles.beverage} onClick={handleBeveragePage}>
-            <Link to="/beverge" className={styles.customLink2}>
+            <Link to="/beverage" className={styles.customLink2}>
               <p>Beverage</p>
             </Link>
           </div>
           <Link to="/cart">
-            <img src="/cart.256x256.png" className={styles.cart} />
+            <img
+              src="/cart.256x256.png"
+              className={styles.cart}
+              onClick={cartOrder}
+            />
           </Link>
           <p className={styles.p} onClick={cartOrder}>
             {props.arrayLength}
