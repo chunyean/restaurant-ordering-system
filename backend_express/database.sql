@@ -4,65 +4,45 @@ create database restaurant_db;
 --add extension for uuid generate
 CREATE EXTENSION "uuid-ossp";
 
-CREATE FUNCTION nettprice()
-RETURNS trigger AS 
-$$
-BEGIN
-  IF NEW.nett_amount IS NULL THEN
-    NEW.nett_amount = NEW.quantity * NEW.unit_price;
-  END IF;
-  RETURN NEW;
-END;
-$$
-LANGUAGE plpgsql
-VOLATILE
-CALLED ON NULL INPUT
-SECURITY INVOKER;
-
-CREATE FUNCTION service_charge()
+CREATE FUNCTION allCalculation()
 RETURNS trigger AS 
 $$
 BEGIN
   IF NEW.service_charge IS NULL THEN
-    NEW.service_charge = new.nett_amount * 0.1;
+    NEW.service_charge = NEW.nett_amount * 0.1;
   END IF;
-  RETURN NEW;
-END;
-$$
-LANGUAGE plpgsql
-VOLATILE
-CALLED ON NULL INPUT
-SECURITY INVOKER;
 
-CREATE FUNCTION gst()
-RETURNS trigger AS 
-$$
-BEGIN
   IF NEW.gst IS NULL THEN
-    NEW.gst = (new.nett_amount + (new.nett_amount * 0.1)) *0.08;
+    NEW.gst = (NEW.nett_amount + NEW.service_charge) * 0.08;
   END IF;
+
+  IF NEW.total_amount IS NULL THEN
+    NEW.total_amount = NEW.nett_amount + NEW.service_charge + NEW.gst;
+  END IF;
+
   RETURN NEW;
-END;
+END
 $$
 LANGUAGE plpgsql
 VOLATILE
 CALLED ON NULL INPUT
 SECURITY INVOKER;
 
-CREATE FUNCTION total_amount()
+CREATE FUNCTION nettAmount()
 RETURNS trigger AS 
 $$
 BEGIN
-  IF NEW.total_amount IS NULL THEN
-    NEW.total_amount = new.nett_amount + (new.nett_amount * 0.1) + ((new.nett_amount + (new.nett_amount * 0.1)) *0.08);
+  IF NEW.nett_amount IS null THEN
+    NEW.nett_amount = NEW.quantity * NEW.unit_price;
   END IF;
   RETURN NEW;
-END;
+END
 $$
 LANGUAGE plpgsql
 VOLATILE
 CALLED ON NULL INPUT
 SECURITY INVOKER;
+
 
 create table types (
 	type varchar(15) not null primary key
@@ -161,26 +141,27 @@ create table order_histories (
 	constraint pfk_id foreign key(payment_id) references payments(id)
 );
 
-CREATE TRIGGER service_charge
-  before INSERT OR UPDATE 
-  ON payments
+create table cart (
+customer_id integer,
+item_id integer, 
+name varchar(100), 
+quantity smallserial, 
+unit_price decimal(6,2), 
+nett_amount decimal(6,2) null);
+
+CREATE TRIGGER nettAmount
+  BEFORE INSERT OR UPDATE 
+  ON cart
 
 FOR EACH ROW 
-  EXECUTE PROCEDURE service_charge();
+  EXECUTE PROCEDURE nettAmount();
  
- CREATE TRIGGER gst
+CREATE TRIGGER allCalculation
   before INSERT OR UPDATE 
   ON payments
 
 FOR EACH ROW 
-  EXECUTE PROCEDURE gst();
- 
- CREATE TRIGGER total_amount
-  before INSERT OR UPDATE 
-  ON payments
-
-FOR EACH ROW 
-  EXECUTE PROCEDURE total_amount();
+  EXECUTE PROCEDURE allCalculation();
 
 insert into types values ('FOOD');
 insert into types values ('DRINK');

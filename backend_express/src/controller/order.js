@@ -26,7 +26,8 @@ const newOrder = async (req, res) => {
 
     //use item_id to retrieve each individual unit price
     const list = await pool.query(
-      `select item_id, name, sum(quantity) as quantity, sum(nett_amount) as nett_amount, unit_price from "SEI${req.custID}" group by item_id, name, unit_price`
+      `select item_id, name, sum(quantity) as quantity, sum(nett_amount) as nett_amount, unit_price from cart where customer_id= $1 group by item_id, name, unit_price`,
+      [req.custID]
     );
     const unitPrice = list.rows;
 
@@ -46,7 +47,7 @@ const newOrder = async (req, res) => {
       );
     }
 
-    await pool.query(`drop table "SEI${req.custID}"`);
+    await pool.query("delete from cart where customer_id = $1", [req.custID]);
 
     res.json({ status: "ok", message: "Order has been created" });
   } catch (error) {
@@ -106,7 +107,7 @@ const cancelOrder = async (req, res) => {
 //retrieve all the order detail order by that table
 const allOrder = async (req, res) => {
   try {
-    console.log(req.params.id)
+    console.log(req.params.id);
     const list = await pool.query(
       "select table_number, pax, username, name, quantity, total_price from orders join order_lists on order_lists.order_id = orders.id join items on items.id = order_lists.item_id join customers on customers.id = orders.customer_id where (table_number = $1 and is_payment = false and is_voidorder = false)",
       [req.params.id]
