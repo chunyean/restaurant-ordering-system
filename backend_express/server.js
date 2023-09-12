@@ -36,17 +36,6 @@ app.use("/item", fnbList);
 app.use("/order", order);
 app.use("/payment", payment);
 
-// Route to test the database connection
-app.get("/book", async (req, res) => {
-  try {
-    console.log(process.env.USERNAME);
-    var query = $`select * from public.city c where id = {req.params.id}`;
-    const book = await pool.query("select * from public.city c limit 1");
-    res.json(book.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

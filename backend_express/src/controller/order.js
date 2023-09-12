@@ -106,6 +106,7 @@ const cancelOrder = async (req, res) => {
 //retrieve all the order detail order by that table
 const allOrder = async (req, res) => {
   try {
+    console.log(req.params.id)
     const list = await pool.query(
       "select table_number, pax, username, name, quantity, total_price from orders join order_lists on order_lists.order_id = orders.id join items on items.id = order_lists.item_id join customers on customers.id = orders.customer_id where (table_number = $1 and is_payment = false and is_voidorder = false)",
       [req.params.id]
