@@ -1,69 +1,227 @@
 
-
-.container {
-  background-color: aqua;
+.register {
   width: 40dvw;
-  height: 50svh;
-  position: relative;
-  margin: auto;
-  top: 8dvw;
-  display: flex;
-  justify-content: center;
-  align-self: center;
+  /* height: 60svh; */
+  /* display: flex; */
+  position: absolute;
+  top: 23svh;
+  justify-items: center;
+  align-items: center;
+  margin: 0 33dvw;
+  /* border: 2px black solid; */
 }
 
 .title {
-  background-color: azure;
+  /* background-color: azure; */
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-self: center;
-  margin: auto;
-  top: 1dvw;
+  margin: 1dvw;
+  /* bottom: 8dvw; */
+  left:10dvw;
   font-size: 3dvw;
 }
 
-.id {
+/* .id1 {
   background-color: blueviolet;
   position: relative;
-  /* margin: auto; */
-  top: 1.5dvw;
-  right: 6dvw;
+  margin: auto;
+  bottom: 4.7dvw;
+  left: 6dvw;
+  width: 20dvw;
   font-size: 2dvw;
-}
+} */
 
-.id > input {
+/* .id1 > input {
   position: absolute;
   display: flex;
   top: 6svh;
   width: 20dvw;
   height: 4svh;
   font-size: 1.5dvw;
+} */
+
+/* .password {
+  background-color: blue;
+  position: absolute;
+  margin: -180px;
+  top: 10dvw;
+  right: 10.4dvw;
+  width: 20dvw;
+  font-size: 2dvw;
+} */
+
+/* .input {
+  position: relative;
+  display: flex;
+  top: 6svh;
+  height: 4svh;
+  font-size: 1.5dvw;
+  width: 10dpx;
+
+} */
+
+.loginbtn {
+  position: absolute;
+  margin: auto;
+  font-size: 2dvw;
+  left: 9dvw;
+  background-color:bisque;
+  border-radius: 20px;
+  width: 10dvw;
 }
 
-.password {
-  background-color: blue;
+.check1{
   position: relative;
+
+}
+
+.register2 {
+  width: 40dvw;
+  /* height: 60svh; */
+  /* display: flex; */
+  position: absolute;
+  top: 23svh;
+  justify-items: center;
+  align-items: center;
+  margin: 0 33dvw;
+  /* border: 2px black solid; */
+}
+
+.employee {
+  /* background-color: rgb(243, 73, 217); */
+  width: 30dvw;
+  height: 10svh;
+  position: relative;
+  top: 50%;
+}
+
+.employee > label {
+  font-size: 2dvw;
   margin: auto;
-  top: 4.5dvw;
-  right: 6dvw;
+}
+
+.employee > p {
+  font-size: 2dvw;
+  position: relative;
+  bottom: 4.2dvw;
+  left: 12dvw;
+}
+.name {
+  /* background-color: rgb(243, 73, 217); */
+  width: 30dvw;
+  height: 10svh;
+  position: relative;
+  top: 50%;
+  margin-bottom: 0.5dvw;
+}
+.name > label {
+  font-size: 2dvw;
+  margin: auto;
+}
+
+.name > p {
+  font-size: 2dvw;
+  position: relative;
+  bottom: 4.2dvw;
+  left: 12dvw;
+}
+
+.name > input {
+  position: absolute;
+  top: 5svh;
+  left: 0dvw;
+  width: 30dvw;
+  height: 5svh;
+  margin: auto;
+}
+
+input::placeholder {
+  font-size: 1.2dvw;
+}
+
+input[type="text"] {
+  font-size: 1.2dvw;
+}
+
+.contact {
+  position: relative;
+  /* background-color: rgb(10, 144, 233); */
+  width: 30dvw;
+  height: 10svh;
+  position: relative;
+  top: 70%;
+  margin-bottom: 0.5dvw;
+}
+
+.contact > label {
+  font-size: 2dvw;
+  margin: auto;
+}
+
+.contact > input {
+  position: absolute;
+  top: 5svh;
+  left: 0dvw;
+  width: 30dvw;
+  height: 5svh;
+  margin: auto;
+}
+
+.password1 {
+  position: relative;
+  /* background-color: rgb(10, 144, 233); */
+  width: 30dvw;
+  height: 10svh;
+  position: relative;
+  top: 90%;
+  margin-bottom: 0.5dvw;
+}
+
+.password1 > label {
+  font-size: 2dvw;
+  margin: auto;
+}
+
+.password1 > input {
+  position: absolute;
+  top: 5svh;
+  left: 0dvw;
+  width: 30dvw;
+  height: 5svh;
+  margin: auto;
   font-size: 2dvw;
 }
 
-.password > input{
-    position: absolute;
-    display: flex;
-    top: 6svh;
-    width: 20dvw;
-    height: 4svh;
-    font-size: 1.5dvw;
+.check {
+  /* background-color: pink; */
+  position: relative;
+  float: right;
+  top: 15%;
+  right: 2%;
+  font-size: 1.5dvw;
 }
 
-.loginbtn{
-    position: absolute;
-    margin: 0 3dvw;
-    font-size: 2dvw;
-    bottom:6svh;
+.term {
+  position: relative;
+  width: 30dvw;
+  height: 6svh;
+  position: relative;
+  top: 1dvw;
+  left: 2%;
 }
 
+.term > span {
+  font-size: large;
+  float: left;
+  width: 30dvw;
+}
 
+.registerbtn {
+  float: right;
+  width: 10dvw;
+  height: 5svh;
+  position: relative;
+  right: 10%;
+  border-radius: 30px;
+  background-color: chocolate;
+  font-size: 1.2dvw;
+}

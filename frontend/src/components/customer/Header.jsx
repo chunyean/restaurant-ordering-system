@@ -40,15 +40,22 @@ const Header = (props) => {
     }
   };
 
-  const returnFoodPage = () => {
-    props.setCart(false);
-    props.setBeveragePage(false);
-    props.setFoodPage(true);
+  const register = (e) => {
+    if (e.target.value === "Register") {
+      navigate("/admin/register");
+      nextEmployeeID();
+    }
   };
 
-  const returnRegisterPage = () => {
-    props.setLogin(false);
-    props.setRegister(true);
+  const nextEmployeeID = async () => {
+    const res = await fetchData("/employee/nextAvaiId");
+    if (res.ok) {
+      props.setAvailableId(res.data);
+    } else {
+      console.log(res.data);
+      setErrorUsername(res.data);
+      setErrorPassword(res.data);
+    }
   };
 
   return (
@@ -59,7 +66,6 @@ const Header = (props) => {
             <img
               src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
               className={styles.logo}
-              onClick={returnRegisterPage}
             />
           </Link>
         </div>
@@ -70,7 +76,6 @@ const Header = (props) => {
             <img
               src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
               className={styles.logo}
-              onClick={returnFoodPage}
             />
           </Link>
           <div className={styles.food} onClick={handleFoodPage}>
@@ -84,11 +89,7 @@ const Header = (props) => {
             </Link>
           </div>
           <Link to="/cart">
-            <img
-              src="/cart.256x256.png"
-              className={styles.cart}
-              onClick={cartOrder}
-            />
+            <img src="/cart.256x256.png" className={styles.cart} />
           </Link>
           <p className={styles.p} onClick={cartOrder}>
             {props.arrayLength}
@@ -105,7 +106,6 @@ const Header = (props) => {
             <img
               src="/sei45-cafe-high-resolution-logo-color-on-transparent-background.png"
               className={styles.logo}
-              onClick={returnFoodPage}
             />
           </Link>
         </div>
@@ -129,7 +129,9 @@ const Header = (props) => {
             </Link>
           </div>
           <div className={styles.table}>
-            <p>Table</p>
+            <Link to="/admin/table" className={styles.customLink3}>
+              <p>Table</p>
+            </Link>
           </div>
           <Link to="/admin/cart">
             <img
@@ -141,14 +143,14 @@ const Header = (props) => {
           <p className={styles.p} onClick={cartOrder}>
             {props.arrayLength}
           </p>
-          <button className={styles.displayname}>
-            Hi, {props.user.username}!
-          </button>
+          <select className={styles.displayname} onChange={register}>
+            <option>Hi, {props.user.username}!</option>
+            <option value="Register">Register Staff</option>
+          </select>
           <img src="/log-out-04.512x465.png" className={styles.logout} />
         </div>
       )}
     </>
   );
 };
-
 export default Header;

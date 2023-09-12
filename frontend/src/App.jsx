@@ -10,12 +10,14 @@ import BeveragePage from "./components/fnb_item/BeveragePage";
 import OrderCart from "./components/orderCart/OrderCart";
 import AdminRegister from "./components/admin/AdminRegister";
 import AdminLogin from "./components/admin/AdminLogin";
+import Table from "./components/payment/Table";
+import ViewTableOrder from "./components/payment/ViewTableOrder";
 
 const App = () => {
   const fetchData = useFetch();
 
   const test =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SUQiOjIwMDAyLCJ1c2VybmFtZSI6InBpa2FjaHUxIiwiaWF0IjoxNjk0MzIzNjAyLCJleHAiOjE2OTQ0MTAwMDIsImp0aSI6ImQ4NmUyZmE4LWY5NzEtNDQzNC05Zjk3LTJhZDU5NzE5NWExNCJ9.NuxdGvBvc9L6GTXE9PWstiByASPevbQExRyBm4ZoE-M";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlNFSSAxMTUiLCJ1c2VybmFtZSI6ImRlc21vbmQiLCJjdXN0SUQiOjk5OTk5LCJpYXQiOjE2OTQ1MDA3MzEsImV4cCI6MTY5NDU4NzEzMSwianRpIjoiOWI0MjcyODgtNTgwYy00NjFhLWJjOGQtMDBiMWM3MWJmZmE1In0.K78mZ1DJGbLe9JqtzGo3JCOWcuNT1AKzA_HGzxKzMkw";
 
   const [accessToken, setAccessToken] = useState(test);
   // const [showLanding, setShowLanding] = useState(true);
@@ -34,6 +36,8 @@ const App = () => {
   const [cart, setCart] = useState(false);
   const [cartDetail, setCartDetail] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [availableId, setAvailableId] = useState();
+  const [tableDetail, setTableDetail] = useState();
 
   const [header1, setHeader1] = useState(true);
   const [header2, setHeader2] = useState(false);
@@ -91,6 +95,7 @@ const App = () => {
           cart={cart}
           setCart={setCart}
           setCartDetail={setCartDetail}
+          setAvailableId={setAvailableId}
           header1={header1}
           header2={header2}
           header3={header3}
@@ -192,11 +197,33 @@ const App = () => {
                 setHeader2={setHeader2}
                 setHeader3={setHeader3}
                 setHeader4={setHeader4}
+                showPassword={showPassword}
                 password={password}
                 handlePassword={handlePassword}
                 setUser={setUser}
                 employeeId={employeeId}
                 handleEmployeeId={handleEmployeeId}
+              />
+            }
+          />
+          <Route
+            path="/admin/register"
+            element={
+              <AdminRegister
+                setRegister={setRegister}
+                setHeader1={setHeader1}
+                setHeader2={setHeader2}
+                setHeader3={setHeader3}
+                setHeader4={setHeader4}
+                showPassword={showPassword}
+                password={password}
+                handlePassword={handlePassword}
+                contact={contact}
+                setContact={setContact}
+                setUser={setUser}
+                employeeId={employeeId}
+                handleEmployeeId={handleEmployeeId}
+                availableId={availableId}
               />
             }
           />
@@ -248,6 +275,28 @@ const App = () => {
                 setCart={setCart}
                 setFoodPage={setFoodPage}
                 setArrayLength={setArrayLength}
+              />
+            }
+          />
+          <Route
+            path="/admin/table"
+            element={
+              <Table
+                setHeader1={setHeader1}
+                setHeader4={setHeader4}
+                tableDetail={tableDetail}
+                setTableDetail={setTableDetail}
+              />
+            }
+          />
+          <Route
+            path="/admin/viewtable"
+            element={
+              <ViewTableOrder
+                setHeader1={setHeader1}
+                setHeader4={setHeader4}
+                tableDetail={tableDetail}
+                setTableDetail={setTableDetail}
               />
             }
           />

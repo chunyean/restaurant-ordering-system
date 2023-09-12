@@ -144,7 +144,7 @@ const OrderCart = (props) => {
           <p onClick={handleClose}>x</p>
         </div>
 
-        <label>Order Detail</label>
+        <label>Order Cart</label>
         <div className={styles.table}>
           <label>Table Number:</label>
           <select className={styles.select} onClick={handleTblNo}>
