@@ -1,0 +1,151 @@
+.tblcontainer {
+  /* background-color: bisque; */
+  width: 60dvw;
+  height: 7dvw;
+  display: flex;
+  justify-content: space-around;
+  margin: 7dvw auto 1dvw auto;
+}
+
+.tblcontainer2 {
+  /* background-color: bisque; */
+  width: 60dvw;
+  height: 7dvw;
+  display: flex;
+  justify-content: space-around;
+  margin: 3dvw auto;
+}
+
+.table {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+}
+
+.number {
+  position: relative;
+  width: 7dvw;
+  height: 7dvw;
+  border: 2px black solid;
+  border-radius: 50%;
+  text-align: center;
+  margin: auto;
+  background-color: cadetblue;
+  font-size: 4dvw;
+}
+
+.number > p {
+  position: relative;
+  font-size: 4dvw;
+  bottom: 2.8dvw;
+}
+
+.listDetail {
+  background-color: beige;
+  display: flex;
+  width: 60dvw;
+  height: 70svh;
+  margin: 4dvw auto;
+}
+
+.listDetail > p {
+  background-color: aqua;
+  position: absolute;
+  width: 50dvw;
+  margin: 2dvw 4dvw;
+  font-size: 2dvw;
+  text-align: center;
+  padding: 10px;
+  text-transform: uppercase;
+  border-bottom: 2px solid black;
+}
+
+.box {
+  background-color: blueviolet;
+  position: absolute;
+  margin: auto 4dvw;
+  width: 50dvw;
+  top: 15dvw;
+}
+.tableinfo {
+  position: relative;
+  background-color: rgb(201, 223, 242);
+  width: cals(100%/5);
+  float: left;
+  /* margin: auto; */
+  /* width: 19%; */
+  /* float: left; */
+}
+
+.tbl {
+  width: cals(100%/5);
+  /* position: relative; */
+  /* font-size: 1.5dvw; */
+  /* margin: 2px; */
+}
+
+.colon {
+  width: cals(100%/5);
+  background-color: yellowgreen;
+  position: relative;
+  width: 1%;
+  /* height: 70px; */
+  float: left;
+}
+
+.colon > p {
+  /* position: relative; */
+  /* font-size: 1.5dvw; */
+  /* margin: 2px; */
+}
+.result {
+  width: cals(100%/5);
+  /* background-color: chocolate; */
+  position: relative;
+  /* margin: auto; */
+  width: 50%;
+  float: left;
+}
+.name {
+  width: cals(100%/5);
+  position: relative;
+  /* font-size: 1.5dvw; */
+  /* margin: 2px; */
+}
+
+.space1 {
+  width: cals(100%/5);
+  background-color: aqua;
+  /* position: relative; */
+  /* width: 15%; */
+  /* height: 70px; */
+  /* float: left; */
+}
+
+/* .space2 {
+  background-color: aqua;
+  position: relative;
+  width: 15%;
+  height: 70px;
+  float: right;
+} */
+
+.list {
+  position: relative;
+  display: flex;
+  /* background-color: pink; */
+  /* position: absolute; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-self: center; */
+}
+
+/* .itemName {
+  position: relative;
+} */
+
+.individual {
+  position: relative;
+}

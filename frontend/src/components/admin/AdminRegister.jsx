@@ -1,39 +1,116 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../admin/Admin.module.css";
+import useFetch from "../custom_hooks/useFetch";
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminRegister = (props) => {
+  const fetchData = useFetch();
+  const [errorId, setErrorId] = useState();
+  const [errorPassword, setErrorPassword] = useState();
+  const [errorUsername, setErrorUsername] = useState();
+  // const [availableId, setAvailableId] = useState();
+
   const handleHeader = () => {
     props.setHeader1(false);
-    props.setHeader2(false);
-    props.setRegister(false);
-    props.setHeader3(true);
+    props.setHeader4(true);
   };
 
-  handleHeader();
+  const registerAccount = async () => {
+    const res = await fetchData("/employee/register", "PUT", {
+      name: props.username,
+      password: props.password,
+      contact: props.contact,
+    });
+    if (res.ok) {
+      console.log(res);
+      props.setUsername("");
+      props.setPassword("");
+      props.setContact("");
+      navigate("/admin/login");
+    } else {
+      console.log(res.data);
+      setErrorId(res.data);
+      setErrorPassword(res.data);
+    }
+  };
 
+  // const nextEmployeeID = async () => {
+  //   const res = await fetchData("/employee/nextAvaiId");
+  //   if (res.ok) {
+  //     setAvailableId(res.data);
+  //   } else {
+  //     console.log(res.data);
+  //     setErrorUsername(res.data);
+  //     setErrorPassword(res.data);
+  //   }
+  // };
+
+  useEffect(() => {
+    handleHeader();
+  }, []);
   return (
-    <div className={styles.background}>
-      <div className={styles.container}>
-        <div className={styles.register}>
-          <div className={styles.title}>
-            <label>LOGIN</label>
+    <>
+      <div className={styles.register2}>
+        <div className={styles.employee}>
+          <label>Employee ID: </label>
+          <p>{props.availableId}</p>
+          {errorId ? (
+            <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
+          ) : (
+            <div style={{ height: "36px", margin: "0" }}></div>
+          )}
+        </div>
+        <div className={styles.name}>
+          <label htmlFor="name">Name: </label>
+          <input
+            type="text"
+            id="contact"
+            placeholder="Enter your name"
+            onChange={props.handleContact}
+          ></input>
+          {/* {errorId ? (
+            <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
+          ) : (
+            <div style={{ height: "36px", margin: "0" }}></div>
+          )} */}
+        </div>
+        <div className={styles.contact}>
+          <label htmlFor="contact">Contact</label>
+          <input
+            type="text"
+            id="contact"
+            placeholder="Enter your contact number"
+            onChange={props.handleContact}
+          ></input>
+        </div>
+        <div className={styles.password1}>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            onChange={props.handlePassword}
+          ></input>
+          <div className={styles.check}>
+            <label>
+              <input type="checkbox" onClick={props.showPassword} />
+              Show Password
+            </label>
           </div>
-          <div className={styles.id}>
-            <label htmlFor="id">Employee ID:</label>
-            <input id="id" placeholder="Enter employee ID" type="text"></input>
-          </div>
-          <div className={styles.password}>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              placeholder="Enter password"
-              type="password"
-            ></input>
-          </div>
-          <button className={styles.loginbtn}>Login</button>
+          {/* {errorPassword ? (
+            <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
+          ) : (
+            <div style={{ height: "36px", margin: "0" }}></div>
+          )} */}
+        </div>
+        <div className={styles.term}>
+          <span></span>
+          <button className={styles.registerbtn} onClick={registerAccount}>
+            Register
+          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

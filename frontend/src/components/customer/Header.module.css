@@ -43,6 +43,15 @@
   text-decoration: none;
 }
 
+.customLink3 {
+  position: relative;
+  font-size: 1.7dvw;
+  bottom: 1.7dvw;
+  left: 2.5dvw;
+  color: black;
+  text-decoration: none;
+}
+
 .register {
   width: 40dvw;
   height: 60svh;
@@ -287,15 +296,19 @@ input[type="text"] {
 }
 
 .displayname {
-  width: fit-content;
+  min-width: 10dvw;
   height: 1.5dvw;
   position: absolute;
+  display: inline-block;
   left: 84dvw;
   bottom: 0.7dvw;
   font-size: 1dvw;
   border-radius: 30px;
   cursor: pointer;
+  -webkit-appearance: none;
+  text-align: center;
 }
+
 
 .logout {
   background-color: beige;
@@ -362,9 +375,10 @@ input[type="text"] {
   cursor: pointer;
 }
 
-.table > p {
-  font-size: 1.5dvw;
+/* .table > p {
+  font-size: 2dvw;
   text-align: center;
   position: relative;
   bottom: 1.3dvw;
-}
+  left:6dvw;
+} */
