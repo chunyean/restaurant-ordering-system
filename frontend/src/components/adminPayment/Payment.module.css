@@ -44,16 +44,19 @@
 
 .listDetail {
   background-color: beige;
+  /* position:absolute; */
   display: flex;
-  width: 60dvw;
-  height: 70svh;
+  width: 50dvw;
+  min-height: dvw;
   margin: 4dvw auto;
+  padding-bottom: 50px;
 }
 
 .listDetail > p {
-  background-color: aqua;
+  /* background-color: aqua; */
   position: absolute;
-  width: 50dvw;
+  width: 40dvw;
+  /* height: fit-content; */
   margin: 2dvw 4dvw;
   font-size: 2dvw;
   text-align: center;
@@ -63,89 +66,100 @@
 }
 
 .box {
-  background-color: blueviolet;
+  /* background-color: blueviolet; */
   position: absolute;
-  margin: auto 4dvw;
+  margin: 0 5dvw;
   width: 50dvw;
-  top: 15dvw;
-}
-.tableinfo {
-  position: relative;
-  background-color: rgb(201, 223, 242);
-  width: cals(100%/5);
-  float: left;
-  /* margin: auto; */
-  /* width: 19%; */
-  /* float: left; */
+  top: 14dvw;
 }
 
-.tbl {
+.tableinfo {
+  position: relative;
+  /* background-color: rgb(201, 223, 242); */
   width: cals(100%/5);
-  /* position: relative; */
-  /* font-size: 1.5dvw; */
-  /* margin: 2px; */
+  float: left;
+  left: auto;
 }
 
 .colon {
-  width: cals(100%/5);
-  background-color: yellowgreen;
+  /* width: cals(100%/5); */
+  /* background-color: yellowgreen; */
   position: relative;
   width: 1%;
-  /* height: 70px; */
   float: left;
 }
 
-.colon > p {
-  /* position: relative; */
-  /* font-size: 1.5dvw; */
-  /* margin: 2px; */
-}
 .result {
-  width: cals(100%/5);
+  /* width: cals(100%/5); */
   /* background-color: chocolate; */
   position: relative;
-  /* margin: auto; */
   width: 50%;
   float: left;
 }
-.name {
-  width: cals(100%/5);
-  position: relative;
-  /* font-size: 1.5dvw; */
-  /* margin: 2px; */
-}
 
-.space1 {
-  width: cals(100%/5);
-  background-color: aqua;
-  /* position: relative; */
-  /* width: 15%; */
-  /* height: 70px; */
-  /* float: left; */
-}
-
-/* .space2 {
-  background-color: aqua;
+.result > p {
   position: relative;
-  width: 15%;
-  height: 70px;
-  float: right;
-} */
+  left: 1dvw;
+}
 
 .list {
-  position: relative;
+  position: absolute;
   display: flex;
+  flex-direction: row;
   /* background-color: pink; */
-  /* position: absolute; */
-  /* display: flex; */
+  top: 20dvw;
+  width: 60dvw;
+  left: 30dvw;
+  margin: auto;
+
   /* justify-content: center; */
   /* align-self: center; */
 }
 
+.list > p {
+  /* position: inherit; */
+  display: flex;
+  flex-direction: row;
+  width: 60dvw;
+  font-size: 1.3dvw;
+  text-decoration: underline;
+  margin-bottom: 2px;
+}
 /* .itemName {
   position: relative;
 } */
 
 .individual {
+  background-color: cadetblue;
+  margin: 0;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 60dvw;
+  top: 15.5dvw;
+  left: 5dvw;
+}
+
+.individual > p {
+  position: relative;
+  margin: 5px;
+  width: calc(100%/5);
+  display: flex;
+  flex-direction: row;
+}
+
+.admend{
+  border-radius: 33px;
+  background-color: aquamarine;
+  height: 20px;
+}
+
+.delete{
+  border-radius: 33px;
+  background-color: red;
+  height: 20px;
+}
+
+.payment{
   position: relative;
 }

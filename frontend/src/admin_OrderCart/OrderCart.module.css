@@ -66,7 +66,7 @@
 .name {
   display: flex;
   float: left;
-  width: 55%;
+  width: 60%;
   border-bottom: 3px black solid;
 }
 
@@ -85,7 +85,7 @@
   display: flex;
   float: left;
   right: 2dvw;
-  width: 20%;
+  width: 15%;
   border-bottom: 3px black solid;
   justify-content: center;
 }
@@ -104,7 +104,7 @@
   position: relative;
   display: flex;
   float: left;
-  width: 55%;
+  width: 60%;
   font-size: 1.5dvw;
 }
 
@@ -112,7 +112,7 @@
   position: relative;
   display: flex;
   float: left;
-  width: 15%;
+  width: 10%;
   right: 1dvw;
   font-size: 1.5dvw;
   justify-content: center;
@@ -140,23 +140,20 @@
 
 .check {
   position: relative;
-  /* display: flex; */
+  display: flex;
   float: left;
-  width: 10px;
-  /* height: 20px; */
+  width: 10%;
+  height: 20px;
   cursor: pointer;
   top: 0.3dvw;
-  /* margin-right:1dvw; */
-  padding-right: 4dvw;
 }
 
 .button {
   position: relative;
   display: left;
   float: left;
-  width: 10%;
+  width: 7%;
   height: 1.5dvw;
   cursor: pointer;
   border-radius: 20px;
-  color: red;
 }

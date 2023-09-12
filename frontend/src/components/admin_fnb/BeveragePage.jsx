@@ -1,28 +1,53 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../fnb_item/MenuPage.module.css";
-import ItemOverlay from "../overlay_item/ItemOverlay";
-import style from '../admin/Admin.module.css'
 import UserContext from "../context/user";
+import ItemOverlay from "../overlay_item/ItemOverlay";
 
-const Food = (props) => {
+const BeveragePage = (props) => {
+  const fetchData = useFetch();
+  const [category, setCategory] = useState("COCKTAIL");
+  const [bevItem, setBevItem] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const auth = useContext(UserContext);
+  const [individualItem, setIndividualItem] = useState();
+  const [showItemOverlay, setShowItemOverlay] = useState(false);
+
   const handleHeader = () => {
     props.setHeader1(false);
     props.setHeader2(false);
+    props.setHeader3(false);
     props.setRegister(false);
     props.setHeader4(true);
   };
 
-  handleHeader();
-  const fetchData = useFetch();
-  const [fnbItem, setFnbItem] = useState([]);
-  const [category, setCategory] = useState("APPERTIZER");
-  const [quantity, setQuantity] = useState(1);
-  const [individualItem, setIndividualItem] = useState();
-  const [showItemOverlay, setShowItemOverlay] = useState(false);
-  const auth = useContext(UserContext);
+  // handleHeader();
 
-  const foodCate = ["APPERTIZER", "SOUP", "MAIN COURSE", "PASTA", "DESSERT"];
+  const beverageCate = [
+    "COCKTAIL",
+    "RED WINE",
+    "WHITE WINE",
+    "BOTTLE BEER",
+    "SPIRIT",
+    "SOFT DRINK",
+    "JUICE",
+  ];
+
+  const subBeverage = beverageCate.map((subBev, idx) => {
+    return (
+      // if not work need to change value to button there
+      <li
+        key={idx}
+        value={subBev}
+        onClick={() => {
+          setCategory(subBev);
+          everyCateData();
+        }}
+      >
+        {subBev}
+      </li>
+    );
+  });
 
   const everyCateData = async () => {
     const res = await fetchData("/item/category", "POST", {
@@ -30,32 +55,21 @@ const Food = (props) => {
     });
     if (res.ok) {
       console.log(res.data);
-      setFnbItem(res.data);
+      setBevItem(res.data);
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
-  const subFoods = foodCate.map((subFood, idx) => {
-    return (
-      // if not work need to change value to button there
-      <li
-        key={idx}
-        value={subFood}
-        onClick={() => {
-          setCategory(subFood);
-          everyCateData();
-        }}
-      >
-        {subFood}
-      </li>
-    );
-  });
-
   const addOrder = async (id) => {
-    const res = await fetchData("/item/addorder/" + id, "PUT", {
-      quantity: props.quantity,
-    });
+    const res = await fetchData(
+      "/item/addorder/" + id,
+      "PUT",
+      {
+        quantity: quantity,
+      },
+      auth.accessToken
+    );
     if (res.ok) {
       console.log(res.ok);
       lengthOfCart();
@@ -72,35 +86,34 @@ const Food = (props) => {
       auth.accessToken
     );
     if (res.ok) {
-      console.log(res.data);
       props.setArrayLength(res.data);
+    } else {
+      alert(JSON.stringify(res.data));
     }
   };
 
-  const listItem = fnbItem.map((item) => {
+  const listItem = bevItem.map((item) => {
     return (
-      <div key={item.id} className={styles.box}>
+      <div key={item.id}>
         <div className={styles.leftbox} />
         <div className={styles.rightbox} />
-
         <div
           id={item.id}
           onClick={() => {
-            console.log(item);
+            console.log("item");
             setIndividualItem(item);
             setShowItemOverlay(true);
           }}
         >
           <div className={styles.items}>
-            <div className={styles.photo}>
-              <img src={item.photo} />
+            <div>
+              <img src={item.photo} className={styles.drink} />
             </div>
             <div className={styles.content}>
               <span>{item.name}</span>
               <span className={styles.price}>${item.price}</span>
               <p>{item.description}</p>
               <button
-                className={styles.button}
                 onClick={(event) => {
                   console.log("add");
                   event.stopPropagation();
@@ -123,22 +136,22 @@ const Food = (props) => {
   }, [category]);
 
   return (
-    <div className={style.background}>
-      <div className={styles.subfood}>
-        <ul>{subFoods}</ul>
+    <>
+      <div className={styles.subbev}>
+        <ul>{subBeverage}</ul>
       </div>
       {listItem}
       {showItemOverlay && (
         <ItemOverlay
           individualItem={individualItem}
-          setQuantity={props.setQuantity}
+          setQuantity={setQuantity}
           addOrder={addOrder}
           lengthOfCart={lengthOfCart}
           setShowItemOverlay={setShowItemOverlay}
         ></ItemOverlay>
       )}
-    </div>
+    </>
   );
 };
 
-export default Food;
+export default BeveragePage;

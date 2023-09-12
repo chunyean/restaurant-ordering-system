@@ -73,6 +73,7 @@ const BeveragePage = (props) => {
     if (res.ok) {
       console.log(res.ok);
       lengthOfCart();
+      props.setShowItemOverlay(false)
     } else {
       alert(JSON.stringify(res.data));
     }
@@ -83,7 +84,7 @@ const BeveragePage = (props) => {
       "/item/length",
       "POST",
       undefined,
-      auth.accesstoken
+      auth.accessToken
     );
     if (res.ok) {
       props.setArrayLength(res.data);
@@ -102,7 +103,7 @@ const BeveragePage = (props) => {
           onClick={() => {
             console.log("item");
             setIndividualItem(item);
-            setShowItemOverlay(true);
+            props.setShowItemOverlay(true);
           }}
         >
           <div className={styles.items}>
@@ -141,13 +142,13 @@ const BeveragePage = (props) => {
         <ul>{subBeverage}</ul>
       </div>
       {listItem}
-      {showItemOverlay && (
+      {props.showItemOverlay && (
         <ItemOverlay
           individualItem={individualItem}
           setQuantity={setQuantity}
           addOrder={addOrder}
           lengthOfCart={lengthOfCart}
-          setShowItemOverlay={setShowItemOverlay}
+          setShowItemOverlay={props.setShowItemOverlay}
         ></ItemOverlay>
       )}
     </>

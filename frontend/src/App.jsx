@@ -10,16 +10,16 @@ import BeveragePage from "./components/fnb_item/BeveragePage";
 import OrderCart from "./components/orderCart/OrderCart";
 import AdminRegister from "./components/admin/AdminRegister";
 import AdminLogin from "./components/admin/AdminLogin";
-import Table from "./components/payment/Table";
-import ViewTableOrder from "./components/payment/ViewTableOrder";
+import Table from "./components/adminPayment/Table";
+import ViewTableOrder from "./components/adminPayment/ViewTableOrder";
 
 const App = () => {
   const fetchData = useFetch();
 
-  const test =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlNFSSAxMTUiLCJ1c2VybmFtZSI6ImRlc21vbmQiLCJjdXN0SUQiOjk5OTk5LCJpYXQiOjE2OTQ1MDA3MzEsImV4cCI6MTY5NDU4NzEzMSwianRpIjoiOWI0MjcyODgtNTgwYy00NjFhLWJjOGQtMDBiMWM3MWJmZmE1In0.K78mZ1DJGbLe9JqtzGo3JCOWcuNT1AKzA_HGzxKzMkw";
+  // const test =
+  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlNFSSAxMTUiLCJ1c2VybmFtZSI6ImRlc21vbmQiLCJjdXN0SUQiOjk5OTk5LCJpYXQiOjE2OTQ1MDA3MzEsImV4cCI6MTY5NDU4NzEzMSwianRpIjoiOWI0MjcyODgtNTgwYy00NjFhLWJjOGQtMDBiMWM3MWJmZmE1In0.K78mZ1DJGbLe9JqtzGo3JCOWcuNT1AKzA_HGzxKzMkw";
 
-  const [accessToken, setAccessToken] = useState(test);
+  const [accessToken, setAccessToken] = useState();
   // const [showLanding, setShowLanding] = useState(true);
 
   //need to change login to true, display back the login container
@@ -37,7 +37,10 @@ const App = () => {
   const [cartDetail, setCartDetail] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [availableId, setAvailableId] = useState();
-  const [tableDetail, setTableDetail] = useState();
+  const [test, setTest]=useState()
+  const [showItemOverlay, setShowItemOverlay] = useState(false);
+
+  // const [tableDetail, setTableDetail] = useState();
 
   const [header1, setHeader1] = useState(true);
   const [header2, setHeader2] = useState(false);
@@ -100,6 +103,10 @@ const App = () => {
           header2={header2}
           header3={header3}
           header4={header4}
+          test={test}
+          setTest={setTest}
+          showItemOverlay={showItemOverlay}
+          setShowItemOverlay={setShowItemOverlay}
         ></Header>
 
         <Routes>
@@ -137,6 +144,8 @@ const App = () => {
                 setFoodPage={setFoodPage}
                 setLogin={setLogin}
                 showPassword={showPassword}
+                username={username}
+                handleUsername={handleUsername}
                 password={password}
                 handlePassword={handlePassword}
                 setHeader1={setHeader1}
@@ -157,6 +166,9 @@ const App = () => {
                 arrayLength={arrayLength}
                 quantity={quantity}
                 setQuantity={setQuantity}
+                test={test}
+                showItemOverlay={showItemOverlay}
+                setShowItemOverlay={setShowItemOverlay}
               ></FoodPage>
             }
           />
@@ -170,6 +182,9 @@ const App = () => {
                 setArrayLength={setArrayLength}
                 quantity={quantity}
                 setQuantity={setQuantity}
+                test={test}
+                showItemOverlay={showItemOverlay}
+                setShowItemOverlay={setShowItemOverlay}
               ></BeveragePage>
             }
           />
@@ -185,6 +200,8 @@ const App = () => {
                 quantity={quantity}
                 setQuantity={setQuantity}
                 setArrayLength={setArrayLength}
+                setTest={setTest}
+                test={test}
               ></OrderCart>
             }
           />
@@ -244,6 +261,8 @@ const App = () => {
                 arrayLength={arrayLength}
                 quantity={quantity}
                 setQuantity={setQuantity}
+                showItemOverlay={showItemOverlay}
+                setShowItemOverlay={setShowItemOverlay}
               />
             }
           />
@@ -257,6 +276,8 @@ const App = () => {
                 setHeader3={setHeader3}
                 setHeader4={setHeader4}
                 setArrayLength={setArrayLength}
+                showItemOverlay={showItemOverlay}
+                setShowItemOverlay={setShowItemOverlay}
               />
             }
           />
@@ -275,6 +296,8 @@ const App = () => {
                 setCart={setCart}
                 setFoodPage={setFoodPage}
                 setArrayLength={setArrayLength}
+                setTest={setTest}
+                test={test}
               />
             }
           />
@@ -284,8 +307,8 @@ const App = () => {
               <Table
                 setHeader1={setHeader1}
                 setHeader4={setHeader4}
-                tableDetail={tableDetail}
-                setTableDetail={setTableDetail}
+                // tableDetail={tableDetail}
+                // setTableDetail={setTableDetail}
               />
             }
           />
@@ -295,8 +318,8 @@ const App = () => {
               <ViewTableOrder
                 setHeader1={setHeader1}
                 setHeader4={setHeader4}
-                tableDetail={tableDetail}
-                setTableDetail={setTableDetail}
+                // tableDetail={tableDetail}
+                // setTableDetail={setTableDetail}
               />
             }
           />
