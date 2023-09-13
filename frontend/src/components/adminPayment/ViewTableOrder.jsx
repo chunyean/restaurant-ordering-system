@@ -33,7 +33,7 @@ const ViewTableOrder = (props) => {
 
   const minus = async (order_id, id, name, quantity) => {
     const newQuantity = quantity - 1;
-    if (newQuantity <= 1) {
+    if (newQuantity === 0) {
       return;
     }
     const res = await fetchData(
@@ -106,8 +106,8 @@ const ViewTableOrder = (props) => {
     );
     if (res.ok) {
       console.log(res.data);
-      props.setPaymentDetail(res.data)
-      props.setTableDetail(detail)
+      props.setPaymentDetail(res.data);
+      props.setTableDetail(detail);
       navigate("/admin/payment");
     } else {
       alert(JSON.stringify(res.data));
@@ -116,7 +116,7 @@ const ViewTableOrder = (props) => {
 
   const listDetail = detail.map((item) => {
     return (
-      <div key={item.id} className={styles.individual}>
+      <div key={item.item_id} className={styles.individual}>
         <p className={styles.name}>{item.name}</p>
         <button
           type="submit"

@@ -13,6 +13,7 @@ import AdminLogin from "./components/admin/AdminLogin";
 import Table from "./components/adminPayment/Table";
 import ViewTableOrder from "./components/adminPayment/ViewTableOrder";
 import Payment from "./components/adminPayment/Payment";
+import Receipt from "./components/adminPayment/Receipt";
 
 const App = () => {
   const fetchData = useFetch();
@@ -238,71 +239,19 @@ const App = () => {
                 password={password}
                 handlePassword={handlePassword}
                 contact={contact}
+                username={username}
+                setUsername={setUsername}
+                setPassword={setPassword}
                 setContact={setContact}
                 setUser={setUser}
                 employeeId={employeeId}
                 handleEmployeeId={handleEmployeeId}
                 availableId={availableId}
+                handleContact={handleContact}
+                handleUsername={handleUsername}
               />
             }
           />
-          {/* <Route
-            path="/admin/food"
-            element={
-              <FoodPage
-                setRegister={setRegister}
-                setHeader1={setHeader1}
-                setHeader2={setHeader2}
-                setHeader3={setHeader3}
-                setHeader4={setHeader4}
-                user={user}
-                foodPage={foodPage}
-                setFoodPage={setFoodPage}
-                setBeveragePage={setBeveragePage}
-                setArrayLength={setArrayLength}
-                arrayLength={arrayLength}
-                quantity={quantity}
-                setQuantity={setQuantity}
-                showItemOverlay={showItemOverlay}
-                setShowItemOverlay={setShowItemOverlay}
-              />
-            }
-          />
-          <Route
-            path="/admin/beverage"
-            element={
-              <BeveragePage
-                setRegister={setRegister}
-                setHeader1={setHeader1}
-                setHeader2={setHeader2}
-                setHeader3={setHeader3}
-                setHeader4={setHeader4}
-                setArrayLength={setArrayLength}
-                showItemOverlay={showItemOverlay}
-                setShowItemOverlay={setShowItemOverlay}
-              />
-            }
-          />
-          <Route
-            path="/admin/cart"
-            element={
-              <OrderCart
-                user={user}
-                setRegister={setRegister}
-                setHeader1={setHeader1}
-                setHeader2={setHeader2}
-                setHeader3={setHeader3}
-                setHeader4={setHeader4}
-                cartDetail={cartDetail}
-                setCartDetail={setCartDetail}
-                setCart={setCart}
-                setFoodPage={setFoodPage}
-                setArrayLength={setArrayLength}
-                setTest={setTest}
-                test={test}
-              />
-            }
-          /> */}
           <Route
             path="/admin/table"
             element={
@@ -332,8 +281,24 @@ const App = () => {
           />
           <Route
             path="/admin/payment"
-            element={<Payment paymentDetail={paymentDetail} />}
+            element={
+              <Payment
+                paymentDetail={paymentDetail}
+                tableDetail={tableDetail}
+                setPaymentDetail={setPaymentDetail}
+                setTableDetail={setTableDetail}
+              />
+            }
           />
+          <Route
+            path="/admin/receipt"
+            element={
+              <Receipt
+                paymentDetail={paymentDetail}
+                tableDetail={tableDetail}
+              />
+            }
+          ></Route>
         </Routes>
       </UserContext.Provider>
     </>
