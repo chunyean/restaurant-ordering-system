@@ -4,8 +4,8 @@ const { validateParamsId } = require("../validators/inputValidate");
 const { auth } = require("../middleware/auth");
 const router = express.Router();
 
-router.put("/create/:id", auth, validateParamsId, newPayment);
+router.put("/create", auth, validateParamsId, newPayment);
 
-router.patch("/update/:id", auth, validateParamsId, completedPayment);
+router.patch("/completed/:id", auth, validateParamsId, completedPayment);
 
 module.exports = router;

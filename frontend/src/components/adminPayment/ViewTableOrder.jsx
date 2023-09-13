@@ -2,198 +2,164 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./Payment.module.css";
 import useFetch from "../custom_hooks/useFetch";
 import UserContext from "../context/user";
+import { useNavigate } from "react-router-dom";
 
 const ViewTableOrder = (props) => {
   const fetchData = useFetch();
   const auth = useContext(UserContext);
-  const [value, setValue] = useState();
+  const navigate = useNavigate();
 
   console.log(props.tableDetail);
-  // const detail = props.tableDetail;
-  const detail = [
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Roasted Broccoli Soup",
-      quantity: 3,
-      total_price: "30.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Pasta alla Trapanese",
-      quantity: 3,
-      total_price: "54.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "The Loose Moose French",
-      quantity: 2,
-      total_price: "50.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Dalmore King Alexander III",
-      quantity: 2,
-      total_price: "800.00",
-    },
-    {
-      table_number: 2,
-      pax: 2,
-      username: "pikachu1",
-      name: "Loaded Deviled Eggs",
-      quantity: 2,
-      total_price: null,
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Roasted Broccoli Soup",
-      quantity: 3,
-      total_price: "30.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Pasta alla Trapanese",
-      quantity: 3,
-      total_price: "54.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "The Loose Moose French",
-      quantity: 2,
-      total_price: "50.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Dalmore King Alexander III",
-      quantity: 2,
-      total_price: "800.00",
-    },
-    {
-      table_number: 2,
-      pax: 2,
-      username: "pikachu1",
-      name: "Loaded Deviled Eggs",
-      quantity: 2,
-      total_price: null,
-    },
-    {
-      table_number: 2,
-      pax: 2,
-      username: "pikachu1",
-      name: "Egg salad",
-      quantity: 1,
-      total_price: null,
-    },
-    {
-      table_number: 2,
-      pax: 2,
-      username: "pikachu1",
-      name: "Egg salad",
-      quantity: 1,
-      total_price: null,
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Roasted Broccoli Soup",
-      quantity: 3,
-      total_price: "30.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Pasta alla Trapanese",
-      quantity: 3,
-      total_price: "54.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "The Loose Moose French",
-      quantity: 2,
-      total_price: "50.00",
-    },
-    {
-      table_number: 2,
-      pax: 3,
-      username: "pikachu1",
-      name: "Dalmore King Alexander III",
-      quantity: 2,
-      total_price: "800.00",
-    },
-    {
-      table_number: 2,
-      pax: 2,
-      username: "pikachu1",
-      name: "Loaded Deviled Eggs",
-      quantity: 2,
-      total_price: null,
-    },
-    {
-      table_number: 2,
-      pax: 2,
-      username: "pikachu1",
-      name: "Egg salad",
-      quantity: 1,
-      total_price: null,
-    },
-  ];
+  const detail = props.tableDetail;
 
-  const updateOrder = async () => {
+  const plus = async (order_id, id, name, quantity) => {
     const res = await fetchData(
-      "/order/admend" + id,
+      "/order/update/" + id,
       "PATCH",
       {
-        quantity: value + 1,
+        order_id: order_id,
+        quantity: quantity + 1,
+        name: name,
       },
       auth.accessToken
     );
     if (res.ok) {
+      console.log(res.data);
+      handleViewOrder(detail[0].table_number);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
+  const minus = async (order_id, id, name, quantity) => {
+    const newQuantity = quantity - 1;
+    if (newQuantity <= 1) {
+      return;
+    }
+    const res = await fetchData(
+      "/order/update/" + id,
+      "PATCH",
+      {
+        order_id: order_id,
+        quantity: newQuantity,
+        name: name,
+      },
+      auth.accessToken
+    );
+    if (res.ok) {
+      console.log(res.data);
+      handleViewOrder(detail[0].table_number);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
+  const handleViewOrder = async (id) => {
+    const res = await fetchData("/order/allorder/" + id, "POST");
+    if (res.ok) {
+      props.setTableDetail(res.data);
+      console.log(res.data);
+      // setShowTableOrder(true);
+      // navigate("/admin/viewtable");
+      props.setTest("");
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
+  const deleteItem = async (id, order_id) => {
+    const res = await fetchData(
+      "/order/delete/" + id,
+      "DELETE",
+      { order_id: order_id },
+      auth.accessToken
+    );
+    if (res.ok) {
+      console.log(res.data);
+      handleViewOrder(detail[0].table_number);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
+  const voidOrder = async (table_number) => {
+    const res = await fetchData(
+      "/order/voidorder",
+      "DELETE",
+      { table_number: table_number },
+      auth.accessToken
+    );
+    if (res.ok) {
+      navigate("/food");
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
+  const submitOrder = async (table_number) => {
+    console.log(props.user.StaffID);
+    const res = await fetchData(
+      "/payment/create",
+      "PUT",
+      { table_number: table_number },
+      auth.accessToken
+    );
+    if (res.ok) {
+      console.log(res.data);
+      props.setPaymentDetail(res.data)
+      props.setTableDetail(detail)
+      navigate("/admin/payment");
+    } else {
+      alert(JSON.stringify(res.data));
     }
   };
 
   const listDetail = detail.map((item) => {
     return (
-      <div className={styles.individual}>
-        <p>{item.name}</p>
-        <p>{item.quantity}</p>
-        <p>{item.total_price}</p>
-        <button type="submit" className={styles.admend}>
-          Admend
+      <div key={item.id} className={styles.individual}>
+        <p className={styles.name}>{item.name}</p>
+        <button
+          type="submit"
+          className={styles.update}
+          onClick={() => {
+            minus(item.id, item.item_id, item.name, item.quantity);
+          }}
+        >
+          -
         </button>
-        <button type="submit" className={styles.delete}>
+        <p className={styles.quantity}>{item.quantity}</p>
+        <button
+          type="submit"
+          className={styles.update}
+          onClick={() => {
+            plus(item.id, item.item_id, item.name, item.quantity);
+          }}
+        >
+          +
+        </button>
+        <p className={styles.totalprice}>{item.total_price}</p>
+
+        <button
+          type="submit"
+          className={styles.delete}
+          onClick={() => deleteItem(item.item_id, item.id)}
+        >
           Cancel
         </button>
       </div>
     );
   });
 
-  // const handleHeader = () => {
-  //   {
-  //     props.setHeader1(false);
-  //     props.setHeader4(true);
-  //   }
-  // };
+  // let id = [];
+  // for (let idx = 0; idx < detail.length; idx++) {
+  //   const result = detail[idx].id;
+  //   id.push(result);
+  // }
+  // console.log(id);
 
-  // handleHeader();
+  // useEffect(()=>{
+  //   auth.handleViewOrder(newQuantity)
+  // }, [])
 
   return (
     <>
@@ -211,20 +177,39 @@ const ViewTableOrder = (props) => {
             <p>:</p>
           </div>
           <div className={styles.result}>
-            <p>{detail[0].table_number}</p>
-            <p>{detail[0].username}</p>
-            <p>{detail[0].pax}</p>
+            <p>{detail[0]?.table_number}</p>
+            <p>{detail[0]?.username}</p>
+            <p>{detail[0]?.pax}</p>
           </div>
         </div>
         <div className={styles.list}>
-          <p>Name</p>
-          <p>Quantity</p>
-          <p>Total Price</p>
-          <p></p>
-          <p></p>
+          <p className={styles.name}>Name</p>
+          <p className={styles.update}></p>
+          <p className={styles.quantity}>Quantity</p>
+          <p className={styles.update}></p>
+          <p className={styles.totalprice}>Total Price</p>
+
+          <p className={styles.delete}></p>
         </div>
-        <div className={styles.abc}>{listDetail}</div>
-        <button className={styles.payment}>Payment</button>
+        <div>{listDetail}</div>
+        <div className={styles.voidpay}>
+          <button
+            className={styles.voidorder}
+            onClick={() => {
+              voidOrder(detail[0].table_number);
+            }}
+          >
+            Void Order
+          </button>
+          <button
+            className={styles.payment}
+            onClick={() => {
+              submitOrder(detail[0].table_number);
+            }}
+          >
+            Payment
+          </button>
+        </div>
       </div>
     </>
   );

@@ -12,6 +12,7 @@ import AdminRegister from "./components/admin/AdminRegister";
 import AdminLogin from "./components/admin/AdminLogin";
 import Table from "./components/adminPayment/Table";
 import ViewTableOrder from "./components/adminPayment/ViewTableOrder";
+import Payment from "./components/adminPayment/Payment";
 
 const App = () => {
   const fetchData = useFetch();
@@ -37,10 +38,10 @@ const App = () => {
   const [cartDetail, setCartDetail] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [availableId, setAvailableId] = useState();
-  const [test, setTest]=useState()
+  const [test, setTest] = useState();
   const [showItemOverlay, setShowItemOverlay] = useState(false);
-
-  // const [tableDetail, setTableDetail] = useState();
+  const [tableDetail, setTableDetail] = useState([]);
+  const [paymentDetail, setPaymentDetail] = useState();
 
   const [header1, setHeader1] = useState(true);
   const [header2, setHeader2] = useState(false);
@@ -81,22 +82,23 @@ const App = () => {
   const handleEmployeeId = (e) => {
     setEmployeeId(e.target.value);
   };
+
   return (
     <>
       <UserContext.Provider value={{ accessToken, setAccessToken }}>
         <Header
-          foodPage={foodPage}
-          setFoodPage={setFoodPage}
-          beveragePage={beveragePage}
-          setBeveragePage={setBeveragePage}
+          // foodPage={foodPage}
+          // setFoodPage={setFoodPage}
+          // beveragePage={beveragePage}
+          // setBeveragePage={setBeveragePage}
           // showLanding={showLanding}
           // setShowLanding={setShowLanding}
           setRegister={setRegister}
           setLogin={setLogin}
           user={user}
           arrayLength={arrayLength}
-          cart={cart}
-          setCart={setCart}
+          // cart={cart}
+          // setCart={setCart}
           setCartDetail={setCartDetail}
           setAvailableId={setAvailableId}
           header1={header1}
@@ -114,8 +116,8 @@ const App = () => {
             path=""
             element={
               <Register
-                setRegister={setRegister}
-                setLogin={setLogin}
+                // setRegister={setRegister}
+                // setLogin={setLogin}
                 // loginClick={loginClick}
                 // registerClick={registerClick}
                 showPassword={showPassword}
@@ -244,7 +246,7 @@ const App = () => {
               />
             }
           />
-          <Route
+          {/* <Route
             path="/admin/food"
             element={
               <FoodPage
@@ -300,15 +302,17 @@ const App = () => {
                 test={test}
               />
             }
-          />
+          /> */}
           <Route
             path="/admin/table"
             element={
               <Table
                 setHeader1={setHeader1}
                 setHeader4={setHeader4}
-                // tableDetail={tableDetail}
-                // setTableDetail={setTableDetail}
+                test={test}
+                setTest={setTest}
+                tableDetail={tableDetail}
+                setTableDetail={setTableDetail}
               />
             }
           />
@@ -318,10 +322,17 @@ const App = () => {
               <ViewTableOrder
                 setHeader1={setHeader1}
                 setHeader4={setHeader4}
-                // tableDetail={tableDetail}
-                // setTableDetail={setTableDetail}
+                setTest={setTest}
+                tableDetail={tableDetail}
+                setTableDetail={setTableDetail}
+                user={user}
+                setPaymentDetail={setPaymentDetail}
               />
             }
+          />
+          <Route
+            path="/admin/payment"
+            element={<Payment paymentDetail={paymentDetail} />}
           />
         </Routes>
       </UserContext.Provider>

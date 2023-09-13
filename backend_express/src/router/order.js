@@ -27,7 +27,7 @@ router.delete(
 
 router.patch("/update/:id", auth, validateParamsId, admendOrder);
 
-router.delete("/voidorder/:id", auth, validateParamsId, cancelOrder);
+router.delete("/voidorder", auth, validateParamsId, cancelOrder);
 
 //this one need to check where to get the table number
 router.post("/allorder/:id", validateParamsId, allOrder);
