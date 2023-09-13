@@ -131,7 +131,9 @@ const allOrder = async (req, res) => {
       "select table_number, pax, username, name, quantity, total_price, item_id, orders.id from orders join order_lists on order_lists.order_id = orders.id join items on items.id = order_lists.item_id join customers on customers.id = orders.customer_id where (table_number = $1 and is_payment = false and is_voidorder = false)",
       [req.params.id]
     );
+
     const result = list.rows;
+    console.log(result)
     res.json(result);
   } catch (error) {
     console.log(error.message);
