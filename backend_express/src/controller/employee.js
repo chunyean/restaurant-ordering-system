@@ -60,7 +60,7 @@ const login = async (req, res) => {
 
     if (correctPassword) {
       const payload = {
-        id: employee.id,
+        staffID: employee.id,
         username: employee.name,
         custID: 99999
       };

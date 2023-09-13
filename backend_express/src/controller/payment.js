@@ -11,19 +11,20 @@ const pool = require("../DB/db");
 const newPayment = async (req, res) => {
   try {
     //1st
+    console.log(req.body.table_number);
     const create = await pool.query(
-      "insert into payments (employee_id) values ($1) returning id",
-      [req.staffID]
+      "insert into payments (employee_id, table_number) values ($1, $2) returning id",
+      [req.staffID, req.body.table_number]
     );
     const paymentID = create.rows[0].id;
-
+    console.log("2");
     //2nd
     const order = await pool.query(
-      "select orders.id, customers.id from orders join customers on customers.id = orders.customer_id where table_number = $1 and is_payment = false and orders.is_voidorder = false",
+      "select orders.id from orders join customers on customers.id = orders.customer_id where table_number = $1 and is_payment = false and orders.is_voidorder = false",
       [req.body.table_number]
     );
     const orderID = order.rows;
-
+    console.log(orderID);
     //3rd
     for (let idx = 0; idx < orderID.length; idx++) {
       await pool.query(
@@ -31,13 +32,13 @@ const newPayment = async (req, res) => {
         [paymentID, orderID[idx].id]
       );
     }
-
+    console.log("4");
     //4th
     const price = await pool.query(
-      "select sum(total_price) from order_payment join orders on orders.id = order_payment.order_id join order_lists on order_lists.order_id = orders.id where payment_id=$1",
+      "select sum(total_price) as total_price from order_payment join orders on orders.id = order_payment.order_id join order_lists on order_lists.order_id = orders.id where payment_id=$1",
       [paymentID]
     );
-
+    console.log("5");
     // let nettAmount = 0;
     // for (let idx = 0; idx < price.rows.length; idx++) {
     //   nettAmount += Number(price.rows[idx].total_price);
@@ -55,7 +56,7 @@ const newPayment = async (req, res) => {
       [price.rows[0].total_price]
     );
     const paymentDetail = finalPayment.rows[0];
-
+    console.log(paymentDetail);
     res.json(paymentDetail);
   } catch (error) {
     console.log(error.message);

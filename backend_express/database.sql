@@ -111,8 +111,10 @@ create table order_lists (
 	order_id uuid references orders(id),
 	item_id integer references items(id),
 	quantity smallserial not null,
+	unit_price decimal(6,2),
 	total_price decimal(6,2),
 	order_type varchar(15) references order_types(order_type)
+
 );
 
 
@@ -148,6 +150,19 @@ name varchar(100),
 quantity smallserial, 
 unit_price decimal(6,2), 
 nett_amount decimal(6,2) null);
+
+CREATE OR REPLACE FUNCTION update_totalprice()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.total_price = NEW.quantity * NEW.unit_price;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_totalprice
+BEFORE UPDATE OF quantity ON order_lists
+FOR EACH ROW
+EXECUTE FUNCTION update_totalprice();
 
 CREATE TRIGGER nettAmount
   BEFORE INSERT OR UPDATE 
