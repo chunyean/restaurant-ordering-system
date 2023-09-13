@@ -10,26 +10,26 @@ const Header = (props) => {
   const fetchData = useFetch();
   const auth = useContext(UserContext);
 
-  const handleFoodPage = () => {
-    props.setBeveragePage(false);
-    props.setCart(false);
-    props.setFoodPage(true);
-  };
+  // const handleFoodPage = () => {
+  //   props.setBeveragePage(false);
+  //   props.setCart(false);
+  //   props.setFoodPage(true);
+  // };
 
-  const handleBeveragePage = () => {
-    props.setFoodPage(false);
-    props.setCart(false);
-    props.setBeveragePage(true);
-  };
+  // const handleBeveragePage = () => {
+  //   props.setFoodPage(false);
+  //   props.setCart(false);
+  //   props.setBeveragePage(true);
+  // };
 
   const cartOrder = async () => {
     const res = await fetchData("/item/cart", "GET");
     if (res.ok) {
       console.log(res.data);
       props.setCartDetail(res.data);
-      props.setFoodPage(false);
-      props.setBeveragePage(false);
-      props.setCart(true);
+      // props.setFoodPage(false);
+      // props.setBeveragePage(false);
+      // props.setCart(true);
       props.setTest("");
     } else {
       alert(JSON.stringify(res.data));
@@ -78,12 +78,12 @@ const Header = (props) => {
               className={styles.logo}
             />
           </Link>
-          <div className={styles.food} onClick={handleFoodPage}>
+          <div className={styles.food}>
             <Link to="/food" className={styles.customLink1}>
               <p>Food</p>
             </Link>
           </div>
-          <div className={styles.beverage} onClick={handleBeveragePage}>
+          <div className={styles.beverage}>
             <Link to="/beverage" className={styles.customLink2}>
               <p>Beverage</p>
             </Link>
@@ -123,12 +123,12 @@ const Header = (props) => {
             />
           </Link>
           <div className={styles.food1}>
-            <Link to="/admin/food" className={styles.customLink1}>
+            <Link to="/food" className={styles.customLink1}>
               <p>Food</p>
             </Link>
           </div>
           <div className={styles.beverage1}>
-            <Link to="/admin/beverage" className={styles.customLink2}>
+            <Link to="/beverage" className={styles.customLink2}>
               <p>Beverage</p>
             </Link>
           </div>
@@ -137,7 +137,7 @@ const Header = (props) => {
               <p>Table</p>
             </Link>
           </div>
-          <Link to="/admin/cart">
+          <Link to="/cart">
             <img
               src="/cart.256x256.png"
               className={styles.cart}

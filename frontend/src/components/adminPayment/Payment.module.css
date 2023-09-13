@@ -46,6 +46,7 @@
   background-color: beige;
   /* position:absolute; */
   display: flex;
+  flex-direction: column;
   width: 50dvw;
   min-height: dvw;
   margin: 4dvw auto;
@@ -54,7 +55,7 @@
 
 .listDetail > p {
   /* background-color: aqua; */
-  position: absolute;
+  /* position: absolute; */
   width: 40dvw;
   /* height: fit-content; */
   margin: 2dvw 4dvw;
@@ -67,99 +68,196 @@
 
 .box {
   /* background-color: blueviolet; */
-  position: absolute;
+  /* position: absolute; */
+  display: flex;
   margin: 0 5dvw;
   width: 50dvw;
   top: 14dvw;
+  font-size: 1.5dvw;
+}
+
+.tableinfo > p {
+  margin: 0 auto;
 }
 
 .tableinfo {
-  position: relative;
+  /* position: relative; */
   /* background-color: rgb(201, 223, 242); */
-  width: cals(100%/5);
+  /* width: cals(100%/5); */
   float: left;
   left: auto;
+  margin: 0;
 }
 
-.colon {
-  /* width: cals(100%/5); */
-  /* background-color: yellowgreen; */
-  position: relative;
-  width: 1%;
-  float: left;
+.tableinfo > p {
+  margin: 0 auto;
+}
+
+.colon > p {
+  margin: 10px auto;
 }
 
 .result {
-  /* width: cals(100%/5); */
-  /* background-color: chocolate; */
-  position: relative;
   width: 50%;
-  float: left;
 }
 
 .result > p {
-  position: relative;
-  left: 1dvw;
+  margin: 0 1dvw;
 }
 
 .list {
-  position: absolute;
   display: flex;
   flex-direction: row;
-  /* background-color: pink; */
-  top: 20dvw;
-  width: 60dvw;
-  left: 30dvw;
-  margin: auto;
-
-  /* justify-content: center; */
-  /* align-self: center; */
+  width: 40dvw;
+  margin: 0.5dvw auto;
+  text-decoration: underline;
+  border-bottom: 3px black solid;
 }
 
 .list > p {
-  /* position: inherit; */
-  display: flex;
-  flex-direction: row;
-  width: 60dvw;
-  font-size: 1.3dvw;
-  text-decoration: underline;
-  margin-bottom: 2px;
+  font-size: 1.8dvw;
+  margin: 0.5dvw 0;
 }
-/* .itemName {
-  position: relative;
-} */
 
+.name {
+  /* background-color: blue; */
+  width: 20dvw;
+}
+
+.quantity {
+  /* background-color: bisque; */
+  width: 7dvw;
+  text-align: center;
+}
+
+.update {
+  background-color: beige;
+  width: 2dvw;
+  border-radius: 33px;
+}
+
+.totalprice {
+  /* background-color: blueviolet; */
+  width: 10dvw;
+  text-align: center;
+}
+
+.delete {
+  /* background-color: aqua; */
+  width: 6dvw;
+  border-radius: 33px;
+}
 .individual {
-  background-color: cadetblue;
-  margin: 0;
-  position: relative;
+  /* background-color: cadetblue; */
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
-  width: 60dvw;
-  top: 15.5dvw;
-  left: 5dvw;
+  width: 40dvw;
 }
 
 .individual > p {
-  position: relative;
-  margin: 5px;
-  width: calc(100%/5);
+  margin: 0;
+  font-size: 1dvw;
+}
+
+.voidpay {
+  /* background-color: aquamarine; */
+  width: 28dvw;
+  margin: auto;
+}
+
+.payment {
+  margin: 5dvw 2dvw;
+  padding: 1dvw;
+  /* padding-right: 2dvw; */
+  border-radius: 30px;
+  color: blue;
+}
+
+.voidorder {
+  margin: 5dvw 2dvw;
+  padding: 1dvw;
+  border-radius: 30px;
+  color: red;
+}
+
+/* styling for payment.jsx */
+.receipt {
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  width: 30dvw;
+  margin: 1dvw auto;
+}
+
+.receipt > p {
+  margin: auto;
+}
+
+.p1 {
+  margin: 1dvw auto;
+  padding: 1dvw 0 0;
+  font-size: 5dvw;
+}
+
+.p2 {
+  margin: 1dvw auto;
+  padding: 1dvw 0;
+  font-size: 1dvw;
+}
+
+.p3 {
+  padding-bottom: 0.5dvw;
+}
+
+.div {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.invoice {
+  /* background-color: blueviolet; */
+  width: 6dvw;
+}
+
+.invoice > p {
+  margin: 0.5dvw;
+}
+
+.info > p {
+  margin: 0.5dvw;
+  width: dvw;
+}
+
+/* .itemlist{
+  display:flex;
+  flex-direction: row;
+} */
+
+.fnblist {
   display: flex;
   flex-direction: row;
+  /* background-color: brown; */
+  width: 25dvw;
+  justify-content: center;
+  margin: auto;
 }
 
-.admend{
-  border-radius: 33px;
-  background-color: aquamarine;
-  height: 20px;
+.pquantity {
+  /* background-color: beige; */
+  width: 10%;
+  margin: 0.2dvw auto 0 auto;
 }
 
-.delete{
-  border-radius: 33px;
-  background-color: red;
-  height: 20px;
+.pname {
+  /* background-color: aqua; */
+  width: 70%;
+  margin: 0.2dvw auto 0 auto;
 }
 
-.payment{
-  position: relative;
+.pamount {
+  /* background-color: aquamarine; */
+  width: 10%;
+  margin: 0.2dvw auto 0 auto;
 }

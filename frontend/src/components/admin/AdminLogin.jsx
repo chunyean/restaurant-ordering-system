@@ -31,7 +31,7 @@ const AdminLogin = (props) => {
       props.setHeader4(true);
       props.setUser(res.data.payload);
       console.log(res.data.payload);
-      navigate("/admin/food");
+      navigate("/food");
     } else {
       console.log(res.data);
       //check error data

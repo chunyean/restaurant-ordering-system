@@ -108,7 +108,7 @@ const OrderCart = (props) => {
             console.log(item.name);
             changeQuantity(item.item_id, item.name, item.unit_price);
           }}
-          type="checkbox"
+          type="submit"
         >
           ok
         </button>
@@ -139,11 +139,7 @@ const OrderCart = (props) => {
       props.setFoodPage(true);
       props.setArrayLength(0);
       console.log(props.user);
-      if (/^[a-zA-Z]+$/.test(props.user.custID)) {
-        navigate("/admin/food");
-      } else {
-        navigate("/food");
-      }
+      navigate("/food");
     } else {
       alert(JSON.stringify(res.data));
     }
@@ -206,7 +202,7 @@ const OrderCart = (props) => {
         <button className={styles.btn} onClick={submitOrder}>
           Submit Button
         </button>
-        <p>Please click the check box when quantity is change</p>
+        <p>Please click botton when quantity confirm to change</p>
       </div>
     </>
   );
