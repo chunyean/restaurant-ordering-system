@@ -14,7 +14,6 @@ const OrderCart = (props) => {
   const [order_type, setOrder_Type] = useState("DINE_IN");
   const [value, setValue] = useState();
 
-
   const handleTblNo = (e) => {
     setTable_Number(e.target.value);
   };
@@ -28,6 +27,7 @@ const OrderCart = (props) => {
   };
 
   const handleClose = () => {
+    // props.setArrayLength(0);
     navigate("/food");
   };
 
@@ -45,6 +45,7 @@ const OrderCart = (props) => {
     );
     if (res.ok) {
       console.log(res.data);
+      lengthOfCart();
       props.setTest(1);
     } else {
       alert(JSON.stringify(res.data));
@@ -71,7 +72,7 @@ const OrderCart = (props) => {
     }
   };
 
-  //calculate total quanitty inside the cart 
+  //calculate total quanitty inside the cart
   const lengthOfCart = async () => {
     const res = await fetchData(
       "/item/length",
@@ -82,7 +83,7 @@ const OrderCart = (props) => {
     if (res.ok) {
       console.log(res.data);
       props.setArrayLength(res.data);
-      props.setTest(true);
+      props.setTest("");
     }
   };
 
@@ -111,6 +112,7 @@ const OrderCart = (props) => {
             console.log(item.unit_price);
             console.log(item.name);
             changeQuantity(item.item_id, item.name, item.unit_price);
+            lengthOfCart();
           }}
           type="submit"
         >
@@ -206,7 +208,13 @@ const OrderCart = (props) => {
           {orderDetail}
         </div>
         {/* <p>Please click botton when quantity confirm to change</p> */}
-        <button className={styles.btn} onClick={submitOrder}>
+        <button
+          className={styles.btn}
+          onClick={() => {
+            submitOrder();
+            lengthOfCart();
+          }}
+        >
           Submit Button
         </button>
       </div>

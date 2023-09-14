@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "../customer/Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,12 +22,26 @@ const Register = (props) => {
       navigate("/login");
     } else {
       console.log(res.data);
-      alert(JSON.stringify(res.data[0]));
-      alert(JSON.stringify(res.data[1]));
-      alert(JSON.stringify(res.data[2]));
-      alert(JSON.stringify(res.data[3]));
+      if (res.data === "Username already exists") {
+        return alert(JSON.stringify("Username already exists"));
+      } else {
+        alert(JSON.stringify(res.data[0]));
+        alert(JSON.stringify(res.data[1]));
+        alert(JSON.stringify(res.data[2]));
+        alert(JSON.stringify(res.data[3]));
+      }
     }
   };
+
+  //control header
+  const handleHeader = () => {
+    props.setHeader1(true);
+    props.setHeader2(false);
+  };
+
+  useEffect(() => {
+    handleHeader();
+  }, []);
 
   return (
     <>

@@ -11,8 +11,11 @@ const FoodPage = (props) => {
   const [category, setCategory] = useState("APPERTIZER");
   // const [quantity, setQuantity] = useState(1);
   const [individualItem, setIndividualItem] = useState();
+  // const [test2, setTest2] = useState();
 
   const foodCate = ["APPERTIZER", "SOUP", "MAIN COURSE", "PASTA", "DESSERT"];
+
+  console.log(props.arrayLength);
 
   // map food categories
   const subFoods = foodCate.map((subFood, idx) => {
@@ -43,7 +46,7 @@ const FoodPage = (props) => {
     }
   };
 
-  // add each order to cart 
+  // add each order to cart
   const addOrder = async (id) => {
     const res = await fetchData(
       "/item/addorder/" + id,
@@ -55,14 +58,16 @@ const FoodPage = (props) => {
     );
     if (res.ok) {
       console.log(res.ok);
+      // setTest2();
       lengthOfCart();
+      // setTest2("");
       props.setShowItemOverlay(false);
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
-  // calculate the quanitty contain inside cart 
+  // calculate the quanitty contain inside cart
   const lengthOfCart = async () => {
     const res = await fetchData(
       "/item/length",
@@ -120,6 +125,7 @@ const FoodPage = (props) => {
     everyCateData();
     lengthOfCart();
   }, [category]);
+
 
   return (
     <>
