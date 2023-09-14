@@ -28,12 +28,6 @@ const AdminRegister = (props) => {
       alert(JSON.stringify(res.data[3]));
     }
   };
-  // const ID = props.availableId = "SEI 160";
-  // const currentID = parseInt(ID.match(/\d+/));
-  // const number = currentID + 1;
-  // const newID = "SEI " + number;
-
-  // console.log(matchedDigits); // Output: ["160", "42"]
 
   const handleHeader = () => {
     props.setHeader1(false);
@@ -59,11 +53,6 @@ const AdminRegister = (props) => {
             placeholder="Enter your name"
             onChange={props.handleUsername}
           ></input>
-          {/* {errorId ? (
-            <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
-          ) : (
-            <div style={{ height: "36px", margin: "0" }}></div>
-          )} */}
         </div>
         <div className={styles.contact}>
           <label htmlFor="contact">Contact</label>
@@ -88,11 +77,6 @@ const AdminRegister = (props) => {
               Show Password
             </label>
           </div>
-          {/* {errorPassword ? (
-            <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
-          ) : (
-            <div style={{ height: "36px", margin: "0" }}></div>
-          )} */}
         </div>
         <div className={styles.term}>
           <span></span>
