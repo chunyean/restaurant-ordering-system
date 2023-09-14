@@ -1,3 +1,5 @@
+/* sharing this module with header, customer register and customer login  */
+
 .header {
   display: flex;
   width: 99.2dvw;
@@ -101,18 +103,17 @@
   cursor: pointer;
 }
 .customLink {
-  position:relative;
+  position: relative;
   color: black;
   font-size: 2.3dvw;
   text-decoration: none;
-  top:0.5dvw
-
+  top: 0.2dvw;
 }
 
 .signin > span {
   font-size: 2dvw;
   position: relative;
-  top: 0.4dvw;
+  top: 0.2dvw;
 }
 
 .username {
@@ -120,14 +121,14 @@
   width: 30dvw;
   height: 10svh;
   position: relative;
-  top: 35%;
+  top: 50%;
 }
 
 .username > p {
-  position:relative;
+  position: relative;
   color: red;
-  font-size: 16px;
-  top:1.3dvw;
+  font-size: 20px;
+  top: 3dvw;
 }
 
 .username > label {
@@ -137,7 +138,7 @@
 
 .username > input {
   position: absolute;
-  top: 5svh;
+  top: 5.5svh;
   left: 0dvw;
   width: 30dvw;
   height: 5svh;
@@ -157,7 +158,7 @@ input[type="text"] {
   /* background-color: rgb(10, 144, 233); */
   width: 30dvw;
   height: 10svh;
-  top: 76%;
+  top: 85%;
   padding-top: 0.3dvw;
 }
 
@@ -169,19 +170,26 @@ input[type="text"] {
 
 .contact > input {
   position: absolute;
-  top: 6svh;
+  top: 5.5svh;
   left: 0dvw;
   width: 30dvw;
   height: 5svh;
   margin: auto;
 }
 
+.contact > p {
+  position: relative;
+  font-size: 20px;
+  top: 2.3dvw;
+  color: red;
+} 
+
 .password {
   position: relative;
   /* background-color: rgb(10, 144, 233); */
   width: 30dvw;
   height: 10svh;
-  top: 4.5dvw;
+  top: 4dvw;
 }
 
 .password > label {
@@ -197,6 +205,12 @@ input[type="text"] {
   height: 5svh;
   margin: auto;
   font-size: 2dvw;
+}
+
+.password>p{
+  position: relative;
+  color: red;
+  top: 3dvw;
 }
 
 .check {
@@ -237,7 +251,7 @@ input[type="text"] {
 .loginBtn {
   position: relative;
   margin: 0 10dvw;
-  top: 5dvw;
+  top: 8dvw;
   width: 10dvw;
   height: 3dvw;
   border-radius: 33px;

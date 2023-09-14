@@ -2,33 +2,19 @@ import React, { useEffect, useState, useContext } from "react";
 import useFetch from "../custom_hooks/useFetch";
 import styles from "./MenuPage.module.css";
 import ItemOverlay from "../overlay_item/ItemOverlay";
-import OrderCart from "../orderCart/OrderCart";
 import UserContext from "../context/user";
-import { Link, useNavigate } from "react-router-dom";
 
 const FoodPage = (props) => {
   const fetchData = useFetch();
+  const auth = useContext(UserContext);
   const [fnbItem, setFnbItem] = useState([]);
   const [category, setCategory] = useState("APPERTIZER");
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
   const [individualItem, setIndividualItem] = useState();
-  // const [showItemOverlay, setShowItemOverlay] = useState(false);
-  const auth = useContext(UserContext);
 
   const foodCate = ["APPERTIZER", "SOUP", "MAIN COURSE", "PASTA", "DESSERT"];
 
-  const everyCateData = async () => {
-    const res = await fetchData("/item/category", "POST", {
-      value: category,
-    });
-    if (res.ok) {
-      console.log(res.data);
-      setFnbItem(res.data);
-    } else {
-      alert(JSON.stringify(res.data));
-    }
-  };
-
+  // map food categories
   const subFoods = foodCate.map((subFood, idx) => {
     return (
       <li
@@ -44,6 +30,20 @@ const FoodPage = (props) => {
     );
   });
 
+  //retrieve each categories data
+  const everyCateData = async () => {
+    const res = await fetchData("/item/category", "POST", {
+      value: category,
+    });
+    if (res.ok) {
+      console.log(res.data);
+      setFnbItem(res.data);
+    } else {
+      alert(JSON.stringify(res.data));
+    }
+  };
+
+  // add each order to cart 
   const addOrder = async (id) => {
     const res = await fetchData(
       "/item/addorder/" + id,
@@ -56,12 +56,13 @@ const FoodPage = (props) => {
     if (res.ok) {
       console.log(res.ok);
       lengthOfCart();
-      props.setShowItemOverlay(false)
+      props.setShowItemOverlay(false);
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
+  // calculate the quanitty contain inside cart 
   const lengthOfCart = async () => {
     const res = await fetchData(
       "/item/length",
@@ -75,12 +76,12 @@ const FoodPage = (props) => {
     }
   };
 
+  //list out each category data
   const listItem = fnbItem.map((item) => {
     return (
       <div key={item.id} className={styles.box}>
         <div className={styles.leftbox} />
         <div className={styles.rightbox} />
-
         <div
           id={item.id}
           onClick={() => {
