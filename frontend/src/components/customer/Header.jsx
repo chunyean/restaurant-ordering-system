@@ -8,16 +8,20 @@ import Register from "./Register";
 const Header = (props) => {
   const navigate = useNavigate();
   const fetchData = useFetch();
+  const auth = useContext(UserContext);
 
   // retrieve all the data from cart
   const cartOrder = async () => {
-    const res = await fetchData("/item/cart", "GET");
+    const res = await fetchData(
+      "/item/cart",
+      "GET",
+      undefined,
+      auth.accessToken
+    );
     if (res.ok) {
       console.log(res.data);
       props.setCartDetail(res.data);
       props.setTest("");
-    } else {
-      alert(JSON.stringify(res.data));
     }
   };
 

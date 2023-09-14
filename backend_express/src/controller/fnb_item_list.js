@@ -105,8 +105,14 @@ const addOrder = async (req, res) => {
 //retrieve data from cart plus sum up quantity and nett_amount
 const cartOrder = async (req, res) => {
   try {
+    // const cartDetail = await pool.query(
+    //   "select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from cart group by item_id, name, unit_price"
+    // );
+    // const list = cartDetail.rows;
+
     const cartDetail = await pool.query(
-      "select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from cart group by item_id, name, unit_price"
+      "select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from cart where customer_id = $1 group by item_id, name, unit_price",
+      [req.custID]
     );
     const list = cartDetail.rows;
 
@@ -120,7 +126,10 @@ const cartOrder = async (req, res) => {
 //check the total quantity of cart
 const lengthOfCart = async (req, res) => {
   try {
-    const cart = await pool.query("select sum(quantity) as quantity from cart");
+    const cart = await pool.query(
+      "select sum(quantity) as quantity from cart where customer_id=$1",
+      [req.custID]
+    );
 
     const number = cart.rows[0].quantity;
 
@@ -147,8 +156,7 @@ const deleteCartItem = async (req, res) => {
   }
 };
 
-
-// update each item quantity at cart 
+// update each item quantity at cart
 // delete first then re-create
 const updateQuantity = async (req, res) => {
   try {
