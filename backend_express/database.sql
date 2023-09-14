@@ -107,6 +107,7 @@ CREATE TABLE payments (
 CREATE TABLE order_payment (
 	order_id uuid NULL,
 	payment_id uuid NULL,
+	CONSTRAINT order_payment_pkey PRIMARY KEY (order_id, payment_id),
 	CONSTRAINT order_payment_order_id_fkey FOREIGN KEY (order_id) REFERENCES orders(id),
 	CONSTRAINT order_payment_payment_id_fkey FOREIGN KEY (payment_id) REFERENCES payments(id)
 );
