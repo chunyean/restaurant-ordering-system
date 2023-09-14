@@ -10,9 +10,6 @@ const Login = (props) => {
   const navigate = useNavigate();
 
   const login = async () => {
-    console.log("1");
-    console.log(props.password);
-    console.log(props.username);
     const res = await fetchData("/customer/login", "POST", {
       username: props.username,
       password: props.password,
@@ -26,12 +23,14 @@ const Login = (props) => {
       navigate("/food");
     } else {
       console.log(res.data);
-      alert(JSON.stringify(res.data[0]));
-      alert(JSON.stringify(res.data[1]));
-      alert(JSON.stringify(res.data[2]));
-      alert(JSON.stringify(res.data[3]));
+      if (res.data === "invalid login") {
+        return alert(JSON.stringify("Invalid Login"));
+      } else {
+        alert(JSON.stringify(res.data));
+      }
     }
   };
+  
   return (
     <>
       <div className={styles.register}>

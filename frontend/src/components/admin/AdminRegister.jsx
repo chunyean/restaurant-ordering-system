@@ -5,18 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const AdminRegister = (props) => {
   const fetchData = useFetch();
-  const [errorId, setErrorId] = useState();
-  const [errorPassword, setErrorPassword] = useState();
-  const [errorUsername, setErrorUsername] = useState();
-  // const [availableId, setAvailableId] = useState();
   const navigate = useNavigate();
-
-  const handleHeader = () => {
-    props.setHeader1(false);
-    props.setHeader4(true);
-  };
-
+  console.log(props.availableId);
   const registerAccount = async () => {
+    console.log(props.availableId);
     const res = await fetchData("/employee/register", "PUT", {
       name: props.username,
       password: props.password,
@@ -30,39 +22,34 @@ const AdminRegister = (props) => {
       navigate("/admin");
     } else {
       console.log(res.data);
-      setErrorId(res.data);
-      setErrorPassword(res.data);
+      alert(JSON.stringify(res.data[0]));
+      alert(JSON.stringify(res.data[1]));
+      alert(JSON.stringify(res.data[2]));
+      alert(JSON.stringify(res.data[3]));
     }
   };
+  // const ID = props.availableId = "SEI 160";
+  // const currentID = parseInt(ID.match(/\d+/));
+  // const number = currentID + 1;
+  // const newID = "SEI " + number;
 
-  // const nextEmployeeID = async () => {
-  //   const res = await fetchData("/employee/nextAvaiId");
-  //   if (res.ok) {
-  //     setAvailableId(res.data);
-  //   } else {
-  //     console.log(res.data);
-  //     setErrorUsername(res.data);
-  //     setErrorPassword(res.data);
-  //   }
-  // };
+  // console.log(matchedDigits); // Output: ["160", "42"]
+
+  const handleHeader = () => {
+    props.setHeader1(false);
+    props.setHeader4(true);
+  };
 
   useEffect(() => {
     handleHeader();
   }, []);
-  console.log(props.username);
-  console.log(props.password);
-  console.log(props.contact);
+
   return (
     <>
       <div className={styles.register2}>
         <div className={styles.employee}>
           <label>Employee ID: </label>
           <p>{props.availableId}</p>
-          {/* {errorId ? (
-            <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
-          ) : (
-            <div style={{ height: "36px", margin: "0" }}></div>
-          )} */}
         </div>
         <div className={styles.name}>
           <label htmlFor="name">Name: </label>

@@ -30,70 +30,7 @@ const Payment = (props) => {
       alert(JSON.stringify(res.data));
     }
   };
-  // const odrDetail = [
-  //   {
-  //     table_number: 1,
-  //     pax: 3,
-  //     username: "Happy Customer",
-  //     name: "Apple Cider Margarita",
-  //     quantity: 1,
-  //     total_price: "15.00",
-  //     item_id: 10006,
-  //     id: "fa71dd7f-51bc-498b-942c-1dcafa146aad",
-  //   },
-  //   {
-  //     table_number: 1,
-  //     pax: 3,
-  //     username: "Happy Customer",
-  //     name: "CALABRIA FAMILY WINES",
-  //     quantity: 3,
-  //     total_price: "120.00",
-  //     item_id: 10008,
-  //     id: "fa71dd7f-51bc-498b-942c-1dcafa146aad",
-  //   },
-  //   {
-  //     table_number: 1,
-  //     pax: 3,
-  //     username: "Happy Customer",
-  //     name: "Egg salad",
-  //     quantity: 1,
-  //     total_price: "12.00",
-  //     item_id: 10015,
-  //     id: "fa71dd7f-51bc-498b-942c-1dcafa146aad",
-  //   },
-  //   {
-  //     table_number: 1,
-  //     pax: 3,
-  //     username: "Happy Customer",
-  //     name: "Asahi Super Dry",
-  //     quantity: 2,
-  //     total_price: "26.00",
-  //     item_id: 10009,
-  //     id: "fa71dd7f-51bc-498b-942c-1dcafa146aad",
-  //   },
-  //   {
-  //     table_number: 1,
-  //     pax: 3,
-  //     username: "Happy Customer",
-  //     name: "Pasta alla Trapanese",
-  //     quantity: 2,
-  //     total_price: "36.00",
-  //     item_id: 10004,
-  //     id: "fa71dd7f-51bc-498b-942c-1dcafa146aad",
-  //   },
-  // ];
-
-  // const paymentInfo = {
-  //   id: "a76b0f4a-f56f-430a-a270-0366c049264a",
-  //   employee_id: "SEI 143",
-  //   date: "2023-09-13T15:22:17.963Z",
-  //   nett_amount: "209.00",
-  //   service_charge: "20.90",
-  //   gst: "18.39",
-  //   total_amount: "248.29",
-  //   is_completed: false,
-  //   table_number: 1,
-  // };
+  
 
   const list = odrDetail.map((item) => {
     return (
@@ -159,18 +96,19 @@ const Payment = (props) => {
         <div className={styles.child14}>Payment Method</div>
         <div className={styles.child10}>
           <div className={styles.child11}>
-            <p>Cash:</p>
+            <label htmlFor="cash">Cash: $</label>
           </div>
           <div className={styles.child12}>
             <input
               type="text"
-              placeholder="Input Cash Amount"
+              id="cash"
+              placeholder="Cash Amount"
               onChange={handleNumber}
             ></input>
           </div>
         </div>
         <div className={styles.child13}>
-          <p>Balance:{balance}</p>
+          <p>Balance: ${balance}</p>
         </div>
         <button
           onClick={() => {

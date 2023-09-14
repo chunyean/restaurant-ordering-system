@@ -8,34 +8,20 @@ import Register from "./Register";
 const Header = (props) => {
   const navigate = useNavigate();
   const fetchData = useFetch();
-  const auth = useContext(UserContext);
 
-  // const handleFoodPage = () => {
-  //   props.setBeveragePage(false);
-  //   props.setCart(false);
-  //   props.setFoodPage(true);
-  // };
-
-  // const handleBeveragePage = () => {
-  //   props.setFoodPage(false);
-  //   props.setCart(false);
-  //   props.setBeveragePage(true);
-  // };
-
+  // retrieve all the data from cart
   const cartOrder = async () => {
     const res = await fetchData("/item/cart", "GET");
     if (res.ok) {
       console.log(res.data);
       props.setCartDetail(res.data);
-      // props.setFoodPage(false);
-      // props.setBeveragePage(false);
-      // props.setCart(true);
       props.setTest("");
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
+  // register function
   const register = (e) => {
     if (e.target.value === "Register") {
       navigate("/admin/register");
@@ -43,6 +29,7 @@ const Header = (props) => {
     }
   };
 
+  //generate next available employee id
   const nextEmployeeID = async () => {
     const res = await fetchData("/employee/nextAvaiId");
     if (res.ok) {
@@ -101,7 +88,9 @@ const Header = (props) => {
           <button className={styles.displayname}>
             Hi, {props.user.username}!
           </button>
-          <img src="/log-out-04.512x465.png" className={styles.logout} />
+          <Link to="/">
+            <img src="/log-out-04.512x465.png" className={styles.logout} />
+          </Link>
         </div>
       )}
       {props.header3 && (
@@ -151,7 +140,9 @@ const Header = (props) => {
             <option>Hi, {props.user.username}!</option>
             <option value="Register">Register Staff</option>
           </select>
-          <img src="/log-out-04.512x465.png" className={styles.logout} />
+          <Link to="/admin">
+            <img src="/log-out-04.512x465.png" className={styles.logout} />
+          </Link>
         </div>
       )}
     </>

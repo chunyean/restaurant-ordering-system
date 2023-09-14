@@ -4,6 +4,123 @@ create database restaurant_db;
 --add extension for uuid generate
 CREATE EXTENSION "uuid-ossp";
 
+CREATE TABLE "types" (
+	"type" varchar(15) NOT NULL,
+	CONSTRAINT types_pkey PRIMARY KEY (type)
+);
+
+CREATE TABLE categories (
+	category varchar(15) NOT NULL,
+	CONSTRAINT categories_pkey PRIMARY KEY (category)
+);
+
+CREATE SEQUENCE item_id_seq START 10001;
+CREATE TABLE items (
+	id int4 NOT NULL DEFAULT nextval('item_id_seq'::regclass),
+	"name" varchar(100) NOT NULL,
+	description text NOT NULL,
+	price numeric(6, 2) NOT NULL,
+	photo varchar(255) NOT NULL,
+	"type" varchar(15) NULL,
+	category varchar(15) NULL,
+	isdeleted bool NULL DEFAULT false,
+	CONSTRAINT items_pkey PRIMARY KEY (id),
+	CONSTRAINT items_category_fkey FOREIGN KEY (category) REFERENCES categories(category),
+	CONSTRAINT items_type_fkey FOREIGN KEY ("type") REFERENCES "types"("type")
+);
+
+CREATE TABLE order_histories (
+	customer_id int4 NOT NULL,
+	payment_id uuid NOT NULL,
+	CONSTRAINT order_histories_pkey PRIMARY KEY (customer_id, payment_id),
+	CONSTRAINT fk_id FOREIGN KEY (customer_id) REFERENCES customers(id),
+	CONSTRAINT pfk_id FOREIGN KEY (payment_id) REFERENCES payments(id)
+);
+
+CREATE SEQUENCE customer_id_seq START 20001;
+CREATE TABLE customers (
+	id int4 NOT NULL DEFAULT nextval('customer_id_seq'::regclass),
+	username varchar(30) NOT NULL,
+	"password" varchar(60) NOT NULL,
+	contact varchar(10) NOT NULL,
+	CONSTRAINT customers_pkey PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE employee_id_seq START 100;
+CREATE TABLE employees (
+	id varchar(10) NOT NULL DEFAULT (('SEI '::text || nextval('employee_id_seq'::regclass))),
+	"name" varchar(30) NOT NULL,
+	"password" varchar(60) NOT NULL,
+	contact varchar(10) NOT NULL,
+	is_resigned bool NULL DEFAULT false,
+	CONSTRAINT check_id_pattern CHECK (((id)::text ~ '^SEI [0-9]+$'::text)),
+	CONSTRAINT employees_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE orders (
+	id uuid NOT NULL DEFAULT uuid_generate_v4(),
+	customer_id int4 NULL,
+	"date" timestamp NULL DEFAULT now(),
+	table_number int2 NOT NULL,
+	pax int4 NOT NULL,
+	is_voidorder bool NULL DEFAULT false,
+	is_payment bool NULL DEFAULT false,
+	employee_id varchar(10) NULL,
+	CONSTRAINT orders_pkey PRIMARY KEY (id),
+	CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES customers(id),
+	CONSTRAINT orders_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employees(id)
+);
+
+CREATE TABLE order_types (
+	order_type varchar(15) NOT NULL,
+	CONSTRAINT order_types_pkey PRIMARY KEY (order_type)
+);
+
+CREATE TABLE order_lists (
+	id uuid NOT NULL DEFAULT uuid_generate_v4(),
+	order_id uuid NULL,
+	item_id int4 NULL,
+	quantity smallserial NULL,
+	total_price numeric(6, 2) NULL,
+	order_type varchar(15) NULL,
+	unit_price numeric(6, 2) NULL,
+	CONSTRAINT order_lists_pkey PRIMARY KEY (id),
+	CONSTRAINT order_lists_item_id_fkey FOREIGN KEY (item_id) REFERENCES items(id),
+	CONSTRAINT order_lists_order_id_fkey FOREIGN KEY (order_id) REFERENCES orders(id),
+	CONSTRAINT order_lists_order_type_fkey FOREIGN KEY (order_type) REFERENCES order_types(order_type)
+);
+
+CREATE TABLE payments (
+	id uuid NOT NULL DEFAULT uuid_generate_v4(),
+	employee_id varchar(10) NULL,
+	"date" timestamp NULL DEFAULT now(),
+	nett_amount numeric(6, 2) NULL,
+	service_charge numeric(6, 2) NULL,
+	gst numeric(6, 2) NULL,
+	total_amount numeric(6, 2) NULL,
+	is_completed bool NULL DEFAULT false,
+	table_number int4 NULL,
+	CONSTRAINT payments_pkey PRIMARY KEY (id),
+	CONSTRAINT payments_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employees(id)
+);
+
+CREATE TABLE order_payment (
+	order_id uuid NULL,
+	payment_id uuid NULL,
+	CONSTRAINT order_payment_order_id_fkey FOREIGN KEY (order_id) REFERENCES orders(id),
+	CONSTRAINT order_payment_payment_id_fkey FOREIGN KEY (payment_id) REFERENCES payments(id)
+);
+
+CREATE TABLE cart (
+	customer_id int4 NULL,
+	item_id int4 NULL,
+	"name" varchar(100) NULL,
+	quantity smallserial NOT NULL,
+	unit_price numeric(6, 2) NULL,
+	nett_amount numeric(6, 2) NULL
+);
+
+-- function to calculate for all GST, Service Charge and Total Amount
 CREATE FUNCTION allCalculation()
 RETURNS trigger AS 
 $$
@@ -28,6 +145,8 @@ VOLATILE
 CALLED ON NULL INPUT
 SECURITY INVOKER;
 
+
+--function to calculate Nett Amount
 CREATE FUNCTION nettAmount()
 RETURNS trigger AS 
 $$
@@ -43,114 +162,7 @@ VOLATILE
 CALLED ON NULL INPUT
 SECURITY INVOKER;
 
-
-create table types (
-	type varchar(15) not null primary key
-);
-
-create table categories (
-	category varchar(15) not null primary key
-);
-
-
-create sequence item_id_seq start 10001;
-create table items (
-    id integer default nextval('item_id_seq') primary key,
-    name VARCHAR(100) not null,
-    description text not null,
-    price DECIMAL(6,2) not null,
-    photo varchar(255) not null,
-    type varchar(15) references types(type),
-    category varchar(15) references categories(category),
-    isdeleted boolean default false
-);
-
-create table order_histories (
-	history varchar(36) not null primary key 
-)
-
-create sequence customer_id_seq start 20001;
-create table customers (
-	id integer default nextval('customer_id_seq') primary key,
-	username varchar(30) not null,
-	password varchar(60) not null,
-	contact varchar(10) not null,
-	history varchar(36) references order_histories(history)
-);
-
-
-
-create sequence employee_id_seq start 100;
-create table employees (
-    id varchar(10) default 'SEI ' || nextval('employee_id_seq') not null primary key,
-    name varchar(30) not null,
-    password varchar(60) not null,
-    contact varchar(10) not null,
-    CONSTRAINT check_id_pattern CHECK (id ~ '^SEI [0-9]+$'),
-	is_resigned boolean null default false,
-);
-
-
-
-create table orders (
-	id uuid primary key default uuid_generate_v4(), 
-	customer_id integer references customers(id),
-	date timestamp default now(),
-	table_number smallint not null,
-	pax integer not null,
-	is_voidorder boolean default false,
-	is_payment boolean default false
-);
-
-create table order_types (
-	order_type varchar(15) not null primary key 
-);
-
-create table order_lists (
-	id uuid primary key default uuid_generate_v4(),
-	order_id uuid references orders(id),
-	item_id integer references items(id),
-	quantity smallserial not null,
-	unit_price decimal(6,2),
-	total_price decimal(6,2),
-	order_type varchar(15) references order_types(order_type)
-
-);
-
-
-create table payments (
-	id uuid primary key default uuid_generate_v4(),
-	employee_id varchar(10) references employees(id),
-	date timestamp default now(),
-	nett_amount decimal(6,2),
-	service_charge decimal(6,2),
-	gst decimal(6,2),
-	total_amount decimal(6,2),
-	is_completed boolean default false
-);
-
-create table order_payment (
-	order_id uuid references orders(id),
-	payment_id uuid references payments(id),
-	primary key(order_id, payments_id)
-);
-
-create table order_histories (
-	customer_id integer ,
-	payment_id uuid ,
-	primary key(customer_id, payment_id),
-	constraint fk_id foreign key(customer_id) references customers(id),
-	constraint pfk_id foreign key(payment_id) references payments(id)
-);
-
-create table cart (
-customer_id integer,
-item_id integer, 
-name varchar(100), 
-quantity smallserial, 
-unit_price decimal(6,2), 
-nett_amount decimal(6,2) null);
-
+-- function to re-calculate when quantity has been update
 CREATE OR REPLACE FUNCTION update_totalprice()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -210,4 +222,5 @@ insert into items(name, description, price, photo, "type", category) values ('As
 insert into items(name, description, price, photo, "type", category) values ('Dalmore King Alexander III','THE EMBODIMENT OF BRAVERY In 1263, Colin of Kintail, Chief of the Clan Mackenzie, took a bold decision to stand up and be counted, and felled a charging stag which attacked King Alexander III of Scotland.','400.00','https://www.liquorbar.sg/images/2019/products/whisky/dalmore-king-alexander-iiis.webp','DRINK','SPIRIT');
 insert into items(name, description, price, photo, "type", category) values ('Coke','Coke products were sold in over 200 countries worldwide, with consumers drinking more than 1.8 billion company beverage servings each day.','8.00','https://overricesg.com/wp-content/uploads/2021/07/coke.jpg','DRINK','SOFT DRINK');
 insert into items(name, description, price, photo, "type", category) values ('GREEN JUICE','This Green Juice Recipe is packed with kale, cucumbers, celery, lemon, ginger, and apples! Loaded with fruits and veggies, this juice is healthy and delicious!','14.00','https://showmetheyummy.com/wp-content/uploads/2016/03/Green-Juice-Show-Me-the-Yummy-6-683x1024.jpg','DRINK','JUICE');
+
 

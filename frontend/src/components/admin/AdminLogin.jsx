@@ -2,23 +2,14 @@ import React, { useEffect, useContext, useState } from "react";
 import styles from "../admin/Admin.module.css";
 import AuthContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = (props) => {
   const auth = useContext(AuthContext);
   const fetchData = useFetch();
   const navigate = useNavigate();
-  const [errorUsername, setErrorUsername] = useState();
 
-  const [errorId, setErrorId] = useState();
-  const [errorPassword, setErrorPassword] = useState();
-
-  const handleHeader = () => {
-    props.setHeader1(false);
-    props.setHeader3(true);
-    props.setHeader4(false);
-  };
-
+  //login function
   const login = async () => {
     console.log("1");
     const res = await fetchData("/employee/login", "POST", {
@@ -34,10 +25,19 @@ const AdminLogin = (props) => {
       navigate("/food");
     } else {
       console.log(res.data);
-      //check error data
-      setErrorId(res.data);
-      setErrorPassword(res.data);
+      if (res.data === "invalid login") {
+        return alert(JSON.stringify("Invalid Login"));
+      } else {
+        alert(JSON.stringify(res.data));
+      }
     }
+  };
+
+  //control header
+  const handleHeader = () => {
+    props.setHeader1(false);
+    props.setHeader3(true);
+    props.setHeader4(false);
   };
 
   useEffect(() => {
@@ -55,14 +55,9 @@ const AdminLogin = (props) => {
           <input
             type="text"
             id="id"
-            placeholder="Enter your Employee Id"
+            placeholder="Add a space between SEI and number"
             onChange={props.handleEmployeeId}
           ></input>
-          {errorId ? (
-            <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
-          ) : (
-            <div style={{ height: "36px", margin: "0" }}></div>
-          )}
         </div>
 
         <div className={styles.password1}>
@@ -79,11 +74,6 @@ const AdminLogin = (props) => {
               Show Password
             </label>
           </div>
-          {errorPassword ? (
-            <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
-          ) : (
-            <div style={{ height: "36px", margin: "0" }}></div>
-          )}
         </div>
         <div className={styles.term}>
           <span></span>

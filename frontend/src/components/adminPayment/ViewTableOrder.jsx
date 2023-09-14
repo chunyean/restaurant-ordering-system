@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import styles from "./Payment.module.css";
+import React, { useContext } from "react";
+import styles from "./Table.module.css";
 import useFetch from "../custom_hooks/useFetch";
 import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +9,9 @@ const ViewTableOrder = (props) => {
   const auth = useContext(UserContext);
   const navigate = useNavigate();
 
-  console.log(props.tableDetail);
   const detail = props.tableDetail;
 
+  //add +1 to quantity and update
   const plus = async (order_id, id, name, quantity) => {
     const res = await fetchData(
       "/order/update/" + id,
@@ -31,6 +31,7 @@ const ViewTableOrder = (props) => {
     }
   };
 
+  // minus -1 to quanitty and update
   const minus = async (order_id, id, name, quantity) => {
     const newQuantity = quantity - 1;
     if (newQuantity === 0) {
@@ -54,19 +55,18 @@ const ViewTableOrder = (props) => {
     }
   };
 
+  // use for rerender data
   const handleViewOrder = async (id) => {
     const res = await fetchData("/order/allorder/" + id, "POST");
     if (res.ok) {
       props.setTableDetail(res.data);
-      console.log(res.data);
-      // setShowTableOrder(true);
-      // navigate("/admin/viewtable");
       props.setTest("");
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
+  //delete each item inside order
   const deleteItem = async (id, order_id) => {
     const res = await fetchData(
       "/order/delete/" + id,
@@ -82,6 +82,7 @@ const ViewTableOrder = (props) => {
     }
   };
 
+  // void order, cancel whole order
   const voidOrder = async (table_number) => {
     const res = await fetchData(
       "/order/voidorder",
@@ -96,6 +97,7 @@ const ViewTableOrder = (props) => {
     }
   };
 
+  // submit whole order to payment
   const submitOrder = async (table_number) => {
     console.log(props.user.StaffID);
     const res = await fetchData(
@@ -114,6 +116,7 @@ const ViewTableOrder = (props) => {
     }
   };
 
+  //map out the data that retrieve form database by table 
   const listDetail = detail.map((item) => {
     return (
       <div key={item.item_id} className={styles.individual}>
@@ -150,17 +153,6 @@ const ViewTableOrder = (props) => {
     );
   });
 
-  // let id = [];
-  // for (let idx = 0; idx < detail.length; idx++) {
-  //   const result = detail[idx].id;
-  //   id.push(result);
-  // }
-  // console.log(id);
-
-  // useEffect(()=>{
-  //   auth.handleViewOrder(newQuantity)
-  // }, [])
-
   return (
     <>
       <div className={styles.listDetail}>
@@ -171,15 +163,10 @@ const ViewTableOrder = (props) => {
             <p>Customer Name </p>
             <p>Number of Pax </p>
           </div>
-          <div className={styles.colon}>
-            <p>:</p>
-            <p>:</p>
-            <p>:</p>
-          </div>
           <div className={styles.result}>
-            <p>{detail[0]?.table_number}</p>
-            <p>{detail[0]?.username}</p>
-            <p>{detail[0]?.pax}</p>
+            <p>: {detail[0]?.table_number}</p>
+            <p>: {detail[0]?.username}</p>
+            <p>: {detail[0]?.pax}</p>
           </div>
         </div>
         <div className={styles.list}>

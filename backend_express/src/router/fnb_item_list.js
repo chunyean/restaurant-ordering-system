@@ -17,14 +17,11 @@ const {
 } = require("../validators/inputValidate");
 const validCheck = require("../middleware/validCheck");
 const { auth } = require("../middleware/auth");
-const { deleteOrderedItem } = require("../controller/order");
 const router = express.Router();
 
 router.put("/create", auth, validateDataInput, validCheck, createNewItem);
 
 router.post("/category", categoryItem);
-
-// router.post("/getitem/:id", validateParamsId, singleItem);
 
 router.delete("/delete/:id", auth, validateParamsId, softdelete);
 
