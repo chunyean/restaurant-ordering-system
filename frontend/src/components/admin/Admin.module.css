@@ -1,4 +1,3 @@
-
 .register {
   width: 40dvw;
   /* height: 60svh; */
@@ -16,62 +15,22 @@
   position: relative;
   margin: 1dvw;
   /* bottom: 8dvw; */
-  left:10dvw;
+  left: 10dvw;
   font-size: 3dvw;
 }
-
-/* .id1 {
-  background-color: blueviolet;
-  position: relative;
-  margin: auto;
-  bottom: 4.7dvw;
-  left: 6dvw;
-  width: 20dvw;
-  font-size: 2dvw;
-} */
-
-/* .id1 > input {
-  position: absolute;
-  display: flex;
-  top: 6svh;
-  width: 20dvw;
-  height: 4svh;
-  font-size: 1.5dvw;
-} */
-
-/* .password {
-  background-color: blue;
-  position: absolute;
-  margin: -180px;
-  top: 10dvw;
-  right: 10.4dvw;
-  width: 20dvw;
-  font-size: 2dvw;
-} */
-
-/* .input {
-  position: relative;
-  display: flex;
-  top: 6svh;
-  height: 4svh;
-  font-size: 1.5dvw;
-  width: 10dpx;
-
-} */
 
 .loginbtn {
   position: absolute;
   margin: auto;
   font-size: 2dvw;
   left: 9dvw;
-  background-color:bisque;
+  background-color: bisque;
   border-radius: 20px;
   width: 10dvw;
 }
 
-.check1{
+.check1 {
   position: relative;
-
 }
 
 .register2 {
