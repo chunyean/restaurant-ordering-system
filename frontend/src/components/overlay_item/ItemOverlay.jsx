@@ -4,13 +4,12 @@ import styles from "../overlay_item/Overlay.module.css";
 const ItemOverlay = (props) => {
   const handleQuantity = (e) => {
     props.setQuantity(e.target.value);
-    console.log(e.target.value);
   };
 
   const closeOverlay = () => {
     props.setShowItemOverlay(false);
   };
-  console.log(props.individualItem.id);
+
   return (
     <>
       <div className={styles.backdrop}>

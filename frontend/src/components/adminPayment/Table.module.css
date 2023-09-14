@@ -1,0 +1,186 @@
+/* sharing styling for table, viewTableOrder */
+
+.tblcontainer {
+    /* background-color: bisque; */
+    width: 60dvw;
+    height: 7dvw;
+    display: flex;
+    justify-content: space-around;
+    margin: 7dvw auto 1dvw auto;
+  }
+  
+  .tblcontainer2 {
+    /* background-color: bisque; */
+    width: 60dvw;
+    height: 7dvw;
+    display: flex;
+    justify-content: space-around;
+    margin: 3dvw auto;
+  }
+  
+  .table {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    cursor: pointer;
+  }
+  
+  .number {
+    position: relative;
+    width: 7dvw;
+    height: 7dvw;
+    border: 2px black solid;
+    border-radius: 50%;
+    text-align: center;
+    margin: auto;
+    background-color: cadetblue;
+    font-size: 4dvw;
+  }
+  
+  .number > p {
+    position: relative;
+    font-size: 4dvw;
+    bottom: 2.8dvw;
+  }
+  
+  .listDetail {
+    background-color: beige;
+    /* position:absolute; */
+    display: flex;
+    flex-direction: column;
+    width: 50dvw;
+    min-height: dvw;
+    margin: 4dvw auto;
+    padding-bottom: 50px;
+  }
+  
+  .listDetail > p {
+    /* background-color: aqua; */
+    width: 40dvw;
+    margin: 2dvw 4dvw;
+    font-size: 2dvw;
+    text-align: center;
+    padding: 10px;
+    text-transform: uppercase;
+    border-bottom: 2px solid black;
+  }
+  
+  .box {
+    /* background-color: blueviolet; */
+    display: flex;
+    margin: 0 5dvw;
+    width: 50dvw;
+    top: 14dvw;
+    font-size: 1.5dvw;
+  }
+  
+  .tableinfo > p {
+    margin: 0 auto;
+  }
+  
+  .tableinfo {
+    /* background-color: rgb(201, 223, 242); */
+    float: left;
+    left: auto;
+    margin: 0;
+  }
+  
+  .tableinfo > p {
+    margin: 0 auto;
+  }
+  
+  .colon > p {
+    margin: 10px auto;
+  }
+  
+  .result {
+    width: 50%;
+  }
+  
+  .result > p {
+    margin: 0 1dvw;
+  }
+  
+  .list {
+    display: flex;
+    flex-direction: row;
+    width: 40dvw;
+    margin: 0.5dvw auto;
+    text-decoration: underline;
+    border-bottom: 3px black solid;
+  }
+  
+  .list > p {
+    font-size: 1.8dvw;
+    margin: 0.5dvw 0;
+  }
+  
+  .name {
+    /* background-color: blue; */
+    width: 20dvw;
+  }
+  
+  .quantity {
+    /* background-color: bisque; */
+    width: 7dvw;
+    text-align: center;
+  }
+  
+  .update {
+    background-color: beige;
+    width: 2dvw;
+    border-radius: 33px;
+  }
+  
+  .totalprice {
+    /* background-color: blueviolet; */
+    width: 10dvw;
+    text-align: center;
+  }
+  
+  .delete {
+    /* background-color: aqua; */
+    width: 6dvw;
+    border-radius: 33px;
+  }
+  .individual {
+    /* background-color: cadetblue; */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    width: 40dvw;
+  }
+  
+  .individual > p {
+    margin: 0;
+    font-size: 1.3dvw;
+  }
+  
+  .voidpay {
+    /* background-color: aquamarine; */
+    width: 15dvw;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .payment {
+    margin: 1dvw;
+    /* padding: 1dvw; */
+    /* padding-right: 2dvw; */
+    border-radius: 30px;
+    color: blue;
+    cursor: pointer;
+  }
+  
+  .voidorder {
+    margin: 1dvw;
+    /* padding: 1dvw; */
+    border-radius: 30px;
+    color: red;
+    cursor: pointer;
+  }
+  
+  

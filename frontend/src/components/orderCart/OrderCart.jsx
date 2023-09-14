@@ -2,18 +2,18 @@ import React, { useState, useContext, useEffect } from "react";
 import styles from "../orderCart/OrderCart.module.css";
 import UserContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OrderCart = (props) => {
+  const auth = useContext(UserContext);
+  const fetchData = useFetch();
+  const navigate = useNavigate();
+
   const [table_number, setTable_Number] = useState();
   const [pax, setPax] = useState();
   const [order_type, setOrder_Type] = useState("DINE_IN");
-  const auth = useContext(UserContext);
   const [value, setValue] = useState();
-  const [unitPrice, setUnitPrice] = useState();
-  const [dishName, setDishName] = useState();
-  const fetchData = useFetch();
-  const navigate = useNavigate();
+
 
   const handleTblNo = (e) => {
     setTable_Number(e.target.value);
@@ -35,6 +35,7 @@ const OrderCart = (props) => {
     setValue(e.target.value);
   };
 
+  // delete item from cart
   const deleteCartItem = async (id) => {
     const res = await fetchData(
       "/item/deletecartiem/" + id,
@@ -50,6 +51,7 @@ const OrderCart = (props) => {
     }
   };
 
+  //change quantity
   const changeQuantity = async (id, name, price) => {
     const res = await fetchData(
       "/item/updatecartitem/" + id,
@@ -69,6 +71,7 @@ const OrderCart = (props) => {
     }
   };
 
+  //calculate total quanitty inside the cart 
   const lengthOfCart = async () => {
     const res = await fetchData(
       "/item/length",
@@ -83,6 +86,7 @@ const OrderCart = (props) => {
     }
   };
 
+  // list down all the item has been order
   const orderDetail = props.cartDetail.map((item) => {
     return (
       <div key={item.item_id}>
@@ -123,6 +127,7 @@ const OrderCart = (props) => {
     );
   });
 
+  //submit order to database
   const submitOrder = async () => {
     const res = await fetchData(
       "/order/create",
@@ -158,8 +163,8 @@ const OrderCart = (props) => {
 
         <label>Order Cart</label>
         <div className={styles.table}>
-          <label>Table Number:</label>
-          <select className={styles.select} onClick={handleTblNo}>
+          <label htmlFor="table">Table Number:</label>
+          <select id="table" className={styles.select} onClick={handleTblNo}>
             <option></option>
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -176,16 +181,17 @@ const OrderCart = (props) => {
           </select>
         </div>
         <div className={styles.table}>
-          <label>Pax:</label>
+          <label htmlFor="pax">Pax:</label>
           <input
             className={styles.select}
             type="number"
+            id="pax"
             onChange={handlePax}
           ></input>
         </div>
         <div className={styles.table}>
-          <label>Order Types:</label>
-          <select className={styles.select} onClick={handleOrderType}>
+          <label htmlFor="type"> Order Types:</label>
+          <select id="type" className={styles.select} onClick={handleOrderType}>
             <option value={"DINE_IN"}>DINE IN</option>
             <option value={"TAKE_AWAY"}>TAKE AWAY</option>
             <option value={"DELIVERY"}>DELIVERY</option>
@@ -199,10 +205,10 @@ const OrderCart = (props) => {
           <span className={styles.space}></span>
           {orderDetail}
         </div>
+        {/* <p>Please click botton when quantity confirm to change</p> */}
         <button className={styles.btn} onClick={submitOrder}>
           Submit Button
         </button>
-        <p>Please click botton when quantity confirm to change</p>
       </div>
     </>
   );

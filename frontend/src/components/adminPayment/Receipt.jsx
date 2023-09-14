@@ -1,17 +1,11 @@
-import React, { useContext } from "react";
-import useFetch from "../custom_hooks/useFetch";
-import UserContext from "../context/user";
-import { useNavigate } from "react-router-dom";
-import styles from "./Payment.module.css";
+import React from "react";
+import styles from "./Receipt.module.css";
 
 const Receipt = (props) => {
-  const navigate = useNavigate();
-  const fetchData = useFetch();
-
   const paymentDetail = props.paymentDetail;
-  console.log(paymentDetail);
+
   const detail = props.tableDetail;
-  console.log(detail);
+
   const itemlist = detail?.map((item) => {
     return (
       <div key={item.id} className={styles.fnblist}>
@@ -67,12 +61,14 @@ const Receipt = (props) => {
         <p>***************************************************</p>
         <div className={styles.chargeinfo}>
           <div className={styles.paymentlist}>
+            <p>Total Price</p>
             <p>Service Charge 10%</p>
             <p>GST 8%</p>
             <p>Total Amount</p>
           </div>
           <div className={styles.empty}></div>
           <div className={styles.totalpayment}>
+            <p>: {paymentDetail.nett_amount}</p>
             <p>: {paymentDetail.service_charge}</p>
             <p>: {paymentDetail.gst}</p>
             <p>: {paymentDetail.total_amount}</p>
