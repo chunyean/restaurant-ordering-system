@@ -14,39 +14,28 @@ const order = require("./src/router/order");
 const payment = require("./src/router/payment");
 
 //set limit for the number of request
-const limit = rateLimit({
-  windowMs: 15 * 60 * 1000, //15 min
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// const limit = rateLimit({
+//   windowMs: 15 * 60 * 1000, //15 min
+//   max: 100,
+//   standardHeaders: true,
+//   legacyHeaders: false,
+// });
 
 const app = express();
 
 app.use(cors());
 app.use(helmet());
-app.use(limit);
+// app.use(limit);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // use the routes
 app.use("/customer", customer);
 app.use("/employee", employee);
-app.use("/fnblist", fnbList);
+app.use("/item", fnbList);
 app.use("/order", order);
 app.use("/payment", payment);
 
-// Route to test the database connection
-app.get("/book", async (req, res) => {
-  try {
-    console.log(process.env.USERNAME);
-    var query = $`select * from public.city c where id = {req.params.id}`;
-    const book = await pool.query("select * from public.city c limit 1");
-    res.json(book.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

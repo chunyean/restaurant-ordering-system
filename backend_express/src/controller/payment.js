@@ -12,14 +12,14 @@ const newPayment = async (req, res) => {
   try {
     //1st
     const create = await pool.query(
-      "insert into payments (employee_id) values ($1) returning id",
-      [req.staffID]
+      "insert into payments (employee_id, table_number) values ($1, $2) returning id",
+      [req.staffID, req.body.table_number]
     );
     const paymentID = create.rows[0].id;
 
     //2nd
     const order = await pool.query(
-      "select orders.id, customers.id as custID from orders join customers on customers.id = orders.customer_id where table_number = $1 and is_payment = false and orders.is_voidorder = false",
+      "select orders.id from orders join customers on customers.id = orders.customer_id where table_number = $1 and is_payment = false and orders.is_voidorder = false",
       [req.body.table_number]
     );
     const orderID = order.rows;
@@ -34,30 +34,14 @@ const newPayment = async (req, res) => {
 
     //4th
     const price = await pool.query(
-      "select total_price from order_payment join orders on orders.id = order_payment.order_id join order_lists on order_lists.order_id = orders.id where payment_id=$1",
+      "select sum(total_price) as total_price from order_payment join orders on orders.id = order_payment.order_id join order_lists on order_lists.order_id = orders.id where payment_id=$1",
       [paymentID]
     );
 
-    let nettAmount = 0;
-    for (let idx = 0; idx < price.rows.length; idx++) {
-      nettAmount += Number(price.rows[idx].total_price);
-    }
-
-    const serviceCharge = nettAmount * 0.1;
-
-    const gst = (nettAmount + serviceCharge) * 0.08;
-
-    const finalAmount = nettAmount + serviceCharge + gst;
-
     //5th
     const finalPayment = await pool.query(
-      "update payments set nett_amount=$1, gst=$2, service_charge=$3, total_amount=$4 returning *",
-      [
-        nettAmount.toFixed(2),
-        gst.toFixed(2),
-        serviceCharge.toFixed(2),
-        finalAmount.toFixed(2),
-      ]
+      "update payments set nett_amount=$1 returning *",
+      [price.rows[0].total_price]
     );
     const paymentDetail = finalPayment.rows[0];
 
@@ -71,6 +55,7 @@ const newPayment = async (req, res) => {
 // completed payment will change status unsed table payments is_completed to true and table order is_payemnt to true
 const completedPayment = async (req, res) => {
   try {
+    console.log(req.params.id);
     await pool.query("update payments set is_completed=true where id=$1", [
       req.params.id,
     ]);

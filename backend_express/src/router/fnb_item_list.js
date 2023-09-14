@@ -5,6 +5,11 @@ const {
   singleItem,
   softdelete,
   updateItem,
+  addOrder,
+  cartOrder,
+  lengthOfCart,
+  deleteCartItem,
+  updateQuantity,
 } = require("../controller/fnb_item_list");
 const {
   validateDataInput,
@@ -16,11 +21,19 @@ const router = express.Router();
 
 router.put("/create", auth, validateDataInput, validCheck, createNewItem);
 
-router.get("/category", categoryItem);
-
-router.post("/getItem/:id", validateParamsId, singleItem);
+router.post("/category", categoryItem);
 
 router.delete("/delete/:id", auth, validateParamsId, softdelete);
+
+router.put("/addorder/:id", auth, addOrder);
+
+router.get("/cart", cartOrder);
+
+router.post("/length", auth, lengthOfCart);
+
+router.delete("/deletecartiem/:id", auth, deleteCartItem);
+
+router.patch("/updatecartitem/:id", auth, updateQuantity);
 
 router.patch(
   "/update/:id",

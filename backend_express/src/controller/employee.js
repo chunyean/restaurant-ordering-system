@@ -29,12 +29,15 @@ const nextAvaiId = async (req, res) => {
     await pool.query("select nextval('employee_id_seq')");
 
     // retrieve the next available id
-    // as next_id is give a name to the result column 
+    // as next_id is give a name to the result column
     const result = await pool.query(
       "select 'SEI' || currval('employee_id_seq') as next_id"
     );
-    console.log(result)
-    res.json(result.rows[0].next_id);
+    const id = result.rows[0].next_id;
+    const currentID = parseInt(id.match(/\d+/));
+    const number = currentID + 1;
+    const newID = "SEI " + number;
+    res.json(newID);
   } catch (error) {
     console.log(error.message);
     res.status(400).json({ status: "error", message: error.message });
@@ -44,11 +47,12 @@ const nextAvaiId = async (req, res) => {
 // employee login
 const login = async (req, res) => {
   try {
+    console.log("1");
     const result = await pool.query("select * from employees where id = $1", [
       req.body.id,
     ]);
 
-    if (!result) {
+    if (result.rows.length === 0) {
       return res.status(400).json({ message: "ID does not exist" });
     }
     console.log(result);
@@ -60,9 +64,9 @@ const login = async (req, res) => {
 
     if (correctPassword) {
       const payload = {
-        id: employee.id,
+        staffID: employee.id,
         username: employee.name,
-        custID: 99999
+        custID: 99999,
       };
 
       const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
@@ -80,6 +84,7 @@ const login = async (req, res) => {
   }
 };
 
+//soft delete employee
 const deleteEmployee = async (req, res) => {
   try {
     await pool.query("update employees set is_resigned = true where id = $1", [

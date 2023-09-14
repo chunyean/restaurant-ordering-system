@@ -1,0 +1,128 @@
+/* styling for food and beverage page */
+
+.subfood {
+  position: relative;
+  text-align: center;
+  padding: 1dvw 2dvw;
+  padding-left: 0px;
+}
+
+.subfood > ul > li {
+  display: inline-block;
+  font-size: 1.6dvw;
+  margin: 0 4dvw;
+  left: 5dvw;
+  text-shadow: 2px 2px 4px burlywood;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.leftbox {
+  position: relative;
+  /* background-color: #4233e8; */
+  float: left;
+  height: 30dvh;
+  width: 15%;
+}
+
+.rightbox {
+  position: relative;
+  /* background-color: chartreuse; */
+  float: right;
+  height: 30dvh;
+  width: 15%;
+}
+
+.items {
+  width: 70%;
+  height: 30dvh;
+  /* background-color: #f5f5f5; */
+  margin: 1dvw auto;
+}
+
+.photo {
+  position: absolute;
+  float: left;
+  /* background-color: aqua; */
+  width: 30dvw;
+  height: 30dvh;
+  margin: 0 1dvw;
+  cursor: pointer;
+}
+
+.photo > img {
+  position: absolute;
+  width: 30dvw;
+  height: 30dvh;
+  border-radius: 30px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.food {
+  position: absolute;
+  right: 300dvw;
+  width: 30dvw;
+  height: 30dvh;
+  border-radius: 30px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.drink {
+  position: absolute;
+  width: 30dvw;
+  height: 30dvh;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.content {
+  position: relative;
+  float: right;
+  width: 36dvw;
+  height: 30dvh;
+  top: 1dvw;
+  /* background-color: aquamarine; */
+  margin: auto
+}
+
+.content > span {
+  font-size: 2dvw;
+}
+
+.content > p {
+  font-size: 1.2dvw;
+}
+
+.content > button {
+  position: relative;
+  float: right;
+  font-size: 1.2dvw;
+  right: 1.2dvw;
+  cursor: pointer;
+}
+
+.price {
+  position: relative;
+  float: right;
+  right: 1.5dvw;
+}
+
+.subbev {
+  position: relative;
+  text-align: center;
+  padding: 1dvw 2dvw;
+  padding-left: 0px;
+  cursor: pointer;
+}
+
+.subbev > ul > li {
+  display: inline-block;
+  font-size: 1.6dvw;
+  margin: 0 2.5dvw;
+  left: 5dvw;
+  text-shadow: 2px 2px 4px burlywood;
+  text-decoration: underline;
+  cursor: pointer;
+}
