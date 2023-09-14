@@ -112,13 +112,15 @@ CREATE TABLE order_payment (
 	CONSTRAINT order_payment_payment_id_fkey FOREIGN KEY (payment_id) REFERENCES payments(id)
 );
 
-CREATE TABLE cart (
-	customer_id int4 NULL,
-	item_id int4 NULL,
+CREATE TABLE carts (
+	customer_id int4 NOT NULL,
+	item_id int4 NOT NULL,
 	"name" varchar(100) NULL,
 	quantity smallserial NOT NULL,
 	unit_price numeric(6, 2) NULL,
-	nett_amount numeric(6, 2) NULL
+	nett_amount numeric(6, 2) NULL,
+	CONSTRAINT cart_fk FOREIGN KEY (customer_id) REFERENCES public.customers(id),
+	CONSTRAINT cart_fk_1 FOREIGN KEY (item_id) REFERENCES public.items(id)
 );
 
 -- function to calculate for all GST, Service Charge and Total Amount
