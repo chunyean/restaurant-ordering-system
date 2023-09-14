@@ -25,7 +25,7 @@ const newOrder = async (req, res) => {
 
     //use item_id to retrieve each individual unit price
     const list = await pool.query(
-      `select item_id, name, sum(quantity) as quantity, sum(nett_amount ) as nett_amount, unit_price from cart where customer_id= $1 group by item_id, name, unit_price`,
+      `select item_id, name, sum(quantity) as quantity, sum(nett_amount ) as nett_amount, unit_price from carts where customer_id= $1 group by item_id, name, unit_price`,
       [req.custID]
     );
     const unitPrice = list.rows;
@@ -47,7 +47,7 @@ const newOrder = async (req, res) => {
       );
     }
 
-    await pool.query("delete from cart where customer_id = $1", [req.custID]);
+    await pool.query("delete from carts where customer_id = $1", [req.custID]);
 
     res.json({ status: "ok", message: "Order has been created" });
   } catch (error) {

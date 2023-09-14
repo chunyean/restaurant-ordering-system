@@ -11,6 +11,7 @@ const BeveragePage = (props) => {
   const [bevItem, setBevItem] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [individualItem, setIndividualItem] = useState();
+  const [test1, setTest1] = useState();
 
   const beverageCate = [
     "COCKTAIL",
@@ -38,7 +39,6 @@ const BeveragePage = (props) => {
     );
   });
 
-
   //retrive each category data from database
   const everyCateData = async () => {
     const res = await fetchData("/item/category", "POST", {
@@ -52,7 +52,6 @@ const BeveragePage = (props) => {
     }
   };
 
-
   //add order to cart
   const addOrder = async (id) => {
     const res = await fetchData(
@@ -65,14 +64,16 @@ const BeveragePage = (props) => {
     );
     if (res.ok) {
       console.log(res.ok);
+      setTest1("");
       lengthOfCart();
-      props.setShowItemOverlay(false)
+      setTest1("");
+      props.setShowItemOverlay(false);
     } else {
       alert(JSON.stringify(res.data));
     }
   };
 
-  //calculate the quantity of cart 
+  //calculate the quantity of cart
   const lengthOfCart = async () => {
     const res = await fetchData(
       "/item/length",
@@ -129,6 +130,10 @@ const BeveragePage = (props) => {
     everyCateData();
     lengthOfCart();
   }, [category]);
+
+  useEffect(() => {
+    lengthOfCart();
+  }, [test1]);
 
   return (
     <>

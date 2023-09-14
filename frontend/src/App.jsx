@@ -131,6 +131,10 @@ const App = () => {
                 contact={contact}
                 setContact={setContact}
                 handleContact={handleContact}
+                setHeader1={setHeader1}
+                setHeader2={setHeader2}
+                setHeader3={setHeader3}
+                setHeader4={setHeader4}
               ></Register>
             }
           />
@@ -202,6 +206,7 @@ const App = () => {
                 setFoodPage={setFoodPage}
                 quantity={quantity}
                 setQuantity={setQuantity}
+                arrayLength={arrayLength}
                 setArrayLength={setArrayLength}
                 setTest={setTest}
                 test={test}

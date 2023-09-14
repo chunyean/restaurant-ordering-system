@@ -76,9 +76,9 @@ const updateItem = async (req, res) => {
 //place order to cart
 const addOrder = async (req, res) => {
   try {
-    //insert data into table cart
+    //insert data into table carts
     await pool.query(
-      "insert into cart (item_id, quantity, customer_id) values ($1, $2, $3)",
+      "insert into carts (item_id, quantity, customer_id) values ($1, $2, $3)",
       [req.params.id, req.body.quantity, req.custID]
     );
 
@@ -91,7 +91,7 @@ const addOrder = async (req, res) => {
 
     //update cart
     await pool.query(
-      "update cart set unit_price = $1, name = $2 where item_id = $3",
+      "update carts set unit_price = $1, name = $2 where item_id = $3",
       [list.price, list.name, req.params.id]
     );
 
@@ -105,13 +105,8 @@ const addOrder = async (req, res) => {
 //retrieve data from cart plus sum up quantity and nett_amount
 const cartOrder = async (req, res) => {
   try {
-    // const cartDetail = await pool.query(
-    //   "select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from cart group by item_id, name, unit_price"
-    // );
-    // const list = cartDetail.rows;
-
     const cartDetail = await pool.query(
-      "select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from cart where customer_id = $1 group by item_id, name, unit_price",
+      "select item_id, name, unit_price, sum(quantity) as quantity, sum(nett_amount) as nett_amount from carts where customer_id = $1 group by item_id, name, unit_price",
       [req.custID]
     );
     const list = cartDetail.rows;
@@ -126,13 +121,14 @@ const cartOrder = async (req, res) => {
 //check the total quantity of cart
 const lengthOfCart = async (req, res) => {
   try {
+    console.log("hi");
     const cart = await pool.query(
-      "select sum(quantity) as quantity from cart where customer_id=$1",
+      "select sum(quantity) as quantity from carts where customer_id=$1",
       [req.custID]
     );
-
+    console.log("hi2");
     const number = cart.rows[0].quantity;
-
+    console.log("hi3");
     res.json(number);
   } catch (error) {
     console.error(error.message);
@@ -142,14 +138,14 @@ const lengthOfCart = async (req, res) => {
 
 //delete each item inside the card
 const deleteCartItem = async (req, res) => {
-  console.log("Delete cart item called");
+  console.log("Delete carts item called");
   console.log(req.params.id);
   try {
     await pool.query(
-      "delete from cart where (item_id = $1 and customer_id=$2)",
+      "delete from carts where (item_id = $1 and customer_id=$2)",
       [req.params.id, req.custID]
     );
-    res.json({ status: "okay", message: "item has been deleted from cart " });
+    res.json({ status: "okay", message: "item has been deleted from carts " });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ status: "error", message: error.message });
@@ -160,10 +156,10 @@ const deleteCartItem = async (req, res) => {
 // delete first then re-create
 const updateQuantity = async (req, res) => {
   try {
-    await pool.query("delete from cart where item_id = $1", [req.params.id]);
+    await pool.query("delete from carts where item_id = $1", [req.params.id]);
 
     await pool.query(
-      "insert into cart (item_id, quantity, unit_price, name, customer_id) values ($1,$2,$3, $4, $5)",
+      "insert into carts (item_id, quantity, unit_price, name, customer_id) values ($1,$2,$3, $4, $5)",
       [
         req.params.id,
         req.body.quantity,

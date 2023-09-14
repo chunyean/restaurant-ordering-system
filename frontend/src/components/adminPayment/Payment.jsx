@@ -30,7 +30,6 @@ const Payment = (props) => {
       alert(JSON.stringify(res.data));
     }
   };
-  
 
   const list = odrDetail.map((item) => {
     return (
