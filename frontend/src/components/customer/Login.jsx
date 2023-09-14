@@ -9,11 +9,6 @@ const Login = (props) => {
   const fetchData = useFetch();
   const navigate = useNavigate();
 
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  const [errorUsername, setErrorUsername] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
-
   const login = async () => {
     console.log("1");
     console.log(props.password);
@@ -31,9 +26,10 @@ const Login = (props) => {
       navigate("/food");
     } else {
       console.log(res.data);
-      //check error data
-      setErrorUsername(res.data);
-      setErrorPassword(res.data);
+      alert(JSON.stringify(res.data[0]));
+      alert(JSON.stringify(res.data[1]));
+      alert(JSON.stringify(res.data[2]));
+      alert(JSON.stringify(res.data[3]));
     }
   };
   return (
@@ -58,11 +54,6 @@ const Login = (props) => {
               placeholder="Enter your username"
               onChange={props.handleUsername}
             ></input>
-            {errorUsername ? (
-              <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
-            ) : (
-              <div style={{ height: "36px", margin: "0" }}></div>
-            )}
           </div>
           <div className={styles.password}>
             <label htmlFor="password">Password</label>
@@ -78,11 +69,6 @@ const Login = (props) => {
                 Show Password
               </label>
             </div>
-            {errorPassword ? (
-              <p style={{ color: "red", margin: "0" }}>{errorPassword}</p>
-            ) : (
-              <div style={{ height: "36px", margin: "0" }}></div>
-            )}
           </div>
           <div>
             <button className={styles.loginBtn} onClick={login}>

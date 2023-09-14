@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../admin/Admin.module.css";
 import useFetch from "../custom_hooks/useFetch";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdminRegister = (props) => {
   const fetchData = useFetch();
@@ -9,6 +9,7 @@ const AdminRegister = (props) => {
   const [errorPassword, setErrorPassword] = useState();
   const [errorUsername, setErrorUsername] = useState();
   // const [availableId, setAvailableId] = useState();
+  const navigate = useNavigate();
 
   const handleHeader = () => {
     props.setHeader1(false);
@@ -26,7 +27,7 @@ const AdminRegister = (props) => {
       props.setUsername("");
       props.setPassword("");
       props.setContact("");
-      navigate("/admin/login");
+      navigate("/admin");
     } else {
       console.log(res.data);
       setErrorId(res.data);
@@ -48,25 +49,28 @@ const AdminRegister = (props) => {
   useEffect(() => {
     handleHeader();
   }, []);
+  console.log(props.username);
+  console.log(props.password);
+  console.log(props.contact);
   return (
     <>
       <div className={styles.register2}>
         <div className={styles.employee}>
           <label>Employee ID: </label>
           <p>{props.availableId}</p>
-          {errorId ? (
+          {/* {errorId ? (
             <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>
           ) : (
             <div style={{ height: "36px", margin: "0" }}></div>
-          )}
+          )} */}
         </div>
         <div className={styles.name}>
           <label htmlFor="name">Name: </label>
           <input
             type="text"
-            id="contact"
+            id="name"
             placeholder="Enter your name"
-            onChange={props.handleContact}
+            onChange={props.handleUsername}
           ></input>
           {/* {errorId ? (
             <p style={{ color: "red", margin: "0" }}>{errorUsername}</p>

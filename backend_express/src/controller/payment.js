@@ -67,28 +67,29 @@ const newPayment = async (req, res) => {
 // completed payment will change status unsed table payments is_completed to true and table order is_payemnt to true
 const completedPayment = async (req, res) => {
   try {
+    console.log(req.params.id);
     await pool.query("update payments set is_completed=true where id=$1", [
       req.params.id,
     ]);
-
+    console.log("2");
     const order = await pool.query(
       "select order_id, customer_id from order_payment join orders on orders.id = order_id where payment_id=$1",
       [req.params.id]
     );
 
     const orderID = order.rows;
-
+    console.log("3");
     for (let idx = 0; idx < order.rows.length; idx++) {
       await pool.query("update orders set is_payment=true where id=$1", [
         orderID[idx].order_id,
       ]);
     }
-
+    console.log("4");
     await pool.query(
       "insert into order_histories (customer_id, payment_id) values ($1, $2)",
       [orderID[0].customer_id, req.params.id]
     );
-
+    console.log("3");
     res.json({ status: "ok", message: "Payment has been completed" });
   } catch (error) {
     console.log(error.message);

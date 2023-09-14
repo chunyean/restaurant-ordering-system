@@ -1,103 +1,4 @@
-/* .header {
-  width: 99.2dvw;
-  height: 3dvw;
-  background: linear-gradient(
-    180deg,
-    #4233e8 27.08%,
-    rgba(14, 139, 255, 0) 50.52%,
-    rgba(9, 151, 255, 0.39) 66.67%,
-    #1400ff 73.96%
-  );
-  position: sticky;
-}
-
-.logo {
-  width: 3dvw;
-  height: 3dvw;
-  border-radius: 40px;
-  background: lightgray;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: #f5f5f5;
-  position: absolute;
-  left: 2dvw;
-  cursor: pointer;
-}
-
-.food {
-  background-color: cornflowerblue;
-  width: 9dvw;
-  height: 2dvw;
-  border-radius: 50%;
-  position: absolute;
-  top: 0.5dvw;
-  left: 15dvw;
-}
-
-.food > p {
-  font-size: 1.5dvw;
-  text-align: center;
-  position: relative;
-  bottom: 1.3dvw;
-}
-
-.beverage {
-  background-color: cornflowerblue;
-  width: 9dvw;
-  height: 2dvw;
-  border-radius: 50%;
-  position: absolute;
-  top: 0.5dvw;
-  left: 30dvw;
-}
-
-.beverage > p {
-  font-size: 1.5dvw;
-  text-align: center;
-  position: relative;
-  bottom: 1.3dvw;
-}
-
-.cart {
-  background-color: white;
-  border-radius: 20px;
-  position: relative;
-  width: 3dvw;
-  height: 3dvw;
-  left: 80dvw;
-}
-
-.p {
-  position: fixed;
-  width: 100px;
-  height: 100px;
-  float: right;
-  right: 17dvw;
-  bottom: 0.4dvw;
-  font-size: 7dvw;
-  font-weight: bolder;
-  color: red;
-  background-color: #1400ff;
-}
-
-.username {
-  width: fit-content;
-  height: 1.5dvw;
-  position: relative;
-  left: 81dvw;
-  bottom: 1.2dvw;
-  font-size: 1dvw;
-  border-radius: 30px;
-}
-
-.logout {
-  background-color: rgb(255, 0, 0);
-  width: 3dvw;
-  height: 3dvw;
-  border-radius: 50%;
-  position: sticky;
-  left: 95dvw;
-} */
+/* styling for food and beverage page */
 
 .subfood {
   position: relative;
@@ -181,8 +82,9 @@
   float: right;
   width: 36dvw;
   height: 30dvh;
+  top: 1dvw;
   /* background-color: aquamarine; */
-  margin: 0 1dvw;
+  margin: auto
 }
 
 .content > span {

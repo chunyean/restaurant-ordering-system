@@ -5,23 +5,12 @@ import UserContext from "../context/user";
 import ItemOverlay from "../overlay_item/ItemOverlay";
 
 const BeveragePage = (props) => {
+  const auth = useContext(UserContext);
   const fetchData = useFetch();
   const [category, setCategory] = useState("COCKTAIL");
   const [bevItem, setBevItem] = useState([]);
   const [quantity, setQuantity] = useState(1);
-  const auth = useContext(UserContext);
   const [individualItem, setIndividualItem] = useState();
-  const [showItemOverlay, setShowItemOverlay] = useState(false);
-
-  const handleHeader = () => {
-    props.setHeader1(false);
-    props.setHeader2(false);
-    props.setHeader3(false);
-    props.setRegister(false);
-    props.setHeader4(true);
-  };
-
-  // handleHeader();
 
   const beverageCate = [
     "COCKTAIL",
@@ -33,9 +22,9 @@ const BeveragePage = (props) => {
     "JUICE",
   ];
 
+  // list out all beverage categories name
   const subBeverage = beverageCate.map((subBev, idx) => {
     return (
-      // if not work need to change value to button there
       <li
         key={idx}
         value={subBev}
@@ -49,6 +38,8 @@ const BeveragePage = (props) => {
     );
   });
 
+
+  //retrive each category data from database
   const everyCateData = async () => {
     const res = await fetchData("/item/category", "POST", {
       value: category,
@@ -61,6 +52,8 @@ const BeveragePage = (props) => {
     }
   };
 
+
+  //add order to cart
   const addOrder = async (id) => {
     const res = await fetchData(
       "/item/addorder/" + id,
@@ -79,6 +72,7 @@ const BeveragePage = (props) => {
     }
   };
 
+  //calculate the quantity of cart 
   const lengthOfCart = async () => {
     const res = await fetchData(
       "/item/length",

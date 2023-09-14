@@ -99,13 +99,6 @@ const Table = (props) => {
       <div className={styles.tblcontainer2}>
         <div className={styles.table}>{table3}</div>
       </div>
-      {/* {showTableOrder && (
-        <ViewTableOrder
-          tableDetail={tableDetail}
-          setTableDetail={setTableDetail}
-          handleViewOrder={handleViewOrder}
-        ></ViewTableOrder>
-      )} */}
     </>
   );
 };

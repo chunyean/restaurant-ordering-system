@@ -162,26 +162,28 @@
 
 .voidpay {
   /* background-color: aquamarine; */
-  width: 28dvw;
+  width: 15dvw;
   margin: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .payment {
-  margin: 5dvw 2dvw;
-  padding: 1dvw;
+  margin: 1dvw;
+  /* padding: 1dvw; */
   /* padding-right: 2dvw; */
   border-radius: 30px;
   color: blue;
 }
 
 .voidorder {
-  margin: 5dvw 2dvw;
-  padding: 1dvw;
+  margin: 1dvw;
+  /* padding: 1dvw; */
   border-radius: 30px;
   color: red;
 }
 
-/* styling for payment.jsx */
+/* styling for receipt.jsx */
 .receipt {
   background-color: whitesmoke;
   display: flex;
@@ -218,7 +220,7 @@
 
 .invoice {
   /* background-color: blueviolet; */
-  width: 6dvw;
+  width: 7dvw;
 }
 
 .invoice > p {
@@ -227,13 +229,11 @@
 
 .info > p {
   margin: 0.5dvw;
-  width: dvw;
 }
 
-/* .itemlist{
-  display:flex;
-  flex-direction: row;
-} */
+.itemlist {
+  padding: 0.5dvw;
+}
 
 .fnblist {
   display: flex;
@@ -257,7 +257,165 @@
 }
 
 .pamount {
-  /* background-color: aquamarine; */
-  width: 10%;
+  background-color: aquamarine;
+  width: 20%;
   margin: 0.2dvw auto 0 auto;
+}
+
+.chargeinfo {
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: row;
+  width: 25dvw;
+  margin: auto;
+}
+
+.paymentlist {
+  /* background-color: pink; */
+  width: 10dvw;
+}
+
+.totalamount {
+  display: flex;
+  float: right;
+  width: 15dvw;
+}
+
+.end {
+  padding: 1dvw;
+}
+
+/* styling for payment.jsx */
+.parents {
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  width: 40dvw;
+  margin: 1dvw auto;
+  padding-bottom: 2dvw;
+}
+
+.parents > p {
+  /* background-color: aquamarine; */
+  margin: 1dvw auto;
+  font-size: 2dvw;
+  text-decoration: underline;
+}
+
+.child1 {
+  /* background-color: aqua; */
+  border-top: 2px solid black;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  font-size: 1.2dvw;
+  margin: auto;
+  padding-top: 10px;
+}
+
+.child2 > p {
+  margin: 5px;
+}
+
+.child3 > p {
+  margin: 5px;
+}
+
+.child4 {
+  /* background-color: blueviolet; */
+  display: flex;
+  width: 80%;
+  margin: 1dvw auto;
+  text-decoration: underline;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+  font-size: 1.2dvw;
+}
+
+.pN {
+  width: 60%;
+  margin: 5px;
+}
+
+.pQ {
+  width: 20%;
+  margin: 5px;
+}
+
+.pP {
+  width: 20%;
+  margin: 5px;
+}
+
+.child5 {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.child6 {
+  border-bottom: 2px solid black;
+  width: 80%;
+  margin: auto;
+}
+
+.child7 {
+  /* background-color: aquamarine; */
+  display: flex;
+  width: 80%;
+  margin: auto;
+  border-bottom: 4px solid red;
+}
+
+.child8 {
+  width: 75%;
+  text-align: end;
+}
+
+.child9 {
+  width: 18%;
+  text-align: center;
+}
+
+.child10 {
+  display: flex;
+  margin: 0 auto 0 auto;
+  width: 50%;
+  font-size: 2dvw;
+}
+
+.child11 > p {
+  font-size: 2dvw;
+  margin: 0px;
+}
+
+.child12 > input {
+  font-size: 2dvw;
+  width: 100%;
+  margin: 0px;
+}
+
+.child14 {
+  margin: 1dvw auto;
+  font-size: 2dvw;
+  text-decoration: underline;
+}
+
+.child13 {
+  display: flex;
+  margin: auto;
+}
+
+.child13 > p {
+  font-size: 3dvw;
+  margin: 1dvw auto;
+}
+
+.child15{
+  width: 40%;
+  border-radius: 30px;
+  margin: auto;
+  background-color: aqua;
+  /* padding: 1dvw; */
+  font-size: 2dvw;
 }
