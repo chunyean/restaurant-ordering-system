@@ -11,12 +11,14 @@ const pool = require("../DB/db");
 const newPayment = async (req, res) => {
   try {
     //1st
+    console.log("hi");
+    console.log(req.body.table_number);
     const create = await pool.query(
       "insert into payments (employee_id, table_number) values ($1, $2) returning id",
       [req.staffID, req.body.table_number]
     );
     const paymentID = create.rows[0].id;
-
+    console.log(create.rows);
     //2nd
     const order = await pool.query(
       "select orders.id from orders join customers on customers.id = orders.customer_id where table_number = $1 and is_payment = false and orders.is_voidorder = false",
@@ -40,8 +42,8 @@ const newPayment = async (req, res) => {
 
     //5th
     const finalPayment = await pool.query(
-      "update payments set nett_amount=$1 returning *",
-      [price.rows[0].total_price]
+      "update payments set nett_amount=$1 where id = $2 returning *",
+      [price.rows[0].total_price, paymentID]
     );
     const paymentDetail = finalPayment.rows[0];
 
@@ -55,7 +57,9 @@ const newPayment = async (req, res) => {
 // completed payment will change status unsed table payments is_completed to true and table order is_payemnt to true
 const completedPayment = async (req, res) => {
   try {
+    console.log("hello");
     console.log(req.params.id);
+    console.log("hello");
     await pool.query("update payments set is_completed=true where id=$1", [
       req.params.id,
     ]);

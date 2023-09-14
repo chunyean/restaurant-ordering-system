@@ -190,6 +190,8 @@ CREATE TRIGGER allCalculation
 FOR EACH ROW 
   EXECUTE PROCEDURE allCalculation();
 
+INSERT INTO employees (name, password, contact) values ('user1', 'password1', 12345678):
+
 insert into types values ('FOOD');
 insert into types values ('DRINK');
 

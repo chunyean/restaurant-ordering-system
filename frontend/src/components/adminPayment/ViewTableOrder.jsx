@@ -115,7 +115,8 @@ const ViewTableOrder = (props) => {
       alert(JSON.stringify(res.data));
     }
   };
-
+console.log(detail)
+console.log(props.tableDetail)
   //map out the data that retrieve form database by table 
   const listDetail = detail.map((item) => {
     return (

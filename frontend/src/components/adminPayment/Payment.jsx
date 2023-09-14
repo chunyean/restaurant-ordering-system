@@ -23,8 +23,8 @@ const Payment = (props) => {
     );
     if (res.ok) {
       console.log(res.data);
-      props.setPaymentDetail(paymentInfo);
-      props.setTableDetail(odrDetail);
+      // props.setPaymentDetail(paymentInfo);
+      // props.setTableDetail(odrDetail);
       navigate("/admin/receipt");
     } else {
       alert(JSON.stringify(res.data));
