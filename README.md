@@ -9,7 +9,6 @@
 7. References
 
 
-
 ## Introduction
 This Restaurant Ordering System is a website software application which process from customer side until front-of-house staff to do payment. This apps will improve the efficiency of restaurant taking order from customer. It will help to reduce work load for front-of-hosue staf. Customer side will experience to view menu and place an order, front-of-house staff can place order, view each table order and do payment 
 
@@ -58,11 +57,14 @@ Beverage page will be same as food page. you will notice number contain at shopp
 This one is overlay modal after you click on the item. From this page customer can also order different quantity based on customer prefer.
 <img width="903" alt="pic11" src="https://github.com/chunyean/restaurant-ordering-system/assets/135581973/e6077734-fa6d-4368-8099-66578f7cfad6">
 
-When click shopping cart will come to this page. By this page customer can view what they have been order. From here you can edit quantity and delete the items based on customer prefer. Fill up table number and pax, after confirm all the order click on Submit button, it will send into system.
+When click shopping cart will come to this page. By this page customer can view what they have been order. From here you can edit quantity and delete the items based on customer prefer. Fill up table number and pax, after confirm all the order click on **Submit button**, it will send into system.
 <img width="952" alt="pic5" src="https://github.com/chunyean/restaurant-ordering-system/assets/135581973/8bf5348b-9b7c-4051-97cf-6b207afdbe99">
 
 Go to path="/admin" will direct to employee page. Login with employee id and password
 <img width="950" alt="pic6" src="https://github.com/chunyean/restaurant-ordering-system/assets/135581973/068f55fe-29b8-47b6-82df-ea02ea3d1e02">
+
+Greeting usename is a hidden selection for **Register Staff**. Employee id which display here will be the id for the staff that going to register. This id is importnat need to use it when login 
+<img width="945" alt="pic12" src="https://github.com/chunyean/restaurant-ordering-system/assets/135581973/1858cac0-89e0-48f3-800a-1ccf5c5eb556">
 
 This page is show out all the table number
 <img width="953" alt="pic7" src="https://github.com/chunyean/restaurant-ordering-system/assets/135581973/b2ddce97-2f88-414a-9c21-b70f7c8db79a">
