@@ -51,17 +51,18 @@ const login = async (req, res) => {
     const result = await pool.query("select * from employees where id = $1", [
       req.body.id,
     ]);
-
+    console.log("2");
     if (result.rows.length === 0) {
       return res.status(400).json({ message: "ID does not exist" });
     }
+    console.log("3");
     console.log(result);
     const employee = result.rows[0];
     const correctPassword = await bcrypt.compare(
       req.body.password,
       employee.password
     );
-
+    console.log("4");
     if (correctPassword) {
       const payload = {
         staffID: employee.id,
