@@ -75,21 +75,4 @@ const login = async (req, res) => {
   }
 };
 
-const changePass = async(req, res) => {
-  try {
-    const correctPassword = await bcrypt.compare(
-      req.body.oldPassword,
-      user.password
-    );
-
-    if (correctPassword){
-    
-    }
-    
-
-  } catch (error) {
-    
-  }
-}
-
 module.exports = { register, login };
