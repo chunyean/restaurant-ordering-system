@@ -1,5 +1,5 @@
 const pool = require("../DB/db");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 
@@ -74,5 +74,6 @@ const login = async (req, res) => {
     res.status(500).json({ status: "error", message: "invalid login" });
   }
 };
+
 
 module.exports = { register, login };

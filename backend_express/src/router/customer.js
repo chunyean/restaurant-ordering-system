@@ -11,4 +11,6 @@ router.put("/register", validateCustRegisterData, validCheck, register);
 
 router.post("/login", validateCustLogin, login);
 
+
+
 module.exports = router;
