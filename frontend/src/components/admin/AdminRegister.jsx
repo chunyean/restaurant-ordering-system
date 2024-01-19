@@ -31,7 +31,8 @@ const AdminRegister = (props) => {
 
   const handleHeader = () => {
     props.setHeader1(false);
-    props.setHeader4(true);
+    props.setHeader3(true);
+    props.setHeader4(false);
   };
 
   useEffect(() => {
