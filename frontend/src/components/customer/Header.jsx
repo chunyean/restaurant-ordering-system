@@ -140,9 +140,9 @@ const Header = (props) => {
           <p className={styles.p} onClick={cartOrder}>
             {props.arrayLength}
           </p>
-          <select className={styles.displayname} onChange={register}>
+          <select className={styles.displayname} /*onChange={register}*/>
             <option>Hi, {props.user.username}!</option>
-            <option value="Register">Register Staff</option>
+            {/* <option value="Register">Register Staff</option> */}
           </select>
           <Link to="/admin">
             <img src="/log-out-04.512x465.png" className={styles.logout} />
