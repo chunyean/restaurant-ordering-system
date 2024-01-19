@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import styles from "../admin/Admin.module.css";
 import AuthContext from "../context/user";
 import useFetch from "../custom_hooks/useFetch";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminLogin = (props) => {
   const auth = useContext(AuthContext);
@@ -81,6 +81,7 @@ const AdminLogin = (props) => {
             Login
           </button>
         </div>
+        <p className={styles.signup}><Link to="/admin/register">Sign up</Link> for New Account</p>
       </div>
     </>
   );
